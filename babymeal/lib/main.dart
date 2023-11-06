@@ -1,4 +1,4 @@
-import 'package:babymeal/NavigationPage.dart';
+import 'package:babymeal/pages/recommend/SelectKeywordPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
       title: "Login",
       debugShowCheckedModeBanner: false,
       // initialRoute: "/login",
-      home: NavigationPageWidget(),
+      home: SelectKeywordPageWidget(),
     );
   }
 }
