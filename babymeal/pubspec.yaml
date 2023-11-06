@@ -23,4 +23,25 @@ flutter:
       fonts: 
         - asset: assets/fonts/Pretendard-Regular.otf
   assets:
-    - assets/images/
+    - assets/images/meal.png
+    - assets/images/dessert.png
+    - assets/images/community.png
+    - assets/images/community_sel.png
+    - assets/images/my.png
+    - assets/images/my_sel.png
+    - assets/images/recommend.png
+    - assets/images/recommend_sel.png
+    - assets/images/scrab.png
+    - assets/images/scrab_sel.png
+    - assets/images/refrigerator.png
+    - assets/images/refrigerator_sel.png
+    - assets/images/bread.png
+    - assets/images/onion.png
+    - assets/images/fish.png
+    - assets/images/egg.png
+    - assets/images/cheese.png
+    - assets/images/broccoli.png
+    - assets/images/scrab_empty.png
+    - assets/images/scrab_full.png
+    - assets/images/rectangle.png
+

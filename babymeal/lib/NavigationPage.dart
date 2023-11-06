@@ -28,8 +28,8 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _widgetOptions = <Widget>[
-      ViewRefrigeratorPageWidget(),
       ViewRecommendPageWidget(),
+      ViewRefrigeratorPageWidget(),
       ViewScrabPageWidget(),
       ViewCommunityPageWidget(),
       ViewMyPageWidget()
