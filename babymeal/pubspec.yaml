@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   material: ^1.0.0+2
+  card_swiper: ^3.0.0
+  easy_rich_text: '^2.0.0'
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
@@ -45,4 +48,5 @@ flutter:
     - assets/images/scrab_empty.png
     - assets/images/scrab_full.png
     - assets/images/rectangle.png
+    - assets/images/google.png
 
