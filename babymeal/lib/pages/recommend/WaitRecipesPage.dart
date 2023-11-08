@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:babymeal/etc/tips.dart';
+import 'package:babymeal/pages/recommend/ShowRecipesPage.dart';
 import 'package:flutter/material.dart';
 
 class WaitRecipesPageWidget extends StatefulWidget {
@@ -21,10 +23,20 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget> {
     return tips[randomIndex];
   }
 
+  void navigateToNextScreen(BuildContext context) {
+    // TODO : 식단 가져오면 다음 화면으로 넘어가도록 수정
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => ShowRecipesPageWidget()),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     randomTip = getRandomItem();
+    Timer(Duration(seconds: 2), () {
+      navigateToNextScreen(context);
+    });
   }
 
   @override
