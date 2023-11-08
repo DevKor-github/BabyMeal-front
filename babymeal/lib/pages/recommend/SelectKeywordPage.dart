@@ -14,9 +14,31 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<bool> isSelected = List.generate(nutKeywords.length, (index) => false);
+
+  double opacity1 = 0.0;
+  double opacity2 = 0.0;
+
   @override
   void initState() {
     super.initState();
+    fadeInQuestion();
+    fadeInOption();
+  }
+
+  fadeInQuestion() {
+    Future.delayed(Duration(seconds: 0), () {
+      setState(() {
+        opacity1 = 1.0;
+      });
+    });
+  }
+
+  fadeInOption() {
+    Future.delayed(Duration(seconds: 1, milliseconds: 0), () {
+      setState(() {
+        opacity2 = 1.0;
+      });
+    });
   }
 
   @override
@@ -106,147 +128,283 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
       body: Align(
         alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
-          width: double.infinity,
-          constraints: BoxConstraints(
-            maxWidth: 570,
-          ),
-          decoration: BoxDecoration(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
-                child: Text(
-                  '중복 선택도 가능해요',
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(0.6000000238418579),
-                    fontSize: 14,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
-                  child: RichText(
-                      text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                      text: '키워드',
-                      style: TextStyle(
-                        color: Color(0xFF212121),
-                        fontSize: 25,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                        letterSpacing: -0.50,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '를 선택해주세요.',
-                      style: TextStyle(
-                        color: Color(0xFF616161),
-                        fontSize: 25,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                        letterSpacing: -0.50,
-                      ),
-                    ),
-                  ]))),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            width: double.infinity,
+            constraints: BoxConstraints(
+              maxWidth: 570,
+            ),
+            decoration: BoxDecoration(),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 30, 0, 12),
+                  AnimatedOpacity(
+                    opacity: opacity1,
+                    duration: Duration(seconds: 1),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                       child: Text(
-                        "영양",
-                        textAlign: TextAlign.center,
+                        '중복 선택도 가능해요',
                         style: TextStyle(
-                          color: Color(0xFF757575),
-                          fontSize: 16,
+                          color: Colors.black.withOpacity(0.6000000238418579),
+                          fontSize: 14,
                           fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                           height: 0,
-                          letterSpacing: -0.32,
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
+                  AnimatedOpacity(
+                      opacity: opacity1,
+                      duration: Duration(seconds: 1),
+                      child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
+                          child: RichText(
+                              text: TextSpan(children: <TextSpan>[
+                            TextSpan(
+                              text: '키워드',
+                              style: TextStyle(
+                                color: Color(0xFF212121),
+                                fontSize: 25,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 0,
+                                letterSpacing: -0.50,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '를 선택해주세요.',
+                              style: TextStyle(
+                                color: Color(0xFF616161),
+                                fontSize: 25,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w600,
+                                height: 0,
+                                letterSpacing: -0.50,
+                              ),
+                            ),
+                          ])))),
+                  SingleChildScrollView(
+                      child: Column(
+                    children: [
+                      AnimatedOpacity(
+                          opacity: opacity2,
+                          duration: Duration(seconds: 1),
+                          child: Container(
+                              child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.fromLTRB(0, 30, 0, 12),
+                                      child: Text(
+                                        "영양",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFF757575),
+                                          fontSize: 16,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w700,
+                                          height: 0,
+                                          letterSpacing: -0.32,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                              GridView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.all(12),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 12,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 2.4 / 1,
+                                ),
+                                itemCount: nutKeywords.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isSelected[index] = !isSelected[index];
+                                      });
+                                    },
+                                    child: Container(
+                                      width: 100,
+                                      height: 48,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.fromLTRB(
+                                                10, 11, 8, 11),
+                                            child: Image.asset(
+                                              'assets/images/tag.png',
+                                              width: 26,
+                                              height: 26,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.fromLTRB(
+                                                0, 11, 20, 11),
+                                            child: Text(
+                                              '${nutKeywords[index]}',
+                                              style: TextStyle(
+                                                color: Color(0xFF212121),
+                                                fontSize: 15,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w600,
+                                                height: 0,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      margin: EdgeInsets.fromLTRB(0, 8, 0, 6),
+                                      decoration: isSelected[index]
+                                          ? ShapeDecoration(
+                                              color: Color(0x33FF582C),
+                                              shape: RoundedRectangleBorder(
+                                                side: BorderSide(
+                                                    width: 2,
+                                                    color: Color(0xFFFF5C39)),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            )
+                                          : ShapeDecoration(
+                                              color: Color(0xFFF4F3F0),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ))),
+                      AnimatedOpacity(
+                          opacity: opacity2,
+                          duration: Duration(seconds: 1),
+                          child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 80),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 30, 0, 12),
+                                          child: Text(
+                                            "그 밖",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF757575),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w700,
+                                              height: 0,
+                                              letterSpacing: -0.32,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.all(12),
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                      crossAxisSpacing: 12,
+                                      maxCrossAxisExtent: 210, // 최대 너비
+                                      childAspectRatio:
+                                          2.4 / 1, // 높이를 너비와 동일하게 유지
+                                    ),
+                                    // gridDelegate:
+                                    //     SliverGridDelegateWithFixedCrossAxisCount(
+                                    //   crossAxisSpacing: 12,
+                                    //   crossAxisCount: 2,
+                                    //   childAspectRatio: 2.4 / 1,
+                                    // ),
+                                    itemCount: genKeywords.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isSelected[index] =
+                                                !isSelected[index];
+                                          });
+                                        },
+                                        child: Container(
+                                          height: 48,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    10, 11, 8, 11),
+                                                child: Image.asset(
+                                                  'assets/images/tag.png',
+                                                  width: 26,
+                                                  height: 26,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    0, 11, 20, 11),
+                                                child: Text(
+                                                  '${genKeywords[index]}',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF212121),
+                                                    fontSize: 15,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w600,
+                                                    height: 0,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 8, 0, 6),
+                                          decoration: isSelected[index]
+                                              ? ShapeDecoration(
+                                                  color: Color(0x33FF582C),
+                                                  shape: RoundedRectangleBorder(
+                                                    side: BorderSide(
+                                                        width: 2,
+                                                        color:
+                                                            Color(0xFFFF5C39)),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                )
+                                              : ShapeDecoration(
+                                                  color: Color(0xFFF4F3F0),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              )))
+                    ],
+                  )),
                 ],
               ),
-              Expanded(
-                  child: Column(
-                children: [
-                  GridView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(12),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 12,
-                      crossAxisCount: 2,
-                      childAspectRatio: 2.4 / 1,
-                    ),
-                    itemCount: nutKeywords.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isSelected[index] = !isSelected[index];
-                          });
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 48,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(10, 11, 8, 11),
-                                child: Image.asset(
-                                  'assets/images/tag.png',
-                                  width: 26,
-                                  height: 26,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 11, 20, 11),
-                                child: Text(
-                                  '${nutKeywords[index]}',
-                                  style: TextStyle(
-                                    color: Color(0xFF212121),
-                                    fontSize: 15,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          margin: EdgeInsets.fromLTRB(0, 8, 0, 6),
-                          decoration: isSelected[index]
-                              ? ShapeDecoration(
-                                  color: Color(0x33FF582C),
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        width: 2, color: Color(0xFFFF5C39)),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                )
-                              : ShapeDecoration(
-                                  color: Color(0xFFF4F3F0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              )),
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }

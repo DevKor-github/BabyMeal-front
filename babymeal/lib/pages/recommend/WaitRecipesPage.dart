@@ -12,10 +12,35 @@ class WaitRecipesPageWidget extends StatefulWidget {
   _WaitRecipesPageWidgetState createState() => _WaitRecipesPageWidgetState();
 }
 
-class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget> {
+class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
+    with SingleTickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final Random random = Random();
   late String randomTip;
+
+  double yOffset = 0.0;
+  double opacity = 1.0;
+
+  void startAnimation() {
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        yOffset = -72.0;
+        opacity = 0.0;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    randomTip = getRandomItem();
+
+    startAnimation();
+    Timer(Duration(seconds: 4), () {
+      navigateToNextScreen(context);
+    });
+  }
+
   String getRandomItem() {
     // 랜덤한 인덱스 생성
     int randomIndex = random.nextInt(tips.length);
@@ -28,15 +53,6 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget> {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => ShowRecipesPageWidget()),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    randomTip = getRandomItem();
-    Timer(Duration(seconds: 2), () {
-      navigateToNextScreen(context);
-    });
   }
 
   @override
@@ -87,12 +103,26 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget> {
                   Container(
                       child: Column(
                     children: [
-                      WaitingCard(msg: '선택한 냉장고 속 재료 분석 중'),
-                      WaitingCard(msg: '선택한 키워드 분석 중'),
-                      WaitingCard(msg: '맞춤 레시피 불러오는 중'),
-                      WaitingCard(msg: '선택한 냉장고 속 재료 분석 중'),
-                      WaitingCard(msg: '선택한 키워드 분석 중'),
-                      WaitingCard(msg: '맞춤 레시피 불러오는 중'),
+                      AnimatedOpacity(
+                        opacity: opacity,
+                        curve: Curves.linear,
+                        duration: Duration(seconds: 1),
+                        child: WaitingCard(msg: '선택한 냉장고 속 재료 분석 중'),
+                      ),
+                      AnimatedContainer(
+                          duration: Duration(seconds: 1),
+                          curve: Curves.linear,
+                          transform:
+                              Matrix4.translationValues(0.0, yOffset, 0.0),
+                          child: Column(
+                            children: [
+                              WaitingCard(msg: '선택한 키워드 분석 중'),
+                              WaitingCard(msg: '맞춤 레시피 불러오는 중'),
+                              WaitingCard(msg: '선택한 냉장고 속 재료 분석 중'),
+                              WaitingCard(msg: '선택한 키워드 분석 중'),
+                              WaitingCard(msg: '맞춤 레시피 불러오는 중'),
+                            ],
+                          ))
                     ],
                   ))
                 ],

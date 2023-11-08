@@ -1,6 +1,5 @@
-import 'package:babymeal/pages/recommend/RecomChooseMealPage.dart';
+import 'package:babymeal/pages/recommend/SelectKeywordPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class RecomChooseMaterialPageWidget extends StatefulWidget {
   const RecomChooseMaterialPageWidget({super.key});
@@ -80,7 +79,7 @@ class _RecomChooseMaterialPageWidgetState
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RecomChooseMealPageWidget()));
+                        builder: (context) => SelectKeywordPageWidget()));
               },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
