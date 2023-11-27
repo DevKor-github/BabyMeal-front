@@ -139,7 +139,7 @@ class _ManageMyPageWidgetState extends State<ManageMyPageWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ChangePasswordPageWidget()),
+                            builder: (context) => ChagePasswordPageWidget()),
                       );
                     },
                     padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
