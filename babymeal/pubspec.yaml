@@ -25,6 +25,10 @@ flutter:
     - family : Pretendard
       fonts: 
         - asset: assets/fonts/Pretendard-Regular.otf
+    - family: GowunBatang
+      fonts:
+        - asset: assets/fonts/GowunBatang-Regular.ttf
+        - asset: assets/fonts/GowunBatang-Bold.ttf
   assets:
     - assets/images/
     - assets/images/meal.png
