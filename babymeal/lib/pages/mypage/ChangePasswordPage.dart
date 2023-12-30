@@ -144,7 +144,6 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
             child: Container(
               width: double.infinity,
-
               child: TextFormField(
                 controller: passwordController,
                 obscureText: true,
