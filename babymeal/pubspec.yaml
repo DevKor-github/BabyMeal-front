@@ -1,17 +1,17 @@
 name: babymeal
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.0-131.0.dev <4.0.0'
+  sdk: ">=3.2.0-131.0.dev <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   material: ^1.0.0+2
   card_swiper: ^3.0.0
-  easy_rich_text: '^2.0.0'
+  easy_rich_text: "^2.0.0"
   flutter_screenutil: ^5.9.0
 
 dev_dependencies:
@@ -24,9 +24,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  fonts: 
-    - family : Pretendard
-      fonts: 
+  fonts:
+    - family: Pretendard
+      fonts:
         - asset: assets/fonts/Pretendard-Regular.otf
   assets:
     - assets/images/
@@ -52,4 +52,3 @@ flutter:
     - assets/images/scrab_full.png
     - assets/images/rectangle.png
     - assets/images/google.png
-
