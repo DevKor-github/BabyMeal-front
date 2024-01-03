@@ -1,6 +1,5 @@
 import 'package:babymeal/NavigationPage.dart';
 import 'package:flutter/material.dart';
-import 'package:babymeal/pages/refrigerator/ViewRefrigeratorPage.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,7 +14,7 @@ class MainApp extends StatelessWidget {
       title: "Login",
       debugShowCheckedModeBanner: false,
       // initialRoute: "/login",
-      home: ViewRefrigeratorPageWidget(),
+      home: NavigationPageWidget(),
     );
   }
 }

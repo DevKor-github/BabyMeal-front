@@ -1,3 +1,5 @@
+import 'package:babymeal/NavigationPage.dart';
+import 'package:babymeal/pages/recommend/ShowDetailRecipePage.dart';
 import 'package:flutter/material.dart';
 
 class ShowRecipesPageWidget extends StatefulWidget {
@@ -72,7 +74,16 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                 child: Column(
                   children: [
                     Row(children: [
-                      AIRecipe(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ShowDetailRecipePageWidget()));
+                        },
+                        child: AIRecipe(),
+                      ),
                       GestureDetector(
                           onTap: () {
                             changeLike(0);
@@ -120,7 +131,12 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NavigationPageWidget()));
+                },
                 child: Text(
                   '새로하기',
                   textAlign: TextAlign.center,

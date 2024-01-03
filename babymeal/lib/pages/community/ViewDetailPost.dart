@@ -90,10 +90,13 @@ class _ViewdPostDetailPageWidgetState extends State<ViewdPostDetailPageWidget> {
                     Container(
                         child: Row(
                       children: [
-                        Container(
-                            padding: EdgeInsets.only(right: 5),
-                            child: Icon(Icons.chat_outlined,
-                                color: Color(0xff616161))),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                              padding: EdgeInsets.only(right: 5),
+                              child: Icon(Icons.chat_outlined,
+                                  color: Color(0xff616161))),
+                        ),
                         Text(
                           '3',
                           textAlign: TextAlign.center,

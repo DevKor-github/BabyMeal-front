@@ -1,3 +1,7 @@
+import 'package:babymeal/pages/mypage/ManageMyPage.dart';
+import 'package:babymeal/pages/mypage/MyPageComments.dart';
+import 'package:babymeal/pages/mypage/MyPagePost.dart';
+import 'package:babymeal/pages/mypage/ViewChildInfoPage.dart';
 import 'package:flutter/material.dart';
 
 class ViewMyPageWidget extends StatefulWidget {
@@ -83,24 +87,31 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                             ))
                       ],
                     )),
-                    Container(
-                        child: Row(
-                      children: [
-                        Text(
-                          '계정 관리',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Color(0xFF616161),
-                            fontSize: 14,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        ),
-                        Icon(Icons.keyboard_arrow_right,
-                            color: Color(0xff616161))
-                      ],
-                    ))
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ManageMyPageWidget()));
+                        },
+                        child: Container(
+                            child: Row(
+                          children: [
+                            Text(
+                              '계정 관리',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Color(0xFF616161),
+                                fontSize: 14,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            ),
+                            Icon(Icons.keyboard_arrow_right,
+                                color: Color(0xff616161))
+                          ],
+                        )))
                   ],
                 )),
             Container(
@@ -110,90 +121,116 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                        padding: EdgeInsets.only(top: 18),
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Image.asset("assets/images/baby.png"),
-                            ),
-                            Text(
-                              '아이 정보',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF212121),
-                                fontSize: 15,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                                letterSpacing: -0.30,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ViewChildInfoPageWidget()));
+                      },
+                      child: Container(
+                          padding: EdgeInsets.only(top: 18),
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(bottom: 5),
+                                child: Image.asset("assets/images/baby.png"),
                               ),
-                            )
-                          ],
-                        )),
+                              Text(
+                                '아이 정보',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF212121),
+                                  fontSize: 15,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                  letterSpacing: -0.30,
+                                ),
+                              )
+                            ],
+                          )),
+                    ),
                     Container(
                       height: MediaQuery.of(context).size.height *
                           0.08, // Divider의 높이 설정
                       width: 1.0, // Divider의 두께 설정
                       color: Color(0xffE0E0E0), // Divider의 색상 설정
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 18),
-                        width: MediaQuery.of(context).size.width * 0.28,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child:
-                                  Image.asset("assets/images/post_write.png"),
-                            ),
-                            Text(
-                              '내 게시글',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF212121),
-                                fontSize: 15,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                                letterSpacing: -0.30,
-                              ),
-                            )
-                          ],
-                        )),
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyPageMyPostsPageWidget()));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.only(top: 18),
+                            width: MediaQuery.of(context).size.width * 0.28,
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Image.asset(
+                                      "assets/images/post_write.png"),
+                                ),
+                                Text(
+                                  '내 게시글',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xFF212121),
+                                    fontSize: 15,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0,
+                                    letterSpacing: -0.30,
+                                  ),
+                                )
+                              ],
+                            ))),
                     Container(
                       height: MediaQuery.of(context).size.height *
                           0.08, // Divider의 높이 설정
                       width: 1.0, // Divider의 두께 설정
                       color: Color(0xffE0E0E0), // Divider의 색상 설정
                     ),
-                    Container(
-                        padding: EdgeInsets.only(top: 10),
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Image.asset(
-                                "assets/images/comment.png",
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MypageMyCommentsPageWidget()));
+                      },
+                      child: Container(
+                          padding: EdgeInsets.only(top: 10),
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Image.asset(
+                                  "assets/images/comment.png",
+                                ),
                               ),
-                            ),
-                            Text(
-                              '내 댓글',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF212121),
-                                fontSize: 15,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                                letterSpacing: -0.30,
-                              ),
-                            )
-                          ],
-                        )),
+                              Text(
+                                '내 댓글',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF212121),
+                                  fontSize: 15,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                  letterSpacing: -0.30,
+                                ),
+                              )
+                            ],
+                          )),
+                    )
                   ],
                 )),
             Container(

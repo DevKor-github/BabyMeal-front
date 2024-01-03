@@ -1,4 +1,6 @@
+import 'package:babymeal/pages/community/AlarmCommunityPage.dart';
 import 'package:babymeal/pages/community/ViewDetailPost.dart';
+import 'package:babymeal/pages/community/WriteCommunityPost.dart';
 import 'package:flutter/material.dart';
 
 class ViewCommunityPageWidget extends StatefulWidget {
@@ -171,26 +173,44 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                              6,
-                              0,
-                              0,
-                              0,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AlarmCommunityPage()));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(
+                                6,
+                                0,
+                                0,
+                                0,
+                              ),
+                              child: Icon(Icons.notifications_none,
+                                  color: Color(0xFF757575)),
                             ),
-                            child: Icon(Icons.notifications_none,
-                                color: Color(0xFF757575)),
                           ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(
-                              6,
-                              0,
-                              0,
-                              0,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          WriteCommunityFreePost()));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(
+                                6,
+                                0,
+                                0,
+                                0,
+                              ),
+                              child: ImageIcon(
+                                  AssetImage('assets/images/edit_square.png'),
+                                  color: Color(0xff757575)),
                             ),
-                            child: ImageIcon(
-                                AssetImage('assets/images/edit_square.png'),
-                                color: Color(0xff757575)),
                           ),
                           Container(
                               margin: EdgeInsets.fromLTRB(
