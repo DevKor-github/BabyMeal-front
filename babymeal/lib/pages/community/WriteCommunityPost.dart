@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class WriteCommunityFreePost extends StatefulWidget {
   const WriteCommunityFreePost({super.key});
@@ -64,8 +63,8 @@ class _WriteCommunityFreePostState extends State<WriteCommunityFreePost> {
                 },
                 icon: Image.asset(
                   selectedCategory == '자유글'
-                      ? 'assets/images/freepost_pressed.png'
-                      : 'assets/images/freepost.png',
+                      ? 'assets/images/recipepost_pressed.png'
+                      : 'assets/images/recipepost.png',
                   width: 60, // 이미지의 가로 길이
                   height: 60, // 이미지의 세로 길이
                 ),
