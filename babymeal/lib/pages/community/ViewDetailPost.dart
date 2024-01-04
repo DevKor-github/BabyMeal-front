@@ -1,3 +1,4 @@
+import 'package:babymeal/pages/community/CommentCommunityPage.dart';
 import 'package:flutter/material.dart';
 
 class ViewdPostDetailPageWidget extends StatefulWidget {
@@ -91,7 +92,13 @@ class _ViewdPostDetailPageWidgetState extends State<ViewdPostDetailPageWidget> {
                         child: Row(
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CommentCommunityPage()));
+                          },
                           child: Container(
                               padding: EdgeInsets.only(right: 5),
                               child: Icon(Icons.chat_outlined,
