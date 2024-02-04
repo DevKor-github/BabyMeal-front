@@ -6,7 +6,6 @@ class GetPost {
   String? title;
   String? body;
   List<String>? photos;
-  String? category;
   int? scrap;
   String? type;
 
@@ -18,7 +17,6 @@ class GetPost {
       this.title,
       this.body,
       this.photos,
-      this.category,
       this.scrap,
       this.type});
 
@@ -30,7 +28,6 @@ class GetPost {
     title = json['title'];
     body = json['body'];
     photos = json['photos'].cast<String>();
-    category = json['category'];
     scrap = json['scrap'];
     type = json['type'];
   }
@@ -44,7 +41,6 @@ class GetPost {
     data['title'] = this.title;
     data['body'] = this.body;
     data['photos'] = this.photos;
-    data['category'] = this.category;
     data['scrap'] = this.scrap;
     data['type'] = this.type;
     return data;
@@ -57,7 +53,7 @@ class PostPost {
   int? likes;
   String? title;
   String? body;
-  String? photos; //휴대폰 내 주소로 처리
+  List<String>? photos; //휴대폰 내 주소로 처리
   int? scrap;
   String? type;
 
@@ -82,6 +78,60 @@ class PostPost {
     data['photos'] = this.photos;
     data['scrap'] = this.scrap;
     data['type'] = this.type;
+    return data;
+  }
+}
+
+class PostComment {
+  int? customerId;
+  int? postId;
+  String? contents;
+
+  PostComment({
+    this.customerId,
+    this.postId,
+    this.contents,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['customerId'] = this.customerId;
+    data['postId'] = this.postId;
+    data['contents'] = this.contents;
+    return data;
+  }
+}
+
+class PostLike {
+  int? customerId;
+  int? postId;
+
+  PostLike({
+    this.customerId,
+    this.postId,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['customerId'] = this.customerId;
+    data['postId'] = this.postId;
+    return data;
+  }
+}
+
+class PostScrap {
+  int? customerId;
+  int? postId;
+
+  PostScrap({
+    this.customerId,
+    this.postId,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['customerId'] = this.customerId;
+    data['postId'] = this.postId;
     return data;
   }
 }
