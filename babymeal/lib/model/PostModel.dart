@@ -48,7 +48,6 @@ class GetPost {
 }
 
 class PostPost {
-  int? customerId;
   int? comments;
   int? likes;
   String? title;
@@ -58,8 +57,7 @@ class PostPost {
   String? type;
 
   PostPost(
-      {this.customerId,
-      this.comments,
+      {this.comments,
       this.likes,
       this.title,
       this.body,
@@ -69,7 +67,7 @@ class PostPost {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customerId'] = this.customerId;
+
     data['comments'] = this.comments;
     data['comments'] = this.comments;
     data['likes'] = this.likes;
@@ -83,19 +81,16 @@ class PostPost {
 }
 
 class PostComment {
-  int? customerId;
   int? postId;
   String? contents;
 
   PostComment({
-    this.customerId,
     this.postId,
     this.contents,
   });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customerId'] = this.customerId;
     data['postId'] = this.postId;
     data['contents'] = this.contents;
     return data;
@@ -103,34 +98,28 @@ class PostComment {
 }
 
 class PostLike {
-  int? customerId;
   int? postId;
 
   PostLike({
-    this.customerId,
     this.postId,
   });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customerId'] = this.customerId;
     data['postId'] = this.postId;
     return data;
   }
 }
 
 class PostScrap {
-  int? customerId;
   int? postId;
 
   PostScrap({
-    this.customerId,
     this.postId,
   });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customerId'] = this.customerId;
     data['postId'] = this.postId;
     return data;
   }

@@ -1,7 +1,10 @@
+import 'package:babymeal/model/PostModel.dart';
 import 'package:babymeal/pages/community/AlarmCommunityPage.dart';
-import 'package:babymeal/pages/community/ViewDetailPost.dart';
-import 'package:babymeal/pages/community/WriteCommunityPost.dart';
+import 'package:babymeal/pages/community/ViewDetailPostPage.dart';
+import 'package:babymeal/pages/community/WriteCommunityPostPage.dart';
+import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ViewCommunityPageWidget extends StatefulWidget {
   const ViewCommunityPageWidget({Key? key}) : super(key: key);
@@ -13,27 +16,51 @@ class ViewCommunityPageWidget extends StatefulWidget {
 
 class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String selectedValue = '최신순';
+  String selectedOrder = '최신순';
 
   bool isGeneralClicked = true;
   bool isRecipeClicked = false;
 
+  List<GetPost> _latestPosts = [];
+  List<GetPost> _popularPosts = [];
+  List<GetPost> _generalLatestPosts = [];
+  List<GetPost> _recipeLatestPosts = [];
+  List<GetPost> _generalPopularPosts = [];
+  List<GetPost> _recipePopularPosts = [];
+  List<GetPost> _best10Posts = [];
+  List<GetPost> _showingPosts = []; //보여지는 posts
+
   void changeGeneral() {
     setState(() {
       isGeneralClicked = !isGeneralClicked;
+      changeShowingPosts();
     });
   }
 
   void changeRecipe() {
     setState(() {
       isRecipeClicked = !isRecipeClicked;
+      changeShowingPosts();
     });
   }
 
-  void updateSelectedValue(String value) {
+  void updateselectedOrder(String value) {
     setState(() {
-      selectedValue = value;
+      selectedOrder = value;
+      changeShowingPosts();
     });
+  }
+
+  void changeShowingPosts() {
+    if (selectedOrder == "최신순") {
+      _showingPosts = isRecipeClicked
+          ? _recipeLatestPosts
+          : (isGeneralClicked ? _generalLatestPosts : _latestPosts);
+    } else if (selectedOrder == "인기순") {
+      _showingPosts = isRecipeClicked
+          ? _recipePopularPosts
+          : (isGeneralClicked ? _generalPopularPosts : _popularPosts);
+    }
   }
 
   void _showModal() {
@@ -68,7 +95,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                       ListTile(
                         title: Row(
                           children: [
-                            selectedValue == "인기순"
+                            selectedOrder == "인기순"
                                 ? Container(
                                     width: 36,
                                     padding: EdgeInsets.only(right: 11),
@@ -84,7 +111,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                                 color: Color(0xFF212121),
                                 fontSize: 16,
                                 fontFamily: 'Pretendard',
-                                fontWeight: selectedValue == "인기순"
+                                fontWeight: selectedOrder == "인기순"
                                     ? FontWeight.w600
                                     : FontWeight.w500,
                               ),
@@ -92,14 +119,14 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                           ],
                         ),
                         onTap: () {
-                          updateSelectedValue('인기순');
+                          updateselectedOrder('인기순');
                           Navigator.pop(context);
                         },
                       ),
                       ListTile(
                         title: Row(
                           children: [
-                            selectedValue == "최신순"
+                            selectedOrder == "최신순"
                                 ? Container(
                                     width: 36,
                                     padding: EdgeInsets.only(right: 11),
@@ -115,7 +142,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                                 color: Color(0xFF212121),
                                 fontSize: 16,
                                 fontFamily: 'Pretendard',
-                                fontWeight: selectedValue == "최신순"
+                                fontWeight: selectedOrder == "최신순"
                                     ? FontWeight.w600
                                     : FontWeight.w500,
                               ),
@@ -123,7 +150,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                           ],
                         ),
                         onTap: () {
-                          updateSelectedValue('인기순');
+                          updateselectedOrder('인기순');
                           Navigator.pop(context);
                         },
                       ),
@@ -136,8 +163,40 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
     );
   }
 
+  Future<void> _loadPosts() async {
+    await Provider.of<PostService>(context, listen: false).getLatestPosts(1);
+    await Provider.of<PostService>(context, listen: false).getPopularPosts(1);
+    await Provider.of<PostService>(context, listen: false)
+        .getGeneralLatestPosts(1);
+    await Provider.of<PostService>(context, listen: false)
+        .getRecipeLatestPosts(1);
+    await Provider.of<PostService>(context, listen: false)
+        .getRecipePopularPosts(1);
+    await Provider.of<PostService>(context, listen: false)
+        .getGeneralPopularPosts(1);
+    await Provider.of<PostService>(context, listen: false).getBest10Posts();
+
+    setState(() {
+      _latestPosts = Provider.of<PostService>(context, listen: false)
+          .latestPosts; //최신순 전체 post
+      _popularPosts = Provider.of<PostService>(context, listen: false)
+          .popularPosts; //전체 post 조회-인기순
+      _generalLatestPosts =
+          Provider.of<PostService>(context, listen: false).generalLatestPosts;
+      _recipeLatestPosts =
+          Provider.of<PostService>(context, listen: false).recipeLatestPosts;
+      _generalPopularPosts =
+          Provider.of<PostService>(context, listen: false).generalPopularPosts;
+      _recipePopularPosts =
+          Provider.of<PostService>(context, listen: false).recipePopularPosts;
+      _best10Posts =
+          Provider.of<PostService>(context, listen: false).best10Posts;
+    });
+  }
+
   void initState() {
     super.initState();
+    _loadPosts();
   }
 
   @override
@@ -198,7 +257,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          WriteCommunityFreePost()));
+                                          WriteCommunityPostPageWidget()));
                             },
                             child: Container(
                               margin: EdgeInsets.fromLTRB(
@@ -254,15 +313,14 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                     Container(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height * 0.27,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          children: [
-                            BriefPopularPostcard(),
-                            BriefPopularPostcard(),
-                            BriefPopularPostcard()
-                          ],
-                        ))
+                        child: ListView.builder(
+                            itemCount: _best10Posts.length,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return BriefPopularPostcard(
+                                  postInfo: _best10Posts[index]);
+                            }))
                   ],
                 )),
             Container(
@@ -290,7 +348,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                             child: Row(children: [
                           Icon(Icons.expand_more, color: Color(0xff616161)),
                           Text(
-                            selectedValue,
+                            selectedOrder,
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Color(0xFF616161),
@@ -304,17 +362,15 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                 )),
             Expanded(
                 child: Container(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              color: Colors.white,
-              child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    BriefPostCard(),
-                    BriefPostCard(),
-                    BriefPostCard()
-                  ]),
-            ))
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    color: Colors.white,
+                    child: ListView.builder(
+                        itemCount: _best10Posts.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return BriefPostCard(postInfo: _showingPosts[index]);
+                        })))
           ]),
         ));
   }
@@ -359,7 +415,8 @@ class SelectCard extends StatelessWidget {
 }
 
 class BriefPopularPostcard extends StatelessWidget {
-  const BriefPopularPostcard({super.key});
+  const BriefPopularPostcard({super.key, required this.postInfo});
+  final GetPost postInfo;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -380,7 +437,7 @@ class BriefPopularPostcard extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 9, 0, 7),
               width: 129,
               child: Text(
-                '아이에게 단호하게 말하는 방법',
+                postInfo.title!,
                 style: TextStyle(
                   color: Color(0xFF212121),
                   fontSize: 14,
@@ -392,7 +449,7 @@ class BriefPopularPostcard extends StatelessWidget {
             ),
             Container(
                 child: Text(
-              '식단글 | 쌍둥이맘',
+              '${postInfo.type} | ${postInfo.customerName}',
               style: TextStyle(
                 color: Color(0xFF9E9E9E),
                 fontSize: 12,
@@ -407,15 +464,27 @@ class BriefPopularPostcard extends StatelessWidget {
 }
 
 class BriefPostCard extends StatelessWidget {
-  const BriefPostCard({super.key});
+  const BriefPostCard({super.key, required this.postInfo});
+  final GetPost postInfo;
   @override
   Widget build(BuildContext context) {
+    Duration difference =
+        DateTime.now().difference(DateTime.parse(postInfo.updateDate!));
+    if (difference.inHours >= 24) {
+      int daysDifference = difference.inDays;
+      print("$daysDifference 일 전");
+    } else {
+      int hoursDifference = difference.inHours;
+      print("$hoursDifference 시간 전");
+    }
     return GestureDetector(
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ViewdPostDetailPageWidget()));
+                  builder: (context) => ViewPostDetailPageWidget(
+                        postId: postInfo.postId!,
+                      )));
         },
         child: Container(
             decoration: BoxDecoration(
@@ -432,7 +501,7 @@ class BriefPostCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(bottom: 14),
                   child: Text(
-                    '[건대입구]아이와 함께 가기 좋은 카페 웰컴베이비 추천합니다 - 메뉴,가격,주차정보',
+                    postInfo.body!.substring(0, 40),
                     style: TextStyle(
                       color: Color(0xFF212121),
                       fontSize: 16,
@@ -457,7 +526,7 @@ class BriefPostCard extends StatelessWidget {
                                     color: Color(0xff9E9E9E), size: 18),
                               ),
                               Text(
-                                '3',
+                                postInfo.likes!.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color(0xFF9E9E9E),
@@ -479,7 +548,7 @@ class BriefPostCard extends StatelessWidget {
                                     color: Color(0xff9E9E9E), size: 18),
                               ),
                               Text(
-                                '1',
+                                postInfo.comments!.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color(0xFF9E9E9E),
@@ -495,7 +564,7 @@ class BriefPostCard extends StatelessWidget {
                     ),
                     Container(
                         child: Text(
-                      '쌍둥이맘 | 1시간 전',
+                      '${postInfo.customerName!} | ${difference}시간 전',
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         color: Color(0xFF9E9E9E),

@@ -1,4 +1,4 @@
-import 'package:babymeal/pages/community/ViewDetailPost.dart';
+import 'package:babymeal/pages/community/ViewDetailPostPage.dart';
 import 'package:flutter/material.dart';
 
 class ViewScrabPageWidget extends StatefulWidget {
