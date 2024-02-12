@@ -17,8 +17,9 @@ class PostService extends ChangeNotifier {
   List<GetPost> myPosts = []; //customer별 post
   List<GetPost> keywordPosts = []; //keyword로 post검색
   List<GetPost> best10Posts = []; //주간 인기글 10개
-  List<GetPost> scrappedPosts = []; //주간 인기글 10개
-  GetPost uniquePost = GetPost();
+  List<GetPost> scrappedGeneralPosts = [];
+  List<GetPost> scrappedRecipePosts = [];
+  GetPostDetail uniquePost = GetPostDetail();
 
   Future<bool> uploadPost(PostPost post) async {
     //Post 등록
@@ -255,7 +256,7 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  Future<void> getBest10Posts(int startPostId) async {
+  Future<void> getBest10Posts() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     try {
@@ -360,7 +361,7 @@ class PostService extends ChangeNotifier {
       if (response.statusCode == 200) {
         print('GET 요청 성공');
 
-        uniquePost = json.decode(response.data)['data'][0];
+        uniquePost = GetPostDetail.fromJson(json.decode(response.data)['data']);
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
@@ -371,13 +372,13 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  Future<void> getScrappedPosts(String type) async {
+  Future<void> getScrappedGeneralPosts() async {
     //scrap한 post 조회
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/scrap?type=${type}",
+        "${baseUrl}/post/scrap?type=게시글",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -389,7 +390,7 @@ class PostService extends ChangeNotifier {
         print('GET 요청 성공');
         for (Map<String, dynamic> item in json.decode(response.data)['data']) {
           GetPost post = GetPost.fromJson(item);
-          scrappedPosts.add(post);
+          scrappedGeneralPosts.add(post);
         }
       } else {
         print('GET 요청 실패');
@@ -401,7 +402,37 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  Future<bool> scrapPost(String postId) async {
+  Future<void> getScrappedRecipePosts() async {
+    //scrap한 post 조회
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    String? token = sharedPreference.getString("access_token");
+    try {
+      Response response = await Dio().get(
+        "${baseUrl}/post/scrap?type=식단",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        print('GET 요청 성공');
+        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+          GetPost post = GetPost.fromJson(item);
+          scrappedRecipePosts.add(post);
+        }
+      } else {
+        print('GET 요청 실패');
+        print('Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('GET 요청 에러');
+      print(e.toString());
+    }
+  }
+
+  Future<bool> scrapPost(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     try {
@@ -430,7 +461,7 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  Future<bool> likePost(String postId) async {
+  Future<bool> likePost(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     try {
@@ -477,7 +508,7 @@ class PostService extends ChangeNotifier {
   }
 }
 
-class commentService extends ChangeNotifier {
+class CommentService extends ChangeNotifier {
   List<GetComment> comments = [];
   Future<void> getComments(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();

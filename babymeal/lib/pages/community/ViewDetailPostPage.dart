@@ -85,9 +85,9 @@ class _ViewPostDetailPageWidgetState extends State<ViewPostDetailPageWidget> {
                           child: Row(
                             children: [
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   changeLike();
-                                  postService.likePost(_post.postId!);
+                                  await postService.likePost(_post.postId!);
                                 },
                                 child: Container(
                                     padding: EdgeInsets.only(right: 5),
@@ -141,8 +141,8 @@ class _ViewPostDetailPageWidgetState extends State<ViewPostDetailPageWidget> {
                     ],
                   ),
                   GestureDetector(
-                      onTap: () {
-                        postService.scrapPost(_post.postId!);
+                      onTap: () async {
+                        await postService.scrapPost(_post.postId!);
                       },
                       child: Icon(Icons.ios_share, color: Color(0xff616161)))
                 ],

@@ -469,7 +469,7 @@ class BriefPostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Duration difference =
-        DateTime.now().difference(DateTime.parse(postInfo.updateDate!));
+        DateTime.now().difference(DateTime.parse(postInfo.updateTime!));
     if (difference.inHours >= 24) {
       int daysDifference = difference.inDays;
       print("$daysDifference 일 전");
@@ -483,8 +483,7 @@ class BriefPostCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => ViewPostDetailPageWidget(
-                        postId: postInfo.postId!,
-                      )));
+                      postId: postInfo.postId!, name: postInfo.customerName!)));
         },
         child: Container(
             decoration: BoxDecoration(
@@ -501,7 +500,7 @@ class BriefPostCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(bottom: 14),
                   child: Text(
-                    postInfo.body!.substring(0, 40),
+                    postInfo.title!.substring(0, 40),
                     style: TextStyle(
                       color: Color(0xFF212121),
                       fontSize: 16,

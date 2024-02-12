@@ -1,5 +1,8 @@
+import 'package:babymeal/model/PostModel.dart';
 import 'package:babymeal/pages/community/ViewDetailPostPage.dart';
+import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ViewScrabPageWidget extends StatefulWidget {
   const ViewScrabPageWidget({Key? key}) : super(key: key);
@@ -15,6 +18,9 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
   bool isAIClicked = true;
   bool isGeneralClicked = false;
   bool isRecipeClicked = false;
+  List<GetPost> _scrappedGeneralPosts = [];
+  List<GetPost> _scrappedRecipePosts = [];
+  List<GetPost> _showingScrappedPosts = [];
 
   void changeLike(int index) {
     setState(() {
@@ -35,6 +41,7 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
       isGeneralClicked = true;
       isAIClicked = false;
       isRecipeClicked = false;
+      _showingScrappedPosts = _scrappedGeneralPosts;
     });
   }
 
@@ -43,6 +50,21 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
       isRecipeClicked = true;
       isGeneralClicked = false;
       isAIClicked = false;
+      _showingScrappedPosts = _scrappedRecipePosts;
+    });
+  }
+
+  Future<void> loadScrappedGeneralPosts() async {
+    await Provider.of<PostService>(context, listen: false)
+        .getScrappedGeneralPosts();
+    await Provider.of<PostService>(context, listen: false)
+        .getScrappedRecipePosts();
+
+    setState(() {
+      _scrappedGeneralPosts =
+          Provider.of<PostService>(context, listen: false).scrappedGeneralPosts;
+      _scrappedRecipePosts =
+          Provider.of<PostService>(context, listen: false).scrappedRecipePosts;
     });
   }
 
@@ -58,87 +80,95 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xFFF4F3F0),
-        body: Column(children: [
-          Container(
-              padding: EdgeInsets.fromLTRB(20, 50, 0, 0),
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '찜 목록',
-                style: TextStyle(
-                  color: Color(0xFF424242),
-                  fontSize: 24,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w600,
-                  height: 0,
-                  letterSpacing: -0.48,
-                ),
-              )),
-          Container(
-            padding: EdgeInsets.fromLTRB(20, 19, 0, 14),
-            decoration: BoxDecoration(color: Colors.white),
-            child: Row(
-              children: [
-                GestureDetector(
-                    onTap: changeAI,
-                    child:
-                        SelectCard(isSelected: isAIClicked, type: "AI 추천 식단")),
-                GestureDetector(
-                    onTap: changeRecipe,
-                    child:
-                        SelectCard(isSelected: isRecipeClicked, type: "식단글")),
-                GestureDetector(
-                    onTap: changeGeneral,
-                    child:
-                        SelectCard(isSelected: isGeneralClicked, type: "자유글"))
-              ],
-            ),
-          ),
-          Expanded(
-              child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Container(
+    return Consumer<PostService>(builder: (context, postService, child) {
+      return Scaffold(
+          backgroundColor: Color(0xFFF4F3F0),
+          body: Column(children: [
+            Container(
+                padding: EdgeInsets.fromLTRB(20, 50, 0, 0),
                 color: Colors.white,
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Column(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Color(0xffE0E0E0),
-                              width: 1.0, // 원하는 border 두께 설정
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '찜 목록',
+                  style: TextStyle(
+                    color: Color(0xFF424242),
+                    fontSize: 24,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                    letterSpacing: -0.48,
+                  ),
+                )),
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 19, 0, 14),
+              decoration: BoxDecoration(color: Colors.white),
+              child: Row(
+                children: [
+                  GestureDetector(
+                      onTap: changeAI,
+                      child: SelectCard(
+                          isSelected: isAIClicked, type: "AI 추천 식단")),
+                  GestureDetector(
+                      onTap: changeRecipe,
+                      child:
+                          SelectCard(isSelected: isRecipeClicked, type: "식단글")),
+                  GestureDetector(
+                      onTap: changeGeneral,
+                      child:
+                          SelectCard(isSelected: isGeneralClicked, type: "자유글"))
+                ],
+              ),
+            ),
+            Expanded(
+                child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: _showingScrappedPosts.length, //AI 선택 시 AI 레시피 개수로 변경
+              itemBuilder: (context, index) {
+                return Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Color(0xffE0E0E0),
+                                width: 1.0, // 원하는 border 두께 설정
+                              ),
                             ),
                           ),
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.14,
-                        child: Row(
-                          children: [
-                            isAIClicked ? AIRecipe() : BriefPostCard(),
-                            GestureDetector(
-                                onTap: () {
-                                  changeLike(index);
-                                },
-                                child: ImageIcon(
-                                  AssetImage(likeStates[index]
-                                      ? "assets/images/like_sel.png"
-                                      : "assets/images/like.png"),
-                                  color: Color(0xFFCE4040),
-                                ))
-                          ],
-                        )),
-                  ],
-                ),
-              );
-            },
-          ))
-        ]));
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.14,
+                          child: Row(
+                            children: [
+                              isAIClicked
+                                  ? AIRecipe()
+                                  : BriefPostCard(
+                                      postInfo: _showingScrappedPosts[index],
+                                    ),
+                              GestureDetector(
+                                  onTap: () async {
+                                    changeLike(index);
+                                    await postService.likePost(
+                                        _showingScrappedPosts[index].postId!);
+                                  },
+                                  child: ImageIcon(
+                                    AssetImage(likeStates[index]
+                                        ? "assets/images/like_sel.png"
+                                        : "assets/images/like.png"),
+                                    color: Color(0xFFCE4040),
+                                  ))
+                            ],
+                          )),
+                    ],
+                  ),
+                );
+              },
+            ))
+          ]));
+    });
   }
 }
 
@@ -282,7 +312,8 @@ class SelectCard extends StatelessWidget {
 }
 
 class BriefPostCard extends StatelessWidget {
-  const BriefPostCard({super.key});
+  const BriefPostCard({super.key, required this.postInfo});
+  final GetPost postInfo;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -290,7 +321,8 @@ class BriefPostCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ViewdPostDetailPageWidget()));
+                  builder: (context) => ViewPostDetailPageWidget(
+                      postId: postInfo.postId!, name: postInfo.customerName!)));
         },
         child: Container(
             height: MediaQuery.of(context).size.height * 0.1,
@@ -304,7 +336,7 @@ class BriefPostCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(bottom: 14),
                   child: Text(
-                    '[건대입구]아이와 함께 가기 좋은 카페 웰컴베이비 추천합니다 - 메뉴,가격,주차정보',
+                    postInfo.title!.substring(0, 40),
                     style: TextStyle(
                       color: Color(0xFF212121),
                       fontSize: 16,
@@ -316,7 +348,7 @@ class BriefPostCard extends StatelessWidget {
                 ),
                 Container(
                     child: Text(
-                  '쌍둥이맘',
+                  postInfo.customerName!,
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: Color(0xFF9E9E9E),
