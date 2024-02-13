@@ -51,7 +51,7 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
   void navigateToNextScreen(BuildContext context) {
     // TODO : 식단 가져오면 다음 화면으로 넘어가도록 수정
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => ShowRecipesPageWidget()),
+      MaterialPageRoute(builder: (context) => const ShowRecipesPageWidget()),
     );
   }
 
@@ -63,18 +63,17 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF4F3F0),
+        backgroundColor: const Color(0xFFF4F3F0),
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Positioned(
               bottom: 0,
-              child: Container(
-                  child: Column(
+              child: Column(
                 children: [
                   Container(
-                      margin: EdgeInsets.only(bottom: 6),
-                      child: Text(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      child: const Text(
                         '잠시만 기다려주세요',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -87,8 +86,8 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                         ),
                       )),
                   Container(
-                      margin: EdgeInsets.only(bottom: 37),
-                      child: Text(
+                      margin: const EdgeInsets.only(bottom: 37),
+                      child: const Text(
                         '딱 맞는 식단을 찾고있어요!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -100,21 +99,20 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                           letterSpacing: -0.50,
                         ),
                       )),
-                  Container(
-                      child: Column(
+                  Column(
                     children: [
                       AnimatedOpacity(
                         opacity: opacity,
                         curve: Curves.linear,
-                        duration: Duration(seconds: 1),
-                        child: WaitingCard(msg: '선택한 냉장고 속 재료 분석 중'),
+                        duration: const Duration(seconds: 1),
+                        child: const WaitingCard(msg: '선택한 냉장고 속 재료 분석 중'),
                       ),
                       AnimatedContainer(
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           curve: Curves.linear,
                           transform:
                               Matrix4.translationValues(0.0, yOffset, 0.0),
-                          child: Column(
+                          child: const Column(
                             children: [
                               WaitingCard(msg: '선택한 키워드 분석 중'),
                               WaitingCard(msg: '맞춤 레시피 불러오는 중'),
@@ -124,9 +122,9 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                             ],
                           ))
                     ],
-                  ))
+                  )
                 ],
-              )),
+              ),
             ),
             Positioned(
                 bottom: 0,
@@ -135,7 +133,7 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                   Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.5,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment(0.00, -1.00),
                           end: Alignment(0, 0.01),
@@ -150,12 +148,11 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                         children: [
                           Positioned(
                               bottom: 0,
-                              child: Container(
-                                  child: Column(
+                              child: Column(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(bottom: 8),
-                                    child: Text(
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    child: const Text(
                                       '🍯 틈새 육아 꿀팁',
                                       style: TextStyle(
                                         color: Color(0xFF757575),
@@ -168,12 +165,12 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                                     ),
                                   ),
                                   Container(
-                                      margin: EdgeInsets.only(bottom: 8),
+                                      margin: const EdgeInsets.only(bottom: 8),
                                       alignment: Alignment.center,
                                       width: 350,
                                       height: 83,
                                       decoration: ShapeDecoration(
-                                        color: Color(0x19FF5C39),
+                                        color: const Color(0x19FF5C39),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -182,7 +179,7 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                                       child: Text(
                                         randomTip,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Color(0xFFFF5C39),
                                           fontSize: 14,
                                           fontFamily: 'Pretendard',
@@ -191,7 +188,7 @@ class _WaitRecipesPageWidgetState extends State<WaitRecipesPageWidget>
                                         ),
                                       ))
                                 ],
-                              )))
+                              ))
                         ],
                       )),
                 ]))
@@ -206,7 +203,7 @@ class WaitingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: 12),
+        margin: const EdgeInsets.only(bottom: 12),
         width: 350,
         height: 60,
         decoration: ShapeDecoration(
@@ -220,7 +217,7 @@ class WaitingCard extends StatelessWidget {
             child: Text(
               msg,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFF9E9E9E),
                 fontSize: 16,
                 fontFamily: 'Pretendard',

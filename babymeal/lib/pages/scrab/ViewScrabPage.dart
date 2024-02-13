@@ -82,13 +82,13 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
   Widget build(BuildContext context) {
     return Consumer<PostService>(builder: (context, postService, child) {
       return Scaffold(
-          backgroundColor: Color(0xFFF4F3F0),
+          backgroundColor: const Color(0xFFF4F3F0),
           body: Column(children: [
             Container(
-                padding: EdgeInsets.fromLTRB(20, 50, 0, 0),
+                padding: const EdgeInsets.fromLTRB(20, 50, 0, 0),
                 color: Colors.white,
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   '찜 목록',
                   style: TextStyle(
                     color: Color(0xFF424242),
@@ -100,8 +100,8 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
                   ),
                 )),
             Container(
-              padding: EdgeInsets.fromLTRB(20, 19, 0, 14),
-              decoration: BoxDecoration(color: Colors.white),
+              padding: const EdgeInsets.fromLTRB(20, 19, 0, 14),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Row(
                 children: [
                   GestureDetector(
@@ -126,11 +126,11 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
               itemBuilder: (context, index) {
                 return Container(
                   color: Colors.white,
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Column(
                     children: [
                       Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                             border: Border(
                               bottom: BorderSide(
@@ -158,7 +158,7 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
                                     AssetImage(likeStates[index]
                                         ? "assets/images/like_sel.png"
                                         : "assets/images/like.png"),
-                                    color: Color(0xFFCE4040),
+                                    color: const Color(0xFFCE4040),
                                   ))
                             ],
                           )),
@@ -181,17 +181,16 @@ class AIRecipe extends StatelessWidget {
     return Container(
         height: MediaQuery.of(context).size.height * 0.1,
         width: MediaQuery.of(context).size.width * 0.83,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(4, 10, 0, 6),
+              margin: const EdgeInsets.fromLTRB(4, 10, 0, 6),
               child: Row(
                 children: [
-                  Container(
-                      child: Text(
+                  const Text(
                     '스크램블 에그 샌드위치',
                     style: TextStyle(
                       color: Color(0xFF212121),
@@ -201,21 +200,21 @@ class AIRecipe extends StatelessWidget {
                       height: 0,
                       letterSpacing: -0.36,
                     ),
-                  )),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(left: 8),
+                      margin: const EdgeInsets.only(left: 8),
                       width: 37,
                       height: 18,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 2),
                       clipBehavior: Clip.antiAlias,
                       decoration: ShapeDecoration(
-                        color: Color(0xFFDEFCE9),
+                        color: const Color(0xFFDEFCE9),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17.12),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '간단',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -228,19 +227,19 @@ class AIRecipe extends StatelessWidget {
                         ),
                       )),
                   Container(
-                      margin: EdgeInsets.only(left: 4),
+                      margin: const EdgeInsets.only(left: 4),
                       width: 41,
                       height: 18,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 2),
                       clipBehavior: Clip.antiAlias,
                       decoration: ShapeDecoration(
-                        color: Color(0xFFF4F3F0),
+                        color: const Color(0xFFF4F3F0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17.12),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '20분',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -256,8 +255,8 @@ class AIRecipe extends StatelessWidget {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(left: 4, right: 20),
-                child: Text(
+                margin: const EdgeInsets.only(left: 4, right: 20),
+                child: const Text(
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   '계란을 스크램블해서 만든 부드러운 계란 스크램블을 식빵 사이에 넣어 샌드위치를 만듭니다.',
@@ -282,11 +281,11 @@ class SelectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 0, 12, 0),
+      margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
       height: 34,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: ShapeDecoration(
-        color: isSelected ? Color(0xFFFF5C39) : Color(0xFFF4F3F0),
+        color: isSelected ? const Color(0xFFFF5C39) : const Color(0xFFF4F3F0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -299,7 +298,7 @@ class SelectCard extends StatelessWidget {
           Text(
             type,
             style: TextStyle(
-              color: isSelected ? Colors.white : Color(0xFF757575),
+              color: isSelected ? Colors.white : const Color(0xFF757575),
               fontSize: 15,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.w600,
@@ -327,17 +326,17 @@ class BriefPostCard extends StatelessWidget {
         child: Container(
             height: MediaQuery.of(context).size.height * 0.1,
             width: MediaQuery.of(context).size.width * 0.83,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: 14),
+                  padding: const EdgeInsets.only(bottom: 14),
                   child: Text(
                     postInfo.title!.substring(0, 40),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFF212121),
                       fontSize: 16,
                       fontFamily: 'Pretendard',
@@ -346,18 +345,17 @@ class BriefPostCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                    child: Text(
+                Text(
                   postInfo.customerName!,
                   textAlign: TextAlign.right,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF9E9E9E),
                     fontSize: 12,
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w400,
                     letterSpacing: -0.24,
                   ),
-                ))
+                )
               ],
             )));
   }

@@ -38,8 +38,8 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
           children: [
             Container(
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 20, top: 62),
-                child: Text(
+                margin: const EdgeInsets.only(left: 20, top: 62),
+                child: const Text(
                   'AI 유아식 추천',
                   style: TextStyle(
                     color: Color(0xFF424242),
@@ -51,12 +51,12 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                   ),
                 )),
             Container(
-                margin: EdgeInsets.fromLTRB(0, 21, 20, 11),
+                margin: const EdgeInsets.fromLTRB(0, 21, 20, 11),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Image.asset("assets/images/autorenew.png"),
-                    Text(
+                    const Text(
                       '다른 식단 보기',
                       textAlign: TextAlign.right,
                       style: TextStyle(
@@ -70,7 +70,7 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                   ],
                 )),
             Container(
-                margin: EdgeInsets.only(bottom: 14),
+                margin: const EdgeInsets.only(bottom: 14),
                 child: Column(
                   children: [
                     Row(children: [
@@ -80,7 +80,7 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      ShowDetailRecipePageWidget()));
+                                      const ShowDetailRecipePageWidget()));
                         },
                         child: AIRecipe(),
                       ),
@@ -105,7 +105,7 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                             AssetImage(likeStates[0]
                                 ? "assets/images/like_sel.png"
                                 : "assets/images/like.png"),
-                            color: Color(0xFFCE4040),
+                            color: const Color(0xFFCE4040),
                           ))
                     ]),
                     Row(children: [
@@ -118,14 +118,14 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                             AssetImage(likeStates[0]
                                 ? "assets/images/like_sel.png"
                                 : "assets/images/like.png"),
-                            color: Color(0xFFCE4040),
+                            color: const Color(0xFFCE4040),
                           ))
                     ]),
                   ],
                 )),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(160, 55),
+                  minimumSize: const Size(160, 55),
                   backgroundColor: Color(0xFFFF5C39),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -135,9 +135,9 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NavigationPageWidget()));
+                          builder: (context) => const NavigationPageWidget()));
                 },
-                child: Text(
+                child: const Text(
                   '새로하기',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -150,13 +150,13 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                   ),
                 )),
             Container(
-                margin: EdgeInsets.only(left: 22, top: 34, bottom: 14),
+                margin: const EdgeInsets.only(left: 22, top: 34, bottom: 14),
                 child: Column(
                   children: [
                     Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(bottom: 14),
-                        child: Text(
+                        margin: const EdgeInsets.only(bottom: 14),
+                        child: const Text(
                           '냉장고 재료 기반, 빠른 추천',
                           style: TextStyle(
                             color: Color(0xFF424242),
@@ -167,11 +167,10 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                             letterSpacing: -0.36,
                           ),
                         )),
-                    Container(
-                        child: Column(
+                    Column(
                       children: [
                         Row(children: [
-                          RefrigeratorRecipe(),
+                          const RefrigeratorRecipe(),
                           GestureDetector(
                               onTap: () {
                                 changeLike(0);
@@ -180,11 +179,11 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                                 AssetImage(likeStates[0]
                                     ? "assets/images/like_sel.png"
                                     : "assets/images/like.png"),
-                                color: Color(0xFFCE4040),
+                                color: const Color(0xFFCE4040),
                               ))
                         ]),
                         Row(children: [
-                          RefrigeratorRecipe(),
+                          const RefrigeratorRecipe(),
                           GestureDetector(
                               onTap: () {
                                 changeLike(0);
@@ -193,11 +192,11 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                                 AssetImage(likeStates[0]
                                     ? "assets/images/like_sel.png"
                                     : "assets/images/like.png"),
-                                color: Color(0xFFCE4040),
+                                color: const Color(0xFFCE4040),
                               ))
                         ]),
                       ],
-                    ))
+                    )
                   ],
                 ))
           ],
@@ -212,7 +211,7 @@ class AIRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.fromLTRB(20, 0, 12, 10),
+        margin: const EdgeInsets.fromLTRB(20, 0, 12, 10),
         height: MediaQuery.of(context).size.height * 0.14,
         width: MediaQuery.of(context).size.width * 0.8,
         decoration: ShapeDecoration(
@@ -224,11 +223,10 @@ class AIRecipe extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(21, 25, 0, 6),
+              margin: const EdgeInsets.fromLTRB(21, 25, 0, 6),
               child: Row(
                 children: [
-                  Container(
-                      child: Text(
+                  const Text(
                     '스크램블 에그 샌드위치',
                     style: TextStyle(
                       color: Color(0xFF212121),
@@ -238,21 +236,21 @@ class AIRecipe extends StatelessWidget {
                       height: 0,
                       letterSpacing: -0.36,
                     ),
-                  )),
+                  ),
                   Container(
-                      margin: EdgeInsets.only(left: 12),
+                      margin: const EdgeInsets.only(left: 12),
                       width: 37,
                       height: 18,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 2),
                       clipBehavior: Clip.antiAlias,
                       decoration: ShapeDecoration(
-                        color: Color(0xFFDEFCE9),
+                        color: const Color(0xFFDEFCE9),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17.12),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '간단',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -265,19 +263,19 @@ class AIRecipe extends StatelessWidget {
                         ),
                       )),
                   Container(
-                      margin: EdgeInsets.only(left: 8),
+                      margin: const EdgeInsets.only(left: 8),
                       width: 41,
                       height: 18,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 2),
                       clipBehavior: Clip.antiAlias,
                       decoration: ShapeDecoration(
-                        color: Color(0xFFF4F3F0),
+                        color: const Color(0xFFF4F3F0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(17.12),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '20분',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -293,8 +291,8 @@ class AIRecipe extends StatelessWidget {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(left: 21, right: 20),
-                child: Text(
+                margin: const EdgeInsets.only(left: 21, right: 20),
+                child: const Text(
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   '계란을 스크램블해서 만든 부드러운 계란 스크램블을 식빵 사이에 넣어 샌드위치를 만듭니다.',
@@ -318,7 +316,7 @@ class RefrigeratorRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(right: 12, bottom: 8),
+        margin: const EdgeInsets.only(right: 12, bottom: 8),
         height: MediaQuery.of(context).size.height * 0.06,
         width: MediaQuery.of(context).size.width * 0.8,
         decoration: ShapeDecoration(
@@ -330,8 +328,8 @@ class RefrigeratorRecipe extends StatelessWidget {
         child: Row(
           children: [
             Container(
-                margin: EdgeInsets.only(left: 9, right: 8),
-                child: Text(
+                margin: const EdgeInsets.only(left: 9, right: 8),
+                child: const Text(
                   '🍞',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -343,8 +341,8 @@ class RefrigeratorRecipe extends StatelessWidget {
                   ),
                 )),
             Container(
-                margin: EdgeInsets.only(right: 8),
-                child: Text(
+                margin: const EdgeInsets.only(right: 8),
+                child: const Text(
                   '미니 치즈 피자',
                   style: TextStyle(
                     color: Color(0xFF212121),
@@ -355,18 +353,18 @@ class RefrigeratorRecipe extends StatelessWidget {
                   ),
                 )),
             Container(
-                margin: EdgeInsets.only(right: 8),
+                margin: const EdgeInsets.only(right: 8),
                 width: 37,
                 height: 18,
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 clipBehavior: Clip.antiAlias,
                 decoration: ShapeDecoration(
-                  color: Color(0x33FF8A00),
+                  color: const Color(0x33FF8A00),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(17.12),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   '보통',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -389,7 +387,7 @@ class RefrigeratorRecipe extends StatelessWidget {
                     borderRadius: BorderRadius.circular(17.12),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   '40분',
                   textAlign: TextAlign.center,
                   style: TextStyle(

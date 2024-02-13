@@ -42,17 +42,18 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
           child: FloatingActionButton.extended(
               elevation: 0,
               backgroundColor: change_nameController!.text.length > 0
-                  ? Color(0xFFFF5C39)
-                  : Color(0xFFBDBDBD),
-              onPressed: change_nameController!.text.length > 0
+                  ? const Color(0xFFFF5C39)
+                  : const Color(0xFFBDBDBD),
+              onPressed: change_nameController!.text.isNotEmpty
                   ? () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ViewChildInfoPageWidget()));
+                              builder: (context) =>
+                                  const ViewChildInfoPageWidget()));
                     }
                   : () {},
-              label: Container(
+              label: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +62,7 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
                         child: Container(
                           alignment: Alignment.center,
                           width: 64,
-                          child: Text(
+                          child: const Text(
                             '저장',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -83,7 +84,7 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           '\n아이 이름',
           style: TextStyle(
             fontSize: 18.0,
@@ -92,10 +93,10 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
           ),
         ),
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -104,25 +105,25 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
             Navigator.pop(context);
           },
         ),
-        actions: [],
+        actions: const [],
         elevation: 0,
       ),
       body: Align(
-        alignment: AlignmentDirectional(0.00, -1.00),
+        alignment: const AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: BoxDecoration(),
+          decoration: const BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: Container(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
                     inputFormatters: [
@@ -131,9 +132,9 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
                           RegExp(r'[!@#$%^&*(),.?":{}|<>]')),
                     ],
                     controller: change_nameController,
-                    autofillHints: [AutofillHints.email],
+                    autofillHints: const [AutofillHints.email],
                     obscureText: false,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFFE0E0E0),
@@ -168,7 +169,7 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
                       contentPadding:
                           EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontSize: 18,
                       fontFamily: 'Pretendard',
@@ -178,23 +179,24 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
                     ),
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
-                    cursorColor: Color(0xFF6F61EF),
+                    cursorColor: const Color(0xFF6F61EF),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: const AlignmentDirectional(0.00, 0.00),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                         child: Text(
                           '$_charCount/5',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xFF616161),
                             fontSize: 16,
                             fontFamily: 'Pretendard',
@@ -203,7 +205,7 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
                           ),
                         ),
                       ),
-                      Text(
+                      const Text(
                         "아이 이름을 입력해주세요.",
                         textAlign: TextAlign.right,
                         style: TextStyle(

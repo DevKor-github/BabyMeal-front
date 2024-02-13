@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:babymeal/pages/mypage/ManageMyPage.dart';
 
-
 class ChagePasswordPageWidget extends StatefulWidget {
   const ChagePasswordPageWidget({super.key});
 
   @override
-  State<ChagePasswordPageWidget> createState() => _ChagePasswordPageWidgetState();
+  State<ChagePasswordPageWidget> createState() =>
+      _ChagePasswordPageWidgetState();
 }
 
 class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
@@ -35,8 +35,8 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
     });
   }
 
-  void _truePassword(){
-    if(passwordController!.text == currentPassword)
+  void _truePassword() {
+    if (passwordController!.text == currentPassword)
       setState(() {
         isTrue = true;
       });
@@ -46,10 +46,10 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
       });
   }
 
-  void _matchPassword(){
-    if(newpasswordController!.text == checkpasswordController!.text)
+  void _matchPassword() {
+    if (newpasswordController!.text == checkpasswordController!.text)
       setState(() {
-        isMatch=true;
+        isMatch = true;
       });
     else
       setState(() {
@@ -74,28 +74,31 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
           height: 55,
           child: FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor: !isMatch && newpasswordController!.text.length > 9 && newpasswordController!.text.length < 16
-                  ? Color(0xFFFF5C39)
-                  : Color(0xFFBDBDBD),
-              onPressed: !isMatch && newpasswordController!.text.length > 9 && newpasswordController!.text.length < 16
+              backgroundColor: !isMatch &&
+                      newpasswordController!.text.length > 9 &&
+                      newpasswordController!.text.length < 16
+                  ? const Color(0xFFFF5C39)
+                  : const Color(0xFFBDBDBD),
+              onPressed: !isMatch &&
+                      newpasswordController!.text.length > 9 &&
+                      newpasswordController!.text.length < 16
                   ? () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ManageMyPageWidget()));
-              }
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ManageMyPageWidget()));
+                    }
                   : () {},
-              label: Container(
+              label: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: Text(
+                        child: const Text(
                           '저장',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -108,7 +111,7 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                           ),
                         ),
                       ),
-                      Spacer()
+                      const Spacer()
                     ],
                   )))),
       backgroundColor: Colors.white,
@@ -116,27 +119,25 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(
-          onPressed: ()async{
+          onPressed: () async {
             Navigator.pop(context);
           },
           color: Colors.transparent,
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          icon: Icon(
+          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
           ),
         ),
-        title: Text(
+        title: const Text(
           '비밀번호 변경',
           style: TextStyle(
               fontSize: 18,
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.w600,
-              color: Color(0xFF616161)
-          ),
+              color: Color(0xFF616161)),
         ),
-
       ),
       body: Column(
         children: [
@@ -150,10 +151,10 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(16),
                 ],
-                onChanged: (value){
+                onChanged: (value) {
                   _truePassword();
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE0E0E0),
@@ -186,9 +187,9 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:
-                  EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF9E9E9E),
                   fontSize: 18,
                   fontFamily: 'Pretendard',
@@ -201,8 +202,8 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
-            child: Container(
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
+            child: SizedBox(
               width: double.infinity,
               child: TextFormField(
                 inputFormatters: [
@@ -211,7 +212,7 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                 controller: newpasswordController,
                 obscureText: true,
                 enabled: isTrue,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE0E0E0),
@@ -244,9 +245,9 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:
-                  EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF9E9E9E),
                   fontSize: 18,
                   fontFamily: 'Pretendard',
@@ -259,8 +260,8 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
-            child: Container(
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 0),
+            child: SizedBox(
               width: double.infinity,
               child: TextFormField(
                 inputFormatters: [
@@ -269,10 +270,10 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                 controller: checkpasswordController,
                 obscureText: true,
                 enabled: isTrue,
-                onChanged: (value){
+                onChanged: (value) {
                   _matchPassword();
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE0E0E0),
@@ -305,9 +306,9 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:
-                  EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF9E9E9E),
                   fontSize: 18,
                   fontFamily: 'Pretendard',
@@ -320,16 +321,16 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: const AlignmentDirectional(0.00, 0.00),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   if (isTrue == 0)
-                    Text(
+                    const Text(
                       "비밀번호를 입력해주세요.",
                       textAlign: TextAlign.right,
                       style: TextStyle(
@@ -341,8 +342,8 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                         letterSpacing: -0.24,
                       ),
                     )
-                  else if (_charCount<9 || _charCount>16)
-                    Text(
+                  else if (_charCount < 9 || _charCount > 16)
+                    const Text(
                       "9~16자로 작성해주세요.",
                       textAlign: TextAlign.right,
                       style: TextStyle(
@@ -355,18 +356,18 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
                       ),
                     )
                   else if (isMatch == false)
-                      Text(
-                        "비밀번호가 일치하지 않습니다.",
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xFFFF5C39),
-                          fontSize: 12,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                          letterSpacing: -0.24,
-                        ),
+                    const Text(
+                      "비밀번호가 일치하지 않습니다.",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: Color(0xFFFF5C39),
+                        fontSize: 12,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                        letterSpacing: -0.24,
                       ),
+                    ),
                 ],
               ),
             ),

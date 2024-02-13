@@ -20,7 +20,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           '\n아이 정보',
           style: TextStyle(
             fontSize: 18.0,
@@ -29,10 +29,10 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
           ),
         ),
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -41,11 +41,11 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
             Navigator.pop(context);
           },
         ),
-        actions: [],
+        actions: const [],
         elevation: 0,
       ),
       body: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Container(
@@ -53,7 +53,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: Text(
                     '아이 이름',
@@ -67,7 +67,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                 Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Row(children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Text(
                           '박서준',
@@ -87,7 +87,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                                       ChangeChildNamePageWidget()),
                             );
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_forward_ios,
                             color: Color(0xFF949494),
                             size: 24,
@@ -100,7 +100,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: Text(
                     '아이 생일',
@@ -112,9 +112,9 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Row(children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Text(
                           '2020.12.01',
@@ -134,7 +134,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                                       ChangeChildBirthPageWidget()),
                             );
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_forward_ios,
                             color: Color(0xFF949494),
                             size: 24,
@@ -143,11 +143,11 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
               ],
             )),
         Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: Text(
                     '알레르기 식품',
@@ -164,10 +164,10 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                ChangeChildAllergyPageWidget()),
+                                const ChangeChildAllergyPageWidget()),
                       );
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_forward_ios,
                       color: Color(0xFF949494),
                       size: 24,

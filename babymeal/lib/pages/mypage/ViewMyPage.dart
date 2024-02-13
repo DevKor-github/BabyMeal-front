@@ -30,10 +30,10 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
         body: Column(
           children: [
             Container(
-                padding: EdgeInsets.fromLTRB(20, 50, 0, 0),
+                padding: const EdgeInsets.fromLTRB(20, 50, 0, 0),
                 color: Colors.white,
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   '마이페이지',
                   style: TextStyle(
                     color: Color(0xFF424242),
@@ -46,19 +46,18 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                 )),
             Container(
                 color: Colors.white,
-                padding: EdgeInsets.fromLTRB(20, 32, 13, 0),
+                padding: const EdgeInsets.fromLTRB(20, 32, 13, 0),
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                        child: Column(
+                    Column(
                       children: [
                         Row(
                           children: [
                             Container(
                                 padding: EdgeInsets.only(right: 5),
-                                child: Text(
+                                child: const Text(
                                   '서준맘',
                                   style: TextStyle(
                                     color: Color(0xFF424242),
@@ -73,8 +72,8 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                           ],
                         ),
                         Container(
-                            padding: EdgeInsets.fromLTRB(4, 5, 0, 0),
-                            child: Text(
+                            padding: const EdgeInsets.fromLTRB(4, 5, 0, 0),
+                            child: const Text(
                               'Google 계정 연결',
                               style: TextStyle(
                                 color: Color(0xFF9E9E9E),
@@ -86,7 +85,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               ),
                             ))
                       ],
-                    )),
+                    ),
                     GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -94,8 +93,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               MaterialPageRoute(
                                   builder: (context) => ManageMyPageWidget()));
                         },
-                        child: Container(
-                            child: Row(
+                        child: const Row(
                           children: [
                             Text(
                               '계정 관리',
@@ -111,11 +109,11 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                             Icon(Icons.keyboard_arrow_right,
                                 color: Color(0xff616161))
                           ],
-                        )))
+                        ))
                   ],
                 )),
             Container(
-                padding: EdgeInsets.only(top: 26),
+                padding: const EdgeInsets.only(top: 26),
                 height: MediaQuery.of(context).size.height * 0.18,
                 color: Colors.white,
                 child: Row(
@@ -127,19 +125,19 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    ViewChildInfoPageWidget()));
+                                    const ViewChildInfoPageWidget()));
                       },
                       child: Container(
-                          padding: EdgeInsets.only(top: 18),
+                          padding: const EdgeInsets.only(top: 18),
                           width: MediaQuery.of(context).size.width * 0.25,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.only(bottom: 5),
+                                padding: const EdgeInsets.only(bottom: 5),
                                 child: Image.asset("assets/images/baby.png"),
                               ),
-                              Text(
+                              const Text(
                                 '아이 정보',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -166,10 +164,10 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      MyPageMyPostsPageWidget()));
+                                      const MyPageMyPostsPageWidget()));
                         },
                         child: Container(
-                            padding: EdgeInsets.only(top: 18),
+                            padding: const EdgeInsets.only(top: 18),
                             width: MediaQuery.of(context).size.width * 0.28,
                             child: Column(
                               children: [
@@ -178,7 +176,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                   child: Image.asset(
                                       "assets/images/post_write.png"),
                                 ),
-                                Text(
+                                const Text(
                                   '내 게시글',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -216,7 +214,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                   "assets/images/comment.png",
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '내 댓글',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -234,12 +232,12 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                   ],
                 )),
             Container(
-                padding:
-                    EdgeInsets.only(left: 20, top: 28, right: 20, bottom: 21),
+                padding: const EdgeInsets.only(
+                    left: 20, top: 28, right: 20, bottom: 21),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       '회원 등급',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -251,10 +249,9 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                         letterSpacing: -0.28,
                       ),
                     ),
-                    Container(
-                        child: Column(
+                    Column(
                       children: [
-                        Text(
+                        const Text(
                           'LEVEL 2',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -266,7 +263,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                             letterSpacing: -0.26,
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           width: 88,
                           height: 49,
                           child: Stack(
@@ -281,7 +278,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                   child: Container(
                                     width: 31,
                                     height: 34,
-                                    decoration: ShapeDecoration(
+                                    decoration: const ShapeDecoration(
                                       color: Color(0xFFFF5C39),
                                       shape: StarBorder.polygon(
                                         sides: 3,
@@ -294,9 +291,17 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                 left: 0,
                                 top: 0,
                                 child: Container(
+                                  width: 88,
+                                  height: 33,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFFFF5C39),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
                                   child: Container(
-                                    padding: EdgeInsets.only(top: 16),
-                                    child: Text(
+                                    padding: const EdgeInsets.only(top: 16),
+                                    child: const Text(
                                       '요리사',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -307,14 +312,6 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                         height: 0.08,
                                         letterSpacing: -0.36,
                                       ),
-                                    ),
-                                  ),
-                                  width: 88,
-                                  height: 33,
-                                  decoration: ShapeDecoration(
-                                    color: Color(0xFFFF5C39),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                 ),
@@ -328,7 +325,6 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                             Stack(
                               children: [
                                 Container(
-                                    child: Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.9,
                                   height: 18,
@@ -338,12 +334,12 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                )),
+                                ),
                                 Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.45,
                                   height: 18,
-                                  decoration: ShapeDecoration(
+                                  decoration: const ShapeDecoration(
                                     color: Color(0xFFFF5C39),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
@@ -365,8 +361,8 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                           ],
                         ),
                         Container(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Row(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -395,11 +391,11 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               ],
                             ))
                       ],
-                    ))
+                    )
                   ],
                 )),
             Container(
-                margin: EdgeInsets.only(right: 20, left: 20),
+                margin: const EdgeInsets.only(right: 20, left: 20),
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -409,8 +405,8 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 25),
-                      child: Text.rich(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: const Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
@@ -452,21 +448,21 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                       ),
                     ),
                     Container(
-                        padding: EdgeInsets.only(top: 26),
+                        padding: const EdgeInsets.only(top: 26),
                         height: MediaQuery.of(context).size.height * 0.18,
                         color: Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                padding: EdgeInsets.only(top: 18),
+                                padding: const EdgeInsets.only(top: 18),
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       '받은 좋아요',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -479,7 +475,8 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                       ),
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(bottom: 5),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -487,9 +484,10 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              padding: EdgeInsets.only(top: 7),
+                                              padding:
+                                                  const EdgeInsets.only(top: 7),
                                               height: 30,
-                                              child: Text(
+                                              child: const Text(
                                                 '99',
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
@@ -506,10 +504,10 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                                 width: 10,
                                                 height: 17),
                                             Container(
-                                                padding:
-                                                    EdgeInsets.only(top: 8),
+                                                padding: const EdgeInsets.only(
+                                                    top: 8),
                                                 height: 20,
-                                                child: Text(
+                                                child: const Text(
                                                   '100',
                                                   style: TextStyle(
                                                     color: Color(0xFF757575),
@@ -527,17 +525,17 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               height: MediaQuery.of(context).size.height *
                                   0.08, // Divider의 높이 설정
                               width: 1.0, // Divider의 두께 설정
-                              color: Color(0xffE0E0E0), // Divider의 색상 설정
+                              color: const Color(0xffE0E0E0), // Divider의 색상 설정
                             ),
                             Container(
-                                padding: EdgeInsets.only(top: 18),
+                                padding: const EdgeInsets.only(top: 18),
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       '누른 좋아요',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -550,7 +548,8 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                       ),
                                     ),
                                     Container(
-                                        padding: EdgeInsets.only(bottom: 5),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 5),
                                         child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -558,9 +557,10 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              padding: EdgeInsets.only(top: 7),
+                                              padding:
+                                                  const EdgeInsets.only(top: 7),
                                               height: 30,
-                                              child: Text(
+                                              child: const Text(
                                                 '100',
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
@@ -580,7 +580,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                                 padding:
                                                     EdgeInsets.only(top: 8),
                                                 height: 20,
-                                                child: Text(
+                                                child: const Text(
                                                   '20',
                                                   style: TextStyle(
                                                     color: Color(0xFF757575),
@@ -598,17 +598,17 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               height: MediaQuery.of(context).size.height *
                                   0.08, // Divider의 높이 설정
                               width: 1.0, // Divider의 두께 설정
-                              color: Color(0xffE0E0E0), // Divider의 색상 설정
+                              color: const Color(0xffE0E0E0), // Divider의 색상 설정
                             ),
                             Container(
-                                padding: EdgeInsets.only(top: 18),
+                                padding: const EdgeInsets.only(top: 18),
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       '작성 게시물',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -631,7 +631,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                             Container(
                                               padding: EdgeInsets.only(top: 7),
                                               height: 30,
-                                              child: Text(
+                                              child: const Text(
                                                 '9',
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
@@ -651,7 +651,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                                                 padding:
                                                     EdgeInsets.only(top: 8),
                                                 height: 20,
-                                                child: Text(
+                                                child: const Text(
                                                   '10',
                                                   style: TextStyle(
                                                     color: Color(0xFF757575),

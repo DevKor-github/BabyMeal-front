@@ -26,10 +26,20 @@ class PostService extends ChangeNotifier {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     Map<String, dynamic> data = post.toJson();
+    FormData formData = FormData.fromMap({
+      'requestDto': '''{
+      "comments": ${0},
+      "likes": ${0},
+      "title": ${post.title},
+      "body": ${post.body},
+      "scrap": ${0},
+      "type": ${post.type}
+    }''',
+    });
     try {
       Response response = await Dio().post(
-        "${baseUrl}/post",
-        data: data,
+        "$baseUrl/post",
+        data: formData,
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -59,7 +69,7 @@ class PostService extends ChangeNotifier {
     Map<String, dynamic> data = post.toJson();
     try {
       Response response = await Dio().put(
-        "${baseUrl}/post",
+        "$baseUrl/post",
         data: data,
         options: Options(
           headers: {
@@ -85,7 +95,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post?startPostId=${startPostId}",
+        "$baseUrl/post?startPostId=$startPostId",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -114,7 +124,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/type?startPostId=${startPostId}&type=게시글",
+        "$baseUrl/post/type?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -143,7 +153,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/type?startPostId=${startPostId}&type=식단",
+        "$baseUrl/post/type?startPostId=$startPostId&type=식단",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -172,7 +182,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/likes?startPostId=${startPostId}",
+        "$baseUrl/post/likes?startPostId=$startPostId",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -201,7 +211,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/type/likes?startPostId=${startPostId}&type=게시글",
+        "$baseUrl/post/type/likes?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -232,7 +242,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/type/likes?startPostId=${startPostId}&type=식단",
+        "$baseUrl/post/type/likes?startPostId=$startPostId&type=식단",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -261,7 +271,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/keyword",
+        "$baseUrl/post/keyword",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -291,7 +301,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/customer?startPostId=${startPostId}",
+        "$baseUrl/customer?startPostId=$startPostId",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -321,7 +331,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/${keyword}",
+        "$baseUrl/post/$keyword",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -350,7 +360,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/unique?postId=${postId}",
+        "$baseUrl/post/unique?postId=$postId",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -378,7 +388,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/scrap?type=게시글",
+        "$baseUrl/post/scrap?type=게시글",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -408,7 +418,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/scrap?type=식단",
+        "$baseUrl/post/scrap?type=식단",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -435,10 +445,16 @@ class PostService extends ChangeNotifier {
   Future<bool> scrapPost(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
+    FormData formData = FormData.fromMap({
+      'requestDto': '''{
+        "postId": ${postId}
+      }''',
+    });
+
     try {
       Response response = await Dio().post(
-        "${baseUrl}/post/scrap",
-        data: {"postId": postId},
+        "$baseUrl/post/scrap",
+        data: formData,
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -464,10 +480,15 @@ class PostService extends ChangeNotifier {
   Future<bool> likePost(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
+    FormData formData = FormData.fromMap({
+      'requestDto': '''{
+        "postId": $postId
+      }''',
+    });
     try {
       Response response = await Dio().post(
-        "${baseUrl}/post/likes",
-        data: {"postId": postId},
+        "$baseUrl/post/likes",
+        data: formData,
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -515,7 +536,7 @@ class CommentService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "${baseUrl}/post/comment?postId=${postId}",
+        "$baseUrl/post/comment?postId=$postId",
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -544,10 +565,16 @@ class CommentService extends ChangeNotifier {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     Map<String, dynamic> data = comment.toJson();
+    FormData formData = FormData.fromMap({
+      'requestDto': '''{
+        "postId": ${comment.postId},
+        "contents": ${comment.contents}
+      }''',
+    });
     try {
       Response response = await Dio().post(
-        "${baseUrl}/post/comment",
-        data: data,
+        "$baseUrl/post/comment",
+        data: formData,
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

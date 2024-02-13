@@ -50,7 +50,7 @@ class _RecomChooseMaterialPageWidgetState
   }
 
   fadeInQuestion() {
-    Future.delayed(Duration(seconds: 0), () {
+    Future.delayed(const Duration(seconds: 0), () {
       setState(() {
         opacity1 = 1.0;
       });
@@ -58,7 +58,7 @@ class _RecomChooseMaterialPageWidgetState
   }
 
   fadeInOption() {
-    Future.delayed(Duration(seconds: 1, milliseconds: 0), () {
+    Future.delayed(const Duration(seconds: 1, milliseconds: 0), () {
       setState(() {
         opacity2 = 1.0;
       });
@@ -79,21 +79,21 @@ class _RecomChooseMaterialPageWidgetState
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SelectKeywordPageWidget()));
+                        builder: (context) => const SelectKeywordPageWidget()));
               },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
                         child: isSelected.contains(true)
-                            ? Text(
+                            ? const Text(
                                 '다음',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -105,7 +105,7 @@ class _RecomChooseMaterialPageWidgetState
                                   letterSpacing: -0.36,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 '건너뛰기',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -119,10 +119,10 @@ class _RecomChooseMaterialPageWidgetState
                               ),
                       ),
                       Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: Text(
+                          child: const Text(
                             '2/3',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -141,10 +141,10 @@ class _RecomChooseMaterialPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -153,27 +153,27 @@ class _RecomChooseMaterialPageWidgetState
             Navigator.pop(context);
           },
         ),
-        actions: [],
+        actions: const [],
         centerTitle: false,
         elevation: 0,
       ),
       body: Align(
-        alignment: AlignmentDirectional(0.00, -1.00),
+        alignment: const AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: BoxDecoration(),
+          decoration: const BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AnimatedOpacity(
                 opacity: opacity1,
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                   child: Text(
                     '사용하고 싶은 재료 위주의 식단을 추천드려요!',
                     style: TextStyle(
@@ -188,11 +188,11 @@ class _RecomChooseMaterialPageWidgetState
               ),
               AnimatedOpacity(
                 opacity: opacity1,
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
                 child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
+                    padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
                     child: RichText(
-                        text: TextSpan(children: <TextSpan>[
+                        text: const TextSpan(children: <TextSpan>[
                       TextSpan(
                         text: '냉장고 속 재료',
                         style: TextStyle(
@@ -219,7 +219,7 @@ class _RecomChooseMaterialPageWidgetState
               ),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 4,
                     mainAxisSpacing: 8.0,
@@ -228,26 +228,44 @@ class _RecomChooseMaterialPageWidgetState
                   itemBuilder: (BuildContext context, int index) {
                     return AnimatedOpacity(
                         opacity: opacity2,
-                        duration: Duration(seconds: 1),
+                        duration: const Duration(seconds: 1),
                         child: GestureDetector(
                             onTap: () {
                               setState(() {
                                 isSelected[index] = !isSelected[index];
                               });
                             },
-                            child: Container(
-                                child: Column(
+                            child: Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   width: 169,
                                   height: 48,
+                                  decoration: isSelected[index]
+                                      ? ShapeDecoration(
+                                          color: const Color(0x33FF582C),
+                                          shape: RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                                width: 2,
+                                                color: Color(0xFFFF5C39)),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        )
+                                      : ShapeDecoration(
+                                          color: const Color(0xFFF4F3F0),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     child: Row(children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 10, 0),
                                         child: Image.asset(imageList[index]),
                                       ),
                                       RichText(
@@ -255,7 +273,7 @@ class _RecomChooseMaterialPageWidgetState
                                           text: TextSpan(
                                             text: materialList[index],
                                             style: isSelected[index]
-                                                ? TextStyle(
+                                                ? const TextStyle(
                                                     color: Color(0xFFFF5C39),
                                                     fontSize: 16,
                                                     fontFamily: 'Pretendard',
@@ -263,7 +281,7 @@ class _RecomChooseMaterialPageWidgetState
                                                     height: 0,
                                                     letterSpacing: -0.48,
                                                   )
-                                                : TextStyle(
+                                                : const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16,
                                                     fontFamily: 'Pretendard',
@@ -274,27 +292,9 @@ class _RecomChooseMaterialPageWidgetState
                                           ))
                                     ]),
                                   ),
-                                  decoration: isSelected[index]
-                                      ? ShapeDecoration(
-                                          color: Color(0x33FF582C),
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 2,
-                                                color: Color(0xFFFF5C39)),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        )
-                                      : ShapeDecoration(
-                                          color: Color(0xFFF4F3F0),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
                                 ),
                               ],
-                            ))));
+                            )));
                   },
                 ),
               ),

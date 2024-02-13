@@ -26,7 +26,7 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
   }
 
   fadeInQuestion() {
-    Future.delayed(Duration(seconds: 0), () {
+    Future.delayed(const Duration(seconds: 0), () {
       setState(() {
         opacity1 = 1.0;
       });
@@ -34,7 +34,7 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
   }
 
   fadeInOption() {
-    Future.delayed(Duration(seconds: 1, milliseconds: 0), () {
+    Future.delayed(const Duration(seconds: 1, milliseconds: 0), () {
       setState(() {
         opacity2 = 1.0;
       });
@@ -55,25 +55,25 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
           height: 55,
           child: FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor: Color(0xFFFF5C39),
+              backgroundColor: const Color(0xFFFF5C39),
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => WaitRecipesPageWidget()));
+                        builder: (context) => const WaitRecipesPageWidget()));
               },
-              label: Container(
+              label: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: Text(
+                        child: const Text(
                           '추천받기',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -87,10 +87,10 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                         ),
                       ),
                       Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: Text(
+                          child: const Text(
                             '3/3',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -109,10 +109,10 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -121,18 +121,18 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
             Navigator.pop(context);
           },
         ),
-        actions: [],
+        actions: const [],
         centerTitle: false,
         elevation: 0,
       ),
       body: Align(
-        alignment: AlignmentDirectional(0.00, -1.00),
+        alignment: const AlignmentDirectional(0.00, -1.00),
         child: Container(
             width: double.infinity,
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               maxWidth: 570,
             ),
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -140,9 +140,10 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                 children: [
                   AnimatedOpacity(
                     opacity: opacity1,
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                       child: Text(
                         '중복 선택도 가능해요',
                         style: TextStyle(
@@ -157,11 +158,12 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                   ),
                   AnimatedOpacity(
                       opacity: opacity1,
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(seconds: 1),
                       child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24, 0, 0, 48),
                           child: RichText(
-                              text: TextSpan(children: <TextSpan>[
+                              text: const TextSpan(children: <TextSpan>[
                             TextSpan(
                               text: '키워드',
                               style: TextStyle(
@@ -190,16 +192,16 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                     children: [
                       AnimatedOpacity(
                           opacity: opacity2,
-                          duration: Duration(seconds: 1),
-                          child: Container(
-                              child: Column(
+                          duration: const Duration(seconds: 1),
+                          child: Column(
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                      margin: EdgeInsets.fromLTRB(0, 30, 0, 12),
-                                      child: Text(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          0, 30, 0, 12),
+                                      child: const Text(
                                         "영양",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
@@ -215,9 +217,9 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                               ),
                               GridView.builder(
                                 shrinkWrap: true,
-                                padding: EdgeInsets.all(12),
+                                padding: const EdgeInsets.all(12),
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 12,
                                   crossAxisCount: 2,
                                   childAspectRatio: 2.4 / 1,
@@ -233,12 +235,32 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                     child: Container(
                                       width: 100,
                                       height: 48,
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 8, 0, 6),
+                                      decoration: isSelected[index]
+                                          ? ShapeDecoration(
+                                              color: const Color(0x33FF582C),
+                                              shape: RoundedRectangleBorder(
+                                                side: const BorderSide(
+                                                    width: 2,
+                                                    color: Color(0xFFFF5C39)),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            )
+                                          : ShapeDecoration(
+                                              color: const Color(0xFFF4F3F0),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            ),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.fromLTRB(
+                                            margin: const EdgeInsets.fromLTRB(
                                                 10, 11, 8, 11),
                                             child: Image.asset(
                                               'assets/images/tag.png',
@@ -247,11 +269,11 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                             ),
                                           ),
                                           Container(
-                                            margin: EdgeInsets.fromLTRB(
+                                            margin: const EdgeInsets.fromLTRB(
                                                 0, 11, 20, 11),
                                             child: Text(
-                                              '${nutKeywords[index]}',
-                                              style: TextStyle(
+                                              nutKeywords[index],
+                                              style: const TextStyle(
                                                 color: Color(0xFF212121),
                                                 fontSize: 15,
                                                 fontFamily: 'Pretendard',
@@ -262,45 +284,26 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                           )
                                         ],
                                       ),
-                                      margin: EdgeInsets.fromLTRB(0, 8, 0, 6),
-                                      decoration: isSelected[index]
-                                          ? ShapeDecoration(
-                                              color: Color(0x33FF582C),
-                                              shape: RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    width: 2,
-                                                    color: Color(0xFFFF5C39)),
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                            )
-                                          : ShapeDecoration(
-                                              color: Color(0xFFF4F3F0),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                            ),
                                     ),
                                   );
                                 },
                               ),
                             ],
-                          ))),
+                          )),
                       AnimatedOpacity(
                           opacity: opacity2,
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 80),
+                              margin: const EdgeInsets.fromLTRB(0, 0, 0, 80),
                               child: Column(
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
-                                          margin:
-                                              EdgeInsets.fromLTRB(0, 30, 0, 12),
-                                          child: Text(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0, 30, 0, 12),
+                                          child: const Text(
                                             "그 밖",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -316,20 +319,14 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                   ),
                                   GridView.builder(
                                     shrinkWrap: true,
-                                    padding: EdgeInsets.all(12),
+                                    padding: const EdgeInsets.all(12),
                                     gridDelegate:
-                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
                                       crossAxisSpacing: 12,
                                       maxCrossAxisExtent: 210, // 최대 너비
                                       childAspectRatio:
                                           2.4 / 1, // 높이를 너비와 동일하게 유지
                                     ),
-                                    // gridDelegate:
-                                    //     SliverGridDelegateWithFixedCrossAxisCount(
-                                    //   crossAxisSpacing: 12,
-                                    //   crossAxisCount: 2,
-                                    //   childAspectRatio: 2.4 / 1,
-                                    // ),
                                     itemCount: genKeywords.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
@@ -342,13 +339,39 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                         },
                                         child: Container(
                                           height: 48,
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0, 8, 0, 6),
+                                          decoration: isSelected[index]
+                                              ? ShapeDecoration(
+                                                  color:
+                                                      const Color(0x33FF582C),
+                                                  shape: RoundedRectangleBorder(
+                                                    side: const BorderSide(
+                                                        width: 2,
+                                                        color:
+                                                            Color(0xFFFF5C39)),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                )
+                                              : ShapeDecoration(
+                                                  color:
+                                                      const Color(0xFFF4F3F0),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                ),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
                                               Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    10, 11, 8, 11),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 11, 8, 11),
                                                 child: Image.asset(
                                                   'assets/images/tag.png',
                                                   width: 26,
@@ -356,11 +379,12 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    0, 11, 20, 11),
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 11, 20, 11),
                                                 child: Text(
-                                                  '${genKeywords[index]}',
-                                                  style: TextStyle(
+                                                  genKeywords[index],
+                                                  style: const TextStyle(
                                                     color: Color(0xFF212121),
                                                     fontSize: 15,
                                                     fontFamily: 'Pretendard',
@@ -371,29 +395,6 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                               )
                                             ],
                                           ),
-                                          margin:
-                                              EdgeInsets.fromLTRB(0, 8, 0, 6),
-                                          decoration: isSelected[index]
-                                              ? ShapeDecoration(
-                                                  color: Color(0x33FF582C),
-                                                  shape: RoundedRectangleBorder(
-                                                    side: BorderSide(
-                                                        width: 2,
-                                                        color:
-                                                            Color(0xFFFF5C39)),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                  ),
-                                                )
-                                              : ShapeDecoration(
-                                                  color: Color(0xFFF4F3F0),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                  ),
-                                                ),
                                         ),
                                       );
                                     },

@@ -27,18 +27,18 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF4F3F0),
+      backgroundColor: const Color(0xFFF4F3F0),
       body: Container(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 490,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 62, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 62, 0, 0),
                   child: RichText(
-                      text: TextSpan(children: <TextSpan>[
+                      text: const TextSpan(children: <TextSpan>[
                     TextSpan(
                       text: 'AI 유아식 추천',
                       style: TextStyle(
@@ -52,7 +52,7 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                     )
                   ]))),
               Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
                   child: Row(
                       mainAxisAlignment:
                           MainAxisAlignment.center, // 수평 방향 가운데 정렬
@@ -61,9 +61,9 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                       children: [
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFF5C39),
+                              backgroundColor: const Color(0xFFFF5C39),
                               foregroundColor: Colors.white,
-                              minimumSize: Size(160, 55),
+                              minimumSize: const Size(160, 55),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
@@ -74,11 +74,11 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      RecomChooseMealPageWidget(),
+                                      const RecomChooseMealPageWidget(),
                                 ),
                               );
                             },
-                            child: Text('시작하기',
+                            child: const Text('시작하기',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Pretendard',
@@ -88,9 +88,9 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                                 ))),
                       ])),
               Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(30, 130, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(30, 130, 0, 0),
                   child: RichText(
-                      text: TextSpan(children: <TextSpan>[
+                      text: const TextSpan(children: <TextSpan>[
                     TextSpan(
                       text: '냉장고 재료 기반, 빠른 추천',
                       style: TextStyle(
@@ -105,20 +105,23 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                   ]))),
               Row(children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(30, 15, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(30, 15, 0, 0),
                   child: Container(
                       height: 48.0,
                       width: 315.0,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0)),
                       child: Row(children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                           child: Image.asset("assets/images/bread.png"),
                         ),
                         Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: RichText(
                                 textAlign: TextAlign.left,
-                                text: TextSpan(
+                                text: const TextSpan(
                                     text: '미니 치즈 피자',
                                     style: TextStyle(
                                       color: Color(0xFF212121),
@@ -128,13 +131,10 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                                       height: 0,
                                       letterSpacing: -0.50,
                                     )))),
-                      ]),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0))),
+                      ])),
                 ),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -148,20 +148,23 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
               ]),
               Row(children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(30, 10, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(30, 10, 0, 0),
                   child: Container(
                       height: 48.0,
                       width: 315.0,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0)),
                       child: Row(children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                           child: Image.asset("assets/images/onion.png"),
                         ),
                         Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                             child: RichText(
                                 textAlign: TextAlign.left,
-                                text: TextSpan(
+                                text: const TextSpan(
                                     text: '어니언 스프',
                                     style: TextStyle(
                                       color: Color(0xFF212121),
@@ -171,13 +174,10 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
                                       height: 0,
                                       letterSpacing: -0.50,
                                     )))),
-                      ]),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0))),
+                      ])),
                 ),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
