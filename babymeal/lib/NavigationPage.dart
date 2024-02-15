@@ -1,4 +1,6 @@
+import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/community/ViewCommunityPage.dart';
 import 'pages/mypage/ViewMyPage.dart';
@@ -13,10 +15,26 @@ class NavigationPageWidget extends StatefulWidget {
 }
 
 class _NavigationPageWidgetState extends State<NavigationPageWidget> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 4;
+
+  void _loadPosts() async {
+    await Provider.of<PostService>(context, listen: false).getLatestPosts(0);
+    await Provider.of<PostService>(context, listen: false).getPopularPosts(0);
+    await Provider.of<PostService>(context, listen: false)
+        .getGeneralLatestPosts(0);
+    await Provider.of<PostService>(context, listen: false)
+        .getRecipeLatestPosts(0);
+    await Provider.of<PostService>(context, listen: false)
+        .getRecipePopularPosts(0);
+    await Provider.of<PostService>(context, listen: false)
+        .getGeneralPopularPosts(0);
+    await Provider.of<PostService>(context, listen: false).getBest10Posts();
+  }
+
   @override
   void initState() {
     super.initState();
+    _loadPosts();
   }
 
   void _onItemTapped(int index) {

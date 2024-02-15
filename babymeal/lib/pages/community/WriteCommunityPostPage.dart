@@ -51,7 +51,7 @@ class _WriteCommunityPostPageWidgetState
             padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
             //color: Colors.transparent,
             iconSize: 60,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Color(0xFF949494),
               size: 24,
@@ -64,7 +64,7 @@ class _WriteCommunityPostPageWidgetState
             Row(
               children: [
                 IconButton(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                   onPressed: () {
                     selectCategory('자유글');
                   },
@@ -76,9 +76,9 @@ class _WriteCommunityPostPageWidgetState
                     height: 60, // 이미지의 세로 길이
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 IconButton(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                   onPressed: () {
                     // Handle button press
                     selectCategory('식단글');
@@ -91,12 +91,14 @@ class _WriteCommunityPostPageWidgetState
                     height: 60, // 이미지의 세로 길이
                   ),
                 ),
-                SizedBox(width: 65),
+                const SizedBox(width: 65),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 20, 5, 0),
                   child: TextButton(
                     onPressed: () async {
                       // '등록' 버튼을 눌렀을 때??
+                      print(titleController.text);
+                      print(contentController.text);
                       bool isSuccess = await communityService.uploadPost(
                           PostPost(
                               comments: 0,
@@ -114,7 +116,7 @@ class _WriteCommunityPostPageWidgetState
                                     borderRadius: BorderRadius.circular(10.0)),
                                 title: Column(
                                   children: <Widget>[
-                                    Text("글 작성 성공"),
+                                    const Text("글 작성 성공"),
                                   ],
                                 ),
                                 content: Column(
@@ -202,12 +204,12 @@ class _WriteCommunityPostPageWidgetState
           elevation: 0,
         ),
         body: Container(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 570,
           ),
           child: Column(children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
               child: TextFormField(
                 controller: titleController,
                 obscureText: false,
@@ -217,14 +219,14 @@ class _WriteCommunityPostPageWidgetState
                 keyboardType: TextInputType.emailAddress,
                 cursorColor: Color(0xFF6F61EF),
 
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22,
                   fontFamily: 'Pretendard',
                   fontWeight: FontWeight.w600,
                   letterSpacing: -0.36,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE0E0E0),
@@ -258,15 +260,15 @@ class _WriteCommunityPostPageWidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
               child: TextFormField(
                 controller: contentController,
                 obscureText: false,
                 maxLength: 200,
                 maxLines: null,
                 keyboardType: TextInputType.emailAddress,
-                cursorColor: Color(0xFF6F61EF),
-                style: TextStyle(
+                cursorColor: const Color(0xFF6F61EF),
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontFamily: 'Pretendard',
@@ -275,13 +277,13 @@ class _WriteCommunityPostPageWidgetState
                 ),
                 decoration: InputDecoration(
                   counterText: '',
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.white,
                       width: 1,
                     ),
                   ),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Color(0xFFE0E0E0),
                     fontSize: 18,
                     fontFamily: 'Pretendard',
@@ -292,7 +294,7 @@ class _WriteCommunityPostPageWidgetState
                   hintText: selectedCategory == '식단글'
                       ? '<식단글 작성 가이드라인>\n\n식단 이름:\n난이도 / 소요시간 :\n재료 / 양 (n인분 기준) :\n요리 순서 : \n후기 : \n* 사진도 첨부해주시면 더 좋아요 *'
                       : '내용을 입력해주세요.',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Color(0xFF9E9E9E),
                     fontSize: 16,
                     fontFamily: 'Pretendard',
@@ -300,7 +302,7 @@ class _WriteCommunityPostPageWidgetState
                     height: 0,
                     letterSpacing: -0.36,
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.white,
                       width: 1,

@@ -52,7 +52,7 @@ class _ChangeChildAllergyPageWidgetState
           height: 55,
           child: FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor: Color(
+              backgroundColor: const Color(
                   0xFFFF5C39), //////////////////////////////////////////////////////
               onPressed: () {},
               label: Container(
@@ -64,7 +64,7 @@ class _ChangeChildAllergyPageWidgetState
                         child: Container(
                           alignment: Alignment.center,
                           width: 64,
-                          child: Text(
+                          child: const Text(
                             '저장',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -86,7 +86,7 @@ class _ChangeChildAllergyPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           '\n알레르기 식품',
           style: TextStyle(
             fontSize: 18.0,
@@ -95,10 +95,10 @@ class _ChangeChildAllergyPageWidgetState
           ),
         ),
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -111,21 +111,21 @@ class _ChangeChildAllergyPageWidgetState
         elevation: 0,
       ),
       body: Align(
-        alignment: AlignmentDirectional(0.00, -1.00),
+        alignment: const AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: BoxDecoration(),
+          decoration: const BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                   ),
                   itemCount: 19, // 아이템 개수
@@ -147,7 +147,7 @@ class _ChangeChildAllergyPageWidgetState
                                   ? ShapeDecoration(
                                       color: Color(0x33FF582C),
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             width: 2, color: Color(0xFFFF5C39)),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
@@ -162,7 +162,7 @@ class _ChangeChildAllergyPageWidgetState
                             Text(
                               allergyList[index],
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontFamily: 'Pretendard',

@@ -4,6 +4,7 @@ import 'package:babymeal/etc/url.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../model/PostModel.dart';
 
@@ -26,24 +27,19 @@ class PostService extends ChangeNotifier {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     Map<String, dynamic> data = post.toJson();
-    FormData formData = FormData.fromMap({
-      'requestDto': '''{
-      "comments": ${0},
-      "likes": ${0},
-      "title": ${post.title},
-      "body": ${post.body},
-      "scrap": ${0},
-      "type": ${post.type}
-    }''',
+    var formData = FormData.fromMap({
+      'requestDto':
+          '{"comments" : 0,"likes" : 0,"title" : ${post.title},"body" : ${post.body},"scrap" : 0,"type" : ${post.type}}'
     });
+
     try {
       Response response = await Dio().post(
         "$baseUrl/post",
         data: formData,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $tempToken',
+            'Content-Type': 'application/json'
           },
         ),
       );
@@ -73,7 +69,7 @@ class PostService extends ChangeNotifier {
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
@@ -98,14 +94,15 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post?startPostId=$startPostId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        latestPosts.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           latestPosts.add(post);
         }
@@ -127,23 +124,27 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        generalLatestPosts.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           generalLatestPosts.add(post);
         }
+      } else if (response.statusCode == 400) {
+        print("게시물 없음");
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
       }
     } catch (e) {
       print('GET 요청 에러');
+
       print(e.toString());
     }
   }
@@ -156,17 +157,20 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type?startPostId=$startPostId&type=식단",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        recipeLatestPosts.clear();
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           recipeLatestPosts.add(post);
         }
+      } else if (response.statusCode == 400) {
+        print("게시물 없음");
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
@@ -185,14 +189,15 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/likes?startPostId=$startPostId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        popularPosts.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           popularPosts.add(post);
         }
@@ -214,14 +219,15 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type/likes?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        generalPopularPosts.clear();
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           generalPopularPosts.add(post);
         }
@@ -245,14 +251,15 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type/likes?startPostId=$startPostId&type=식단",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        recipePopularPosts.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           recipePopularPosts.add(post);
         }
@@ -271,17 +278,18 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "$baseUrl/post/keyword",
+        "$baseUrl/post/weekly",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        best10Posts.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           best10Posts.add(post);
         }
@@ -301,17 +309,18 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "$baseUrl/customer?startPostId=$startPostId",
+        "$baseUrl/post/customer?startPostId=$startPostId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        myPosts.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           myPosts.add(post);
         }
@@ -334,14 +343,15 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/$keyword",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        keywordPosts.clear();
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetPost post = GetPost.fromJson(item);
           keywordPosts.add(post);
         }
@@ -363,7 +373,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/unique?postId=$postId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
@@ -371,7 +381,7 @@ class PostService extends ChangeNotifier {
       if (response.statusCode == 200) {
         print('GET 요청 성공');
 
-        uniquePost = GetPostDetail.fromJson(json.decode(response.data)['data']);
+        uniquePost = GetPostDetail.fromJson(response.data["data"]);
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
@@ -391,13 +401,14 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/scrap?type=게시글",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
         print('GET 요청 성공');
+        scrappedGeneralPosts.clear();
         for (Map<String, dynamic> item in json.decode(response.data)['data']) {
           GetPost post = GetPost.fromJson(item);
           scrappedGeneralPosts.add(post);
@@ -421,13 +432,14 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/scrap?type=식단",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
         print('GET 요청 성공');
+        scrappedRecipePosts.clear();
         for (Map<String, dynamic> item in json.decode(response.data)['data']) {
           GetPost post = GetPost.fromJson(item);
           scrappedRecipePosts.add(post);
@@ -445,19 +457,13 @@ class PostService extends ChangeNotifier {
   Future<bool> scrapPost(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
-    FormData formData = FormData.fromMap({
-      'requestDto': '''{
-        "postId": ${postId}
-      }''',
-    });
-
     try {
       Response response = await Dio().post(
-        "$baseUrl/post/scrap",
-        data: formData,
+        "${baseUrl}/post/scrap",
+        data: {"postId": postId},
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
@@ -480,18 +486,13 @@ class PostService extends ChangeNotifier {
   Future<bool> likePost(int postId) async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
-    FormData formData = FormData.fromMap({
-      'requestDto': '''{
-        "postId": $postId
-      }''',
-    });
     try {
       Response response = await Dio().post(
-        "$baseUrl/post/likes",
-        data: formData,
+        "${baseUrl}/post/likes",
+        data: {"postId": postId},
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
@@ -511,11 +512,20 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  Future<void> deletePost(int postId, int customerId) async {
+  Future<void> deletePost(int postId) async {
     //post 삭제
-    Map<String, dynamic> data = {"postId": postId, "customerId": customerId};
+    Map<String, dynamic> data = {"postId": postId};
     try {
-      Response response = await Dio().delete("${baseUrl}/post", data: data);
+      Response response = await Dio().delete(
+        "${baseUrl}/post",
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $tempToken',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
       if (response.statusCode == 200) {
         print('DELETE 요청 성공');
       } else {
@@ -539,14 +549,15 @@ class CommentService extends ChangeNotifier {
         "$baseUrl/post/comment?postId=$postId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),
       );
       if (response.statusCode == 200) {
+        comments.clear();
         print('GET 요청 성공');
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data["data"]) {
           GetComment comment = GetComment.fromJson(item);
           comments.add(comment);
         }
@@ -565,19 +576,13 @@ class CommentService extends ChangeNotifier {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
     Map<String, dynamic> data = comment.toJson();
-    FormData formData = FormData.fromMap({
-      'requestDto': '''{
-        "postId": ${comment.postId},
-        "contents": ${comment.contents}
-      }''',
-    });
     try {
       Response response = await Dio().post(
-        "$baseUrl/post/comment",
-        data: formData,
+        "${baseUrl}/post/comment",
+        data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $tempToken',
             'Content-Type': 'application/json',
           },
         ),

@@ -210,8 +210,10 @@ class _ViewPostDetailPageWidgetState extends State<ViewPostDetailPageWidget> {
                           ]),
                           Container(
                               child: Text(
-                            DateFormat("yyyy.MM.dd")
-                                .format(DateTime.parse(_post.updateDate!)),
+                            _post.updateDate == null
+                                ? ""
+                                : DateFormat("yyyy.MM.dd")
+                                    .format(DateTime.parse(_post.updateDate!)),
                             textAlign: TextAlign.right,
                             style: const TextStyle(
                               color: Color(0xFF616161),
@@ -226,19 +228,21 @@ class _ViewPostDetailPageWidgetState extends State<ViewPostDetailPageWidget> {
                     ],
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(20, 26, 20, 0),
-                  child: Text(
-                    "${_post.body}",
-                    style: const TextStyle(
-                      color: Color(0xFF212121),
-                      fontSize: 16,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: -0.32,
-                    ),
-                  ),
-                )
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 26, 20, 0),
+                      child: Text(
+                        "${_post.body}",
+                        style: const TextStyle(
+                          color: Color(0xFF212121),
+                          fontSize: 16,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: -0.32,
+                        ),
+                      ),
+                    ))
               ],
             ),
           ));

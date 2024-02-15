@@ -150,7 +150,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                           ],
                         ),
                         onTap: () {
-                          updateselectedOrder('인기순');
+                          updateselectedOrder('최신순');
                           Navigator.pop(context);
                         },
                       ),
@@ -163,18 +163,18 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
     );
   }
 
-  Future<void> _loadPosts() async {
-    await Provider.of<PostService>(context, listen: false).getLatestPosts(1);
-    await Provider.of<PostService>(context, listen: false).getPopularPosts(1);
-    await Provider.of<PostService>(context, listen: false)
-        .getGeneralLatestPosts(1);
-    await Provider.of<PostService>(context, listen: false)
-        .getRecipeLatestPosts(1);
-    await Provider.of<PostService>(context, listen: false)
-        .getRecipePopularPosts(1);
-    await Provider.of<PostService>(context, listen: false)
-        .getGeneralPopularPosts(1);
-    await Provider.of<PostService>(context, listen: false).getBest10Posts();
+  void _savePosts() async {
+    // await Provider.of<PostService>(context, listen: false).getLatestPosts(0);
+    // await Provider.of<PostService>(context, listen: false).getPopularPosts(0);
+    // await Provider.of<PostService>(context, listen: false)
+    //     .getGeneralLatestPosts(0);
+    // await Provider.of<PostService>(context, listen: false)
+    //     .getRecipeLatestPosts(0);
+    // await Provider.of<PostService>(context, listen: false)
+    //     .getRecipePopularPosts(0);
+    // await Provider.of<PostService>(context, listen: false)
+    //     .getGeneralPopularPosts(0);
+    // await Provider.of<PostService>(context, listen: false).getBest10Posts();
 
     setState(() {
       _latestPosts = Provider.of<PostService>(context, listen: false)
@@ -191,12 +191,13 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
           Provider.of<PostService>(context, listen: false).recipePopularPosts;
       _best10Posts =
           Provider.of<PostService>(context, listen: false).best10Posts;
+      _showingPosts = _generalLatestPosts;
     });
   }
 
   void initState() {
     super.initState();
-    _loadPosts();
+    _savePosts();
   }
 
   @override
@@ -206,6 +207,7 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(selectedOrder);
     return Scaffold(
         backgroundColor: const Color(0xFFF4F3F0),
         body: Column(children: [
@@ -358,16 +360,18 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
                 ],
               )),
           Expanded(
-              child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  color: Colors.white,
-                  child: ListView.builder(
-                      itemCount: _best10Posts.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return BriefPostCard(postInfo: _showingPosts[index]);
-                      })))
+              child: _showingPosts.length == 0
+                  ? Container()
+                  : Container(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      color: Colors.white,
+                      child: ListView.builder(
+                          itemCount: _showingPosts.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return BriefPostCard(
+                                postInfo: _showingPosts[index]);
+                          })))
         ]));
   }
 }
@@ -415,46 +419,57 @@ class BriefPopularPostcard extends StatelessWidget {
   final GetPost postInfo;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 130,
-              height: 130,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFEEEEEE),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(0, 9, 0, 7),
-              width: 129,
-              child: Text(
-                postInfo.title!,
-                style: const TextStyle(
-                  color: Color(0xFF212121),
-                  fontSize: 14,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.28,
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewPostDetailPageWidget(
+                      postId: postInfo.postId!, name: postInfo.customerName!)));
+        },
+        child: Container(
+            margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 130,
+                  height: 130,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFFEEEEEE),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
                 ),
-              ),
-            ),
-            Text(
-              '${postInfo.type} | ${postInfo.customerName}',
-              style: const TextStyle(
-                color: Color(0xFF9E9E9E),
-                fontSize: 12,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w400,
-                letterSpacing: -0.24,
-              ),
-            )
-          ],
-        ));
+                Container(
+                  padding: const EdgeInsets.fromLTRB(0, 9, 0, 7),
+                  width: 129,
+                  child: Text(
+                    textAlign: TextAlign.start,
+                    postInfo.title!.length > 20
+                        ? postInfo.title!.substring(0, 20) + "..."
+                        : postInfo.title!,
+                    style: const TextStyle(
+                      color: Color(0xFF212121),
+                      fontSize: 14,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.28,
+                    ),
+                  ),
+                ),
+                Text(
+                  '${postInfo.type} | ${postInfo.customerName}',
+                  style: const TextStyle(
+                    color: Color(0xFF9E9E9E),
+                    fontSize: 12,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: -0.24,
+                  ),
+                )
+              ],
+            )));
   }
 }
 
@@ -463,12 +478,13 @@ class BriefPostCard extends StatelessWidget {
   final GetPost postInfo;
   @override
   Widget build(BuildContext context) {
+    int timediff = 0;
     Duration difference =
         DateTime.now().difference(DateTime.parse(postInfo.updateTime!));
     if (difference.inHours >= 24) {
-      int daysDifference = difference.inDays;
+      timediff = difference.inDays;
     } else {
-      int hoursDifference = difference.inHours;
+      timediff = difference.inHours;
     }
     return GestureDetector(
         onTap: () {
@@ -489,11 +505,15 @@ class BriefPostCard extends StatelessWidget {
             ),
             padding: const EdgeInsets.fromLTRB(0, 14, 0, 14),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.only(bottom: 14),
                   child: Text(
-                    postInfo.title!.substring(0, 40),
+                    textAlign: TextAlign.start,
+                    postInfo.title!.length > 40
+                        ? postInfo.title!.substring(0, 40) + "..."
+                        : postInfo.title!,
                     style: const TextStyle(
                       color: Color(0xFF212121),
                       fontSize: 16,
@@ -555,7 +575,7 @@ class BriefPostCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '${postInfo.customerName!} | $difference시간 전',
+                      '${postInfo.customerName!} | $timediff시간 전',
                       textAlign: TextAlign.right,
                       style: const TextStyle(
                         color: Color(0xFF9E9E9E),

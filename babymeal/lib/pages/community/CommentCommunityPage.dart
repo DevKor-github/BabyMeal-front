@@ -154,13 +154,12 @@ class _CommentCommunityPageWidgetState
                                     fontFamily: 'Pretendard',
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xFF757575))),
-                            onPressed: () {
-                              setState(() {
-                                commentController.clear();
-                              });
-                              commentService.uploadComment(PostComment(
-                                  postId: widget.postId,
-                                  contents: commentController.text));
+                            onPressed: () async {
+                              if (commentController.text == "") {
+                                await commentService.uploadComment(PostComment(
+                                    postId: widget.postId,
+                                    contents: commentController.text));
+                              }
                             },
                           ),
                         ])),
@@ -176,62 +175,59 @@ class CommentBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(
-          decoration: const BoxDecoration(
-            color: Color(0xFFF4F3F0),
-          ),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
-                  child: RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                          text: comment.customerName, //id
-                          style: const TextStyle(
-                            color: Color(0xFF212121),
-                            fontSize: 16,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                            letterSpacing: -0.50,
-                          )))),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
-                  child: RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                          text: (DateFormat("yyyy.MM.dd")
-                              .format(DateTime.parse(comment.time!))),
-                          style: const TextStyle(
-                            color: Color(0xFF616161),
-                            fontSize: 12,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                            letterSpacing: -0.50,
-                          )))),
-            ]),
-            Container(
-                width: 430,
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+        decoration: const BoxDecoration(
+          color: Color(0xFFF4F3F0),
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
                 child: RichText(
                     textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
                     text: TextSpan(
-                        text: //comment
-                            comment.contents,
+                        text: comment.customerName, //id
                         style: const TextStyle(
                           color: Color(0xFF212121),
                           fontSize: 16,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w600,
+                          height: 0,
+                          letterSpacing: -0.50,
+                        )))),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+                child: RichText(
+                    textAlign: TextAlign.left,
+                    text: TextSpan(
+                        text: (DateFormat("yyyy.MM.dd")
+                            .format(DateTime.parse(comment.time!))),
+                        style: const TextStyle(
+                          color: Color(0xFF616161),
+                          fontSize: 12,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w500,
                           height: 0,
                           letterSpacing: -0.50,
                         )))),
-          ])),
-    );
+          ]),
+          Container(
+              width: 430,
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+              child: RichText(
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  text: TextSpan(
+                      text: //comment
+                          comment.contents,
+                      style: const TextStyle(
+                        color: Color(0xFF212121),
+                        fontSize: 16,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                        letterSpacing: -0.50,
+                      )))),
+        ]));
   }
 }

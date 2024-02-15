@@ -15,9 +15,9 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<bool> likeStates = [false, false, false, false, false];
-  bool isAIClicked = true;
+  bool isAIClicked = false;
   bool isGeneralClicked = false;
-  bool isRecipeClicked = false;
+  bool isRecipeClicked = true;
   List<GetPost> _scrappedGeneralPosts = [];
   List<GetPost> _scrappedRecipePosts = [];
   List<GetPost> _showingScrappedPosts = [];
@@ -80,6 +80,9 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(_scrappedGeneralPosts);
+    print(_scrappedRecipePosts);
+    print(_showingScrappedPosts);
     return Consumer<PostService>(builder: (context, postService, child) {
       return Scaffold(
           backgroundColor: const Color(0xFFF4F3F0),
@@ -120,53 +123,66 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: _showingScrappedPosts.length, //AI 선택 시 AI 레시피 개수로 변경
-              itemBuilder: (context, index) {
-                return Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Column(
-                    children: [
-                      Container(
-                          decoration: const BoxDecoration(
+                child: _showingScrappedPosts.length == 0
+                    ? Center(
+                        child: Text("스크랩한 글이 없습니다.",
+                            style: TextStyle(
+                              color: Color(0xFF212121),
+                              fontSize: 18,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600,
+                            )))
+                    : ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: _showingScrappedPosts
+                            .length, //AI 선택 시 AI 레시피 개수로 변경
+                        itemBuilder: (context, index) {
+                          return Container(
                             color: Colors.white,
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Color(0xffE0E0E0),
-                                width: 1.0, // 원하는 border 두께 설정
-                              ),
-                            ),
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          child: Row(
-                            children: [
-                              isAIClicked
-                                  ? AIRecipe()
-                                  : BriefPostCard(
-                                      postInfo: _showingScrappedPosts[index],
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            child: Column(
+                              children: [
+                                Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Color(0xffE0E0E0),
+                                          width: 1.0, // 원하는 border 두께 설정
+                                        ),
+                                      ),
                                     ),
-                              GestureDetector(
-                                  onTap: () async {
-                                    changeLike(index);
-                                    await postService.likePost(
-                                        _showingScrappedPosts[index].postId!);
-                                  },
-                                  child: ImageIcon(
-                                    AssetImage(likeStates[index]
-                                        ? "assets/images/like_sel.png"
-                                        : "assets/images/like.png"),
-                                    color: const Color(0xFFCE4040),
-                                  ))
-                            ],
-                          )),
-                    ],
-                  ),
-                );
-              },
-            ))
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.14,
+                                    child: Row(
+                                      children: [
+                                        isAIClicked
+                                            ? AIRecipe()
+                                            : BriefPostCard(
+                                                postInfo: _showingScrappedPosts[
+                                                    index],
+                                              ),
+                                        GestureDetector(
+                                            onTap: () async {
+                                              changeLike(index);
+                                              await postService.likePost(
+                                                  _showingScrappedPosts[index]
+                                                      .postId!);
+                                            },
+                                            child: ImageIcon(
+                                              AssetImage(likeStates[index]
+                                                  ? "assets/images/like_sel.png"
+                                                  : "assets/images/like.png"),
+                                              color: const Color(0xFFCE4040),
+                                            ))
+                                      ],
+                                    )),
+                              ],
+                            ),
+                          );
+                        },
+                      ))
           ]));
     });
   }

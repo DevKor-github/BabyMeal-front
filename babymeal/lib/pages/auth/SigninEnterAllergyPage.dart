@@ -59,13 +59,13 @@ class _SigninEnterAllergyPageWidgetState
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: Text(
+                        child: const Text(
                           '시작하기',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -82,7 +82,7 @@ class _SigninEnterAllergyPageWidgetState
                           padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: Text(
+                          child: const Text(
                             '4/4',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -101,10 +101,10 @@ class _SigninEnterAllergyPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -118,19 +118,19 @@ class _SigninEnterAllergyPageWidgetState
         elevation: 0,
       ),
       body: Align(
-        alignment: AlignmentDirectional(0.00, -1.00),
+        alignment: const AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: BoxDecoration(),
+          decoration: const BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                 child: Text(
                   '레시피 추천 시 해당 식품을 제외하고 알려드려요.',
                   style: TextStyle(
@@ -143,9 +143,9 @@ class _SigninEnterAllergyPageWidgetState
                 ),
               ),
               Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
                   child: RichText(
-                      text: TextSpan(children: <TextSpan>[
+                      text: const TextSpan(children: <TextSpan>[
                     TextSpan(
                       text: '알레르기 식품',
                       style: TextStyle(
@@ -171,7 +171,7 @@ class _SigninEnterAllergyPageWidgetState
                   ]))),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                   ),
                   itemCount: 19, // 아이템 개수
@@ -193,7 +193,7 @@ class _SigninEnterAllergyPageWidgetState
                                   ? ShapeDecoration(
                                       color: Color(0x33FF582C),
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             width: 2, color: Color(0xFFFF5C39)),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
@@ -208,7 +208,7 @@ class _SigninEnterAllergyPageWidgetState
                             Text(
                               allergyList[index],
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontFamily: 'Pretendard',

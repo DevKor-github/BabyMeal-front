@@ -1,4 +1,8 @@
+import 'package:babymeal/model/PostModel.dart';
+import 'package:babymeal/pages/community/ViewDetailPostPage.dart';
+import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyPageMyPostsPageWidget extends StatefulWidget {
   const MyPageMyPostsPageWidget({super.key});
@@ -9,13 +13,19 @@ class MyPageMyPostsPageWidget extends StatefulWidget {
 }
 
 class _MyPageMyPostsPageWidgetState extends State<MyPageMyPostsPageWidget> {
-  List<String> TitleContext = [
-    '아이 훈육법에 대한 내 생각',
-    '[건대입구] 아이와 함께 가기 좋은 카페 \'웰컴베이비\' 추천합니다-메뉴,가격,주차정보',
-    '아이 밥 먹이는 꿀팁!!'
-  ];
+  List<GetPost> _myPosts = [];
+  void _loadPosts() async {
+    await Provider.of<PostService>(context, listen: false).getMyPosts(0);
+    setState(() {
+      _myPosts = Provider.of<PostService>(context, listen: false).myPosts;
+    });
+  }
 
-  List<String> Title_TimeContext = ['9시간전', '13일전', '20일전'];
+  void initState() {
+    super.initState();
+    _loadPosts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +34,7 @@ class _MyPageMyPostsPageWidgetState extends State<MyPageMyPostsPageWidget> {
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             '\n내 게시글',
             style: TextStyle(
               fontSize: 18.0,
@@ -33,10 +43,10 @@ class _MyPageMyPostsPageWidgetState extends State<MyPageMyPostsPageWidget> {
             ),
           ),
           leading: IconButton(
-            padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+            padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
             color: Colors.transparent,
             iconSize: 60,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Color(0xFF949494),
               size: 24,
@@ -49,41 +59,97 @@ class _MyPageMyPostsPageWidgetState extends State<MyPageMyPostsPageWidget> {
           elevation: 0,
         ),
         body: ListView.builder(
-            itemCount: TitleContext.length,
+            itemCount: _myPosts.length,
             itemBuilder: (context, index) {
-              return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
-                        child: Text(TitleContext[index],
-                            style: TextStyle(
-                              color: Color(0xFF212121),
-                              fontSize: 16,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w600,
-                              height: 0,
-                              letterSpacing: -0.50,
-                            )),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(20, 10, 10, 20),
-                        child: Text(Title_TimeContext[index],
-                            style: TextStyle(
-                              color: Color(0xFF616161),
-                              fontSize: 12,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                              letterSpacing: -0.50,
-                            )),
-                      )
-                    ],
-                  ));
+              return BriefMyPostCard(postInfo: _myPosts[index]);
             }));
+  }
+}
+
+class BriefMyPostCard extends StatelessWidget {
+  const BriefMyPostCard({super.key, required this.postInfo});
+  final GetPost postInfo;
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('글 삭제'),
+          content: Text('정말로 글을 삭제하시겠습니까?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Provider.of<PostService>(context, listen: false)
+                    .deletePost(postInfo.postId!);
+                Navigator.of(context).pop(); // AlertDialog를 닫음
+              },
+              child: Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int timediff = 0;
+    bool isTime = false;
+    Duration difference =
+        DateTime.now().difference(DateTime.parse(postInfo.updateTime!));
+    if (difference.inHours >= 24) {
+      timediff = difference.inDays;
+    } else {
+      timediff = difference.inHours;
+      isTime = true;
+    }
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewPostDetailPageWidget(
+                      postId: postInfo.postId!, name: postInfo.customerName!)));
+        },
+        onLongPress: () {
+          showAlertDialog(context);
+        },
+        child: Container(
+            padding: const EdgeInsets.fromLTRB(18, 14, 0, 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(bottom: 14),
+                  child: Text(
+                    textAlign: TextAlign.start,
+                    postInfo.title!.length > 40
+                        ? postInfo.title!.substring(0, 40) + "..."
+                        : postInfo.title!,
+                    style: const TextStyle(
+                      color: Color(0xFF212121),
+                      fontSize: 16,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.32,
+                    ),
+                  ),
+                ),
+                Text(
+                  isTime
+                      ? '${postInfo.customerName!} | $timediff시간 전'
+                      : '${postInfo.customerName!} | $timediff일 전',
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: Color(0xFF9E9E9E),
+                    fontSize: 12,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: -0.24,
+                  ),
+                )
+              ],
+            )));
   }
 }

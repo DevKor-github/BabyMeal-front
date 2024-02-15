@@ -6,7 +6,8 @@ class ChangeNicknamePageWidget extends StatefulWidget {
   const ChangeNicknamePageWidget({super.key});
 
   @override
-  State<ChangeNicknamePageWidget> createState() => _ChangeNicknamePageWidgetState();
+  State<ChangeNicknamePageWidget> createState() =>
+      _ChangeNicknamePageWidgetState();
 }
 
 class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
@@ -32,7 +33,6 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,23 +47,22 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
                   : Color(0xFFBDBDBD),
               onPressed: !isExist && nickNameController!.text.length > 0
                   ? () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                           ManageMyPageWidget()));
-              }
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ManageMyPageWidget()));
+                    }
                   : () {},
-              label: Container(
+              label: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: Text(
+                        child: const Text(
                           '저장',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -76,7 +75,7 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
                           ),
                         ),
                       ),
-                      Spacer()
+                      const Spacer()
                     ],
                   )))),
       backgroundColor: Colors.white,
@@ -84,32 +83,31 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(
-          onPressed: ()async{
+          onPressed: () async {
             Navigator.pop(context);
           },
           color: Colors.transparent,
-          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-          icon: Icon(
+          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
           ),
         ),
-        title: Text(
+        title: const Text(
           '닉네임 변경',
           style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'Pretendart',
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF616161)
-          ),
+              fontSize: 18,
+              fontFamily: 'Pretendart',
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF616161)),
         ),
       ),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: TextFormField(
                 inputFormatters: [
@@ -117,7 +115,7 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
                 ],
                 controller: nickNameController,
                 obscureText: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xFFE0E0E0),
@@ -150,9 +148,9 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:
-                  EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF9E9E9E),
                   fontSize: 18,
                   fontFamily: 'Pretendard',
@@ -165,18 +163,18 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: const AlignmentDirectional(0.00, 0.00),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                     child: Text(
                       '$_charCount/5',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF616161),
                         fontSize: 16,
                         fontFamily: 'Pretendard',
@@ -186,30 +184,30 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
                     ),
                   ),
                   isExist
-                      ? Text(
-                    "이미 존재하는 닉네임입니다.",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Color(0xFFFF5C39),
-                      fontSize: 12,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                      letterSpacing: -0.24,
-                    ),
-                  )
-                      : Text(
-                    "닉네임을 입력해주세요.",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: Color(0xFFFF5C39),
-                      fontSize: 12,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                      letterSpacing: -0.24,
-                    ),
-                  )
+                      ? const Text(
+                          "이미 존재하는 닉네임입니다.",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xFFFF5C39),
+                            fontSize: 12,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                            letterSpacing: -0.24,
+                          ),
+                        )
+                      : const Text(
+                          "닉네임을 입력해주세요.",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xFFFF5C39),
+                            fontSize: 12,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                            letterSpacing: -0.24,
+                          ),
+                        )
                 ],
               ),
             ),

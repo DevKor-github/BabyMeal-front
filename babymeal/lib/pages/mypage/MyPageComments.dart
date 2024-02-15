@@ -25,7 +25,7 @@ class _MypageMyCommentsPageWidgetState
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             '\n내 댓글',
             style: TextStyle(
               fontSize: 18.0,
@@ -37,7 +37,7 @@ class _MypageMyCommentsPageWidgetState
             padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
             color: Colors.transparent,
             iconSize: 60,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Color(0xFF949494),
               size: 24,
@@ -54,16 +54,16 @@ class _MypageMyCommentsPageWidgetState
             itemCount: CommentContext.length,
             itemBuilder: (context, index) {
               return Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
+                        padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
                         child: Text(CommentContext[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF212121),
                               fontSize: 16,
                               fontFamily: 'Pretendard',
@@ -73,9 +73,9 @@ class _MypageMyCommentsPageWidgetState
                             )),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 10, 10, 20),
+                        padding: const EdgeInsets.fromLTRB(20, 10, 10, 20),
                         child: Text(Comment_TimeContext[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF616161),
                               fontSize: 12,
                               fontFamily: 'Pretendard',

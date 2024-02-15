@@ -48,10 +48,10 @@ class _ChangeChildBirthPageWidgetState
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SigninEnterAllergyPageWidget()));
+                                  const SigninEnterAllergyPageWidget()));
                     }
                   : () {},
-              label: Container(
+              label: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +60,7 @@ class _ChangeChildBirthPageWidgetState
                         child: Container(
                           alignment: Alignment.center,
                           width: 64,
-                          child: Text(
+                          child: const Text(
                             '저장',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -82,7 +82,7 @@ class _ChangeChildBirthPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           '\n아이 생일',
           style: TextStyle(
             fontSize: 18.0,
@@ -91,10 +91,10 @@ class _ChangeChildBirthPageWidgetState
           ),
         ),
         leading: IconButton(
-          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -107,10 +107,10 @@ class _ChangeChildBirthPageWidgetState
         elevation: 0,
       ),
       body: Align(
-        alignment: AlignmentDirectional(0.00, -1.00),
+        alignment: const AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 570,
           ),
           decoration: BoxDecoration(),
@@ -119,12 +119,12 @@ class _ChangeChildBirthPageWidgetState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: Container(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: SizedBox(
                     width: double.infinity,
                     child: Column(
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           children: <Widget>[
                             Expanded(
@@ -134,7 +134,7 @@ class _ChangeChildBirthPageWidgetState
                                   LengthLimitingTextInputFormatter(4),
                                 ],
                                 textAlign: TextAlign.center,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'YYYY',
                                   hintStyle: TextStyle(
                                     color: Color(0xFF9E9E9E),
@@ -148,7 +148,7 @@ class _ChangeChildBirthPageWidgetState
                                 keyboardType: TextInputType.number,
                               ),
                             ),
-                            Text(
+                            const Text(
                               '/',
                               style: TextStyle(
                                 color: Color(0xFFE0E0E0),
@@ -165,7 +165,7 @@ class _ChangeChildBirthPageWidgetState
                                   LengthLimitingTextInputFormatter(2),
                                 ],
                                 textAlign: TextAlign.center,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'MM',
                                   hintStyle: TextStyle(
                                     color: Color(0xFF9E9E9E),
@@ -179,7 +179,7 @@ class _ChangeChildBirthPageWidgetState
                                 keyboardType: TextInputType.number,
                               ),
                             ),
-                            Text(
+                            const Text(
                               '/',
                               style: TextStyle(
                                 color: Color(0xFFE0E0E0),
@@ -196,7 +196,7 @@ class _ChangeChildBirthPageWidgetState
                                   LengthLimitingTextInputFormatter(2),
                                 ],
                                 textAlign: TextAlign.center,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'DD',
                                   hintStyle: TextStyle(
                                     color: Color(0xFF9E9E9E),
@@ -212,13 +212,13 @@ class _ChangeChildBirthPageWidgetState
                             ),
                           ],
                         ),
-                        Container(
+                        SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child: Divider())
+                            child: const Divider())
                       ],
                     )),
               ),
-              Align(
+              const Align(
                 alignment: AlignmentDirectional(0.00, 0.00),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),

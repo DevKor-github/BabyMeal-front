@@ -27,7 +27,7 @@ class _AlarmCommunityPageState extends State<AlarmCommunityPage> {
     return Scaffold(
         backgroundColor: Color(0xFFF4F3F0),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             '\n알림',
             style: TextStyle(
               fontSize: 18.0,
@@ -38,10 +38,10 @@ class _AlarmCommunityPageState extends State<AlarmCommunityPage> {
           backgroundColor: Color(0xFFF4F3F0),
           automaticallyImplyLeading: false,
           leading: IconButton(
-            padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+            padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
             color: Colors.transparent,
             iconSize: 60,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Color(0xFF949494),
               size: 24,
@@ -57,7 +57,7 @@ class _AlarmCommunityPageState extends State<AlarmCommunityPage> {
         body: Alarm_Context.isEmpty
             ? Center(
                 child: RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                       text: '알림이 없습니다.',
                       style: TextStyle(
                         color: Color(0xFF9E9E9E),
@@ -74,7 +74,7 @@ class _AlarmCommunityPageState extends State<AlarmCommunityPage> {
                 itemCount: Alarm_Context.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFFF4F3F0),
                     ),
                     child: Column(
@@ -95,7 +95,7 @@ class _AlarmCommunityPageState extends State<AlarmCommunityPage> {
                                     maxLines: 4,
                                     text: TextSpan(
                                         text: Alarm_Context[index],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Color(0xFF212121),
                                           fontSize: 16,
                                           fontFamily: 'Pretendard',
@@ -111,7 +111,7 @@ class _AlarmCommunityPageState extends State<AlarmCommunityPage> {
                                 textAlign: TextAlign.left,
                                 text: TextSpan(
                                     text: Alarm_Time[index],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Color(0xFF616161),
                                       fontSize: 12,
                                       fontFamily: 'Pretendard',
