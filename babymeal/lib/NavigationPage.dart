@@ -15,7 +15,7 @@ class NavigationPageWidget extends StatefulWidget {
 }
 
 class _NavigationPageWidgetState extends State<NavigationPageWidget> {
-  int _selectedIndex = 4;
+  int _selectedIndex = 2;
 
   void _loadPosts() async {
     await Provider.of<PostService>(context, listen: false).getLatestPosts(0);

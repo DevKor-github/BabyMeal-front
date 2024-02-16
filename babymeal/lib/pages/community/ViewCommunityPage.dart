@@ -164,18 +164,6 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
   }
 
   void _savePosts() async {
-    // await Provider.of<PostService>(context, listen: false).getLatestPosts(0);
-    // await Provider.of<PostService>(context, listen: false).getPopularPosts(0);
-    // await Provider.of<PostService>(context, listen: false)
-    //     .getGeneralLatestPosts(0);
-    // await Provider.of<PostService>(context, listen: false)
-    //     .getRecipeLatestPosts(0);
-    // await Provider.of<PostService>(context, listen: false)
-    //     .getRecipePopularPosts(0);
-    // await Provider.of<PostService>(context, listen: false)
-    //     .getGeneralPopularPosts(0);
-    // await Provider.of<PostService>(context, listen: false).getBest10Posts();
-
     setState(() {
       _latestPosts = Provider.of<PostService>(context, listen: false)
           .latestPosts; //최신순 전체 post
@@ -207,7 +195,6 @@ class _ViewCommunityPageWidgetState extends State<ViewCommunityPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(selectedOrder);
     return Scaffold(
         backgroundColor: const Color(0xFFF4F3F0),
         body: Column(children: [

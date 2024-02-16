@@ -18,12 +18,14 @@ class _CommentCommunityPageWidgetState
   TextEditingController commentController = TextEditingController();
   ScrollController scrollController = ScrollController();
   List<GetComment> _comments = [];
+  bool _isLoaded = false;
   Future<void> _loadComments() async {
     await Provider.of<CommentService>(context, listen: false)
         .getComments(widget.postId);
 
     setState(() {
       _comments = Provider.of<CommentService>(context, listen: false).comments;
+      _isLoaded = true;
     });
   }
 
@@ -67,20 +69,9 @@ class _CommentCommunityPageWidgetState
             centerTitle: true,
             elevation: 0,
           ),
-          body: _comments.isEmpty
+          body: !_isLoaded
               ? Center(
-                  child: RichText(
-                    text: const TextSpan(
-                        text: '작성된 댓글이 없습니다.',
-                        style: TextStyle(
-                          color: Color(0xFF9E9E9E),
-                          fontSize: 17,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                          letterSpacing: -0.50,
-                        )),
-                  ),
+                  child: CircularProgressIndicator(),
                 )
               : Column(
                   children: [
