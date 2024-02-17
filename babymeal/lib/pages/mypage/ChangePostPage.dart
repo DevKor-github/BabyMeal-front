@@ -114,6 +114,7 @@ class _ChangePostPageWidgetState extends State<ChangePostPageWidget> {
                       print(titleController.text);
                       print(contentController.text);
                       bool isSuccess = await communityService.updatePost(
+                          _post.postId!,
                           PostPost(
                               comments: _post.comments,
                               likes: _post.likes,

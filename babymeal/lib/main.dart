@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
       title: "Login",
       debugShowCheckedModeBanner: false,
       // initialRoute: "/login",
-      home: MyPagePostWidget(),
+      home: NavigationPageWidget(),
     );
   }
 }

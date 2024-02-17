@@ -1,3 +1,4 @@
+import 'package:babymeal/NavigationPage.dart';
 import 'package:babymeal/model/PostModel.dart';
 import 'package:babymeal/pages/community/ViewCommunityPage.dart';
 import 'package:babymeal/services/CommunityService.dart';
@@ -97,8 +98,6 @@ class _WriteCommunityPostPageWidgetState
                   child: TextButton(
                     onPressed: () async {
                       // '등록' 버튼을 눌렀을 때??
-                      print(titleController.text);
-                      print(contentController.text);
                       bool isSuccess = await communityService.uploadPost(
                           PostPost(
                               comments: 0,
@@ -141,7 +140,7 @@ class _WriteCommunityPostPageWidgetState
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ViewCommunityPageWidget()),
+                                                  NavigationPageWidget()),
                                           (route) => false);
                                     },
                                   ),

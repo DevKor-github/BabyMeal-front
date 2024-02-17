@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:babymeal/etc/url.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -26,16 +26,28 @@ class PostService extends ChangeNotifier {
     //Post 등록
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
-    Map<String, dynamic> data = post.toJson();
-    var formData = FormData.fromMap({
-      'requestDto':
-          '{"comments" : 0,"likes" : 0,"title" : ${post.title},"body" : ${post.body},"scrap" : 0,"type" : ${post.type}}'
-    });
+    var data = FormData.fromMap(
+      {
+        'requestDto': MultipartFile.fromString(
+          jsonEncode({
+            "comments": 0,
+            "likes": 0,
+            "title": "${post.title}",
+            "body": "${post.body}",
+            "scrap": 0,
+            "type": "${post.type}",
+            "files": []
+          }),
+          contentType: MediaType.parse('application/json'),
+        )
+      },
+      ListFormat.multiCompatible,
+    );
 
     try {
       Response response = await Dio().post(
         "$baseUrl/post",
-        data: formData,
+        data: data,
         options: Options(
           headers: {
             'Authorization': 'Bearer $tempToken',
@@ -62,7 +74,25 @@ class PostService extends ChangeNotifier {
     //Post 업데이트
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
-    Map<String, dynamic> data = post.toJson();
+    var data = FormData.fromMap(
+      {
+        'postUpdateReq': MultipartFile.fromString(
+          jsonEncode({
+            "postId": 15,
+            "comments": 0,
+            "likes": 0,
+            "title": "체인지1",
+            "body": "체인지1",
+            "scrap": 0,
+            "type": "식단",
+            "filePath": [],
+            "files": []
+          }),
+          contentType: MediaType.parse('application/json'),
+        )
+      },
+      ListFormat.multiCompatible,
+    );
     try {
       Response response = await Dio().put(
         "$baseUrl/post",
@@ -242,6 +272,7 @@ class PostService extends ChangeNotifier {
       }
     } catch (e) {
       print('GET 요청 에러');
+
       print(e.toString());
     }
   }
