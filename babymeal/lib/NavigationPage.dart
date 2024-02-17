@@ -15,7 +15,13 @@ class NavigationPageWidget extends StatefulWidget {
 }
 
 class _NavigationPageWidgetState extends State<NavigationPageWidget> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
+  void _loadScrappedPosts() async {
+    await Provider.of<PostService>(context, listen: false)
+        .getScrappedGeneralPosts();
+    await Provider.of<PostService>(context, listen: false)
+        .getScrappedRecipePosts();
+  }
 
   void _loadPosts() async {
     await Provider.of<PostService>(context, listen: false).getLatestPosts(0);
@@ -35,6 +41,7 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
   void initState() {
     super.initState();
     _loadPosts();
+    _loadScrappedPosts();
   }
 
   void _onItemTapped(int index) {

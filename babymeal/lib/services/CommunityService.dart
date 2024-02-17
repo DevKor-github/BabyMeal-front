@@ -58,7 +58,7 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  void updatePost(PostPost post) async {
+  Future<bool> updatePost(PostPost post) async {
     //Post 업데이트
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
@@ -76,13 +76,16 @@ class PostService extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         print('POST 요청 성공');
+        return true;
       } else {
         print('POST 요청 실패');
         print('Status Code: ${response.statusCode}');
+        return false;
       }
     } catch (e) {
       print('POST 요청 에러');
       print(e.toString());
+      return false;
     }
   }
 
@@ -121,7 +124,7 @@ class PostService extends ChangeNotifier {
     String? token = sharedPreference.getString("access_token");
     try {
       Response response = await Dio().get(
-        "$baseUrl/post/type?startPostId=$startPostId&type=게시글",
+        "http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/post?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
             'Authorization': 'Bearer $tempToken',
@@ -231,6 +234,8 @@ class PostService extends ChangeNotifier {
           GetPost post = GetPost.fromJson(item);
           generalPopularPosts.add(post);
         }
+      } else if (response.statusCode == 400) {
+        print("존재하지 않습니다");
       } else {
         print('GET 요청 실패');
         print('Status Code: ${response.statusCode}');
@@ -409,7 +414,7 @@ class PostService extends ChangeNotifier {
       if (response.statusCode == 200) {
         print('GET 요청 성공');
         scrappedGeneralPosts.clear();
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data['data']) {
           GetPost post = GetPost.fromJson(item);
           scrappedGeneralPosts.add(post);
         }
@@ -440,7 +445,7 @@ class PostService extends ChangeNotifier {
       if (response.statusCode == 200) {
         print('GET 요청 성공');
         scrappedRecipePosts.clear();
-        for (Map<String, dynamic> item in json.decode(response.data)['data']) {
+        for (Map<String, dynamic> item in response.data['data']) {
           GetPost post = GetPost.fromJson(item);
           scrappedRecipePosts.add(post);
         }

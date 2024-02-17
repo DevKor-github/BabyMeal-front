@@ -54,12 +54,7 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
     });
   }
 
-  Future<void> loadScrappedGeneralPosts() async {
-    await Provider.of<PostService>(context, listen: false)
-        .getScrappedGeneralPosts();
-    await Provider.of<PostService>(context, listen: false)
-        .getScrappedRecipePosts();
-
+  void saveScrappedPosts() async {
     setState(() {
       _scrappedGeneralPosts =
           Provider.of<PostService>(context, listen: false).scrappedGeneralPosts;
@@ -71,6 +66,9 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
   @override
   void initState() {
     super.initState();
+    saveScrappedPosts();
+    // print("dd" + _scr)
+    _showingScrappedPosts = _scrappedRecipePosts;
   }
 
   @override
@@ -164,18 +162,24 @@ class _ViewScrabPageWidgetState extends State<ViewScrabPageWidget> {
                                                     index],
                                               ),
                                         GestureDetector(
-                                            onTap: () async {
-                                              changeLike(index);
-                                              await postService.likePost(
-                                                  _showingScrappedPosts[index]
-                                                      .postId!);
-                                            },
-                                            child: ImageIcon(
-                                              AssetImage(likeStates[index]
-                                                  ? "assets/images/like_sel.png"
-                                                  : "assets/images/like.png"),
-                                              color: const Color(0xFFCE4040),
-                                            ))
+                                          onTap: () async {
+                                            changeLike(index);
+                                            await postService.likePost(
+                                                _showingScrappedPosts[index]
+                                                    .postId!);
+                                          },
+                                          child: Container(
+                                              padding: const EdgeInsets.only(
+                                                  right: 5),
+                                              child: Icon(Icons.favorite,
+                                                  color: _showingScrappedPosts[
+                                                                  index]
+                                                              .likes !=
+                                                          0
+                                                      ? const Color(0xffFF5C39)
+                                                      : const Color(
+                                                          0xffDDDDDD))),
+                                        )
                                       ],
                                     )),
                               ],
@@ -351,7 +355,9 @@ class BriefPostCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(bottom: 14),
                   child: Text(
-                    postInfo.title!.substring(0, 40),
+                    postInfo.title!.length > 20
+                        ? postInfo.title!.substring(0, 20) + "..."
+                        : postInfo.title!,
                     style: const TextStyle(
                       color: Color(0xFF212121),
                       fontSize: 16,

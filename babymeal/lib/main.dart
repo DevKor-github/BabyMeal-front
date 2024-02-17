@@ -1,6 +1,7 @@
 import 'package:babymeal/NavigationPage.dart';
 import 'package:babymeal/pages/community/ViewCommunityPage.dart';
 import 'package:babymeal/pages/community/WriteCommunityPostPage.dart';
+import 'package:babymeal/pages/mypage/MyPagePost.dart';
 import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,7 @@ class MainApp extends StatelessWidget {
       title: "Login",
       debugShowCheckedModeBanner: false,
       // initialRoute: "/login",
-      home: NavigationPageWidget(),
+      home: MyPagePostWidget(),
     );
   }
 }

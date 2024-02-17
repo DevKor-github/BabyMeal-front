@@ -164,7 +164,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const MyPageMyPostsPageWidget()));
+                                      const MyPagePostWidget()));
                         },
                         child: Container(
                             padding: const EdgeInsets.only(top: 18),
