@@ -65,11 +65,13 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
               onPressed: (isSelected[0] == true && !isSelected[1] == true) ||
                       (!isSelected[0] == true && isSelected[1] == true)
                   ? () {
+                    int selectedOptionIndex = isSelected.indexOf(true);
+                    String selectedValue = mealordessert[selectedOptionIndex];
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  RecomChooseMaterialPageWidget()));
+                                  RecomChooseMaterialPageWidget(selectedOption: selectedValue)));
                     }
                   : () {},
               label: Container(

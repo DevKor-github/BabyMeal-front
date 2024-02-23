@@ -1,5 +1,10 @@
+import 'package:babymeal/pages/mypage/ViewChildInfoPage.dart';
+import 'package:babymeal/pages/mypage/ViewMyPage.dart';
+import 'package:babymeal/services/MyPageService.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 class ChangeChildAllergyPageWidget extends StatefulWidget {
   const ChangeChildAllergyPageWidget({Key? key}) : super(key: key);
 
@@ -32,6 +37,29 @@ class _ChangeChildAllergyPageWidgetState
     "조개류",
     "잣"
   ];
+
+  List<String> imageList = [
+  'assets/images/allergy_egg.png', 
+  'assets/images/allergy_milk.png', 
+  'assets/images/allergy_buckwheat.png',
+  'assets/images/allergy_peanut.png',
+  'assets/images/allergy_bean.png',
+  'assets/images/allergy_wheat.png',
+  'assets/images/allergy_mackerel.png',
+  'assets/images/allergy_crab.png',
+  'assets/images/allergy_shrimp.png',
+  'assets/images/allergy_pork.png',
+  'assets/images/allergy_peach.png',
+  'assets/images/allergy_tomato.png',
+  'assets/images/allergy_sulfurous.png',
+  'assets/images/allergy_pinenut.png',
+  'assets/images/allergy_chicken.png',
+  'assets/images/allergy_beef.png',
+  'assets/images/allergy_squid.png',
+  'assets/images/allergy_seaweed.png',
+  'assets/images/allergy_pork.png',
+];
+
   List<bool> isSelected = List.generate(19, (index) => false);
   @override
   void initState() {
@@ -43,6 +71,71 @@ class _ChangeChildAllergyPageWidgetState
     super.dispose();
   }
 
+  
+  Future<void> updateBabyData(String newAllergy) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? userToken = prefs.getString('accessToken');
+
+  MyPageService myPageService = MyPageService();
+  String babyId = await myPageService.getBabyId(userToken!);
+
+  final currentData = await myPageService.fetchCurrentBabyData(babyId);
+
+  if (currentData == null) {
+    print('Failed to fetch current data');
+    return;
+  }
+
+  // 변경하고자 하는 필드만 새로운 값으로 업데이트합니다.
+  currentData['data'][0]['allergy'] = newAllergy;
+  print('newBabyName: $newAllergy');
+  print('Current data: $currentData');
+
+  final babyData = currentData['data'][0];
+  babyData['babyId'] = babyId;
+
+  print('babyData: $babyData');
+
+
+
+  if (userToken == null) {
+    print('No token found');
+    return;
+  }
+
+  final response = await http.put(
+    Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $userToken',
+    },
+    body: jsonEncode(babyData), // 변경된 전체 데이터를 서버에 보냅니다.
+
+  );
+
+  if (response.statusCode == 200) {
+    print('Baby data updated successfully');
+  } else {
+    print('Failed to update baby data');
+  }
+}
+
+Future<void> navigateFromChangeChildAllergyPage() async {
+  final result = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ViewChildInfoPageWidget()),
+  );
+
+  if (result == true) {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userToken = prefs.getString('accessToken');
+    MyPageService myPageService = MyPageService();
+    String babyId = await myPageService.getBabyId(userToken!);
+    myPageService.fetchCurrentBabyData(babyId);
+
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +145,23 @@ class _ChangeChildAllergyPageWidgetState
           height: 55,
           child: FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor: Color(
-                  0xFFFF5C39), //////////////////////////////////////////////////////
-              onPressed: () {},
+              backgroundColor: Color(0xFFFF5C39), 
+              onPressed: () async{
+                List<String> selectedAllergies = [];
+                    for (int i = 0; i < isSelected.length; i++) {
+                      if (isSelected[i]) {
+                        selectedAllergies.add(allergyList[i]);
+                      }
+                    }
+                String newAllergies = selectedAllergies.join(', ');
+                await updateBabyData(newAllergies);  
+                await navigateFromChangeChildAllergyPage();
+                Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ViewMyPageWidget()));
+              },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
@@ -158,6 +265,24 @@ class _ChangeChildAllergyPageWidgetState
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
+                                    child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(12),
+                                          child: Stack(
+                                            children: [
+                                              Image.asset(
+                                                imageList[index],
+                                                fit: BoxFit.cover,
+                                              ),
+                                              if (isSelected[index]) // isSelected가 true일 때만 오버레이 표시
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFFFF582C).withOpacity(0.2), // 투명한 주황색
+                                                    borderRadius: BorderRadius.circular(12),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
                             ),
                             Text(
                               allergyList[index],

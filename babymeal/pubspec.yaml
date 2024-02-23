@@ -15,6 +15,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   emoji_picker_flutter: ^1.6.3
   flutter_keyboard_visibility: ^5.4.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -58,3 +59,6 @@ flutter:
     - assets/images/scrab_full.png
     - assets/images/rectangle.png
     - assets/images/google.png
+    - assets/images/like.png
+    - assets/images/like_sel.png
+  

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPageMyPostsPageWidget extends StatefulWidget {
   const MyPageMyPostsPageWidget({super.key});
@@ -9,13 +12,48 @@ class MyPageMyPostsPageWidget extends StatefulWidget {
 }
 
 class _MyPageMyPostsPageWidgetState extends State<MyPageMyPostsPageWidget> {
-  List<String> TitleContext = [
-    '아이 훈육법에 대한 내 생각',
-    '[건대입구] 아이와 함께 가기 좋은 카페 \'웰컴베이비\' 추천합니다-메뉴,가격,주차정보',
-    '아이 밥 먹이는 꿀팁!!'
-  ];
+  List<String> TitleContext = [];
+  List<String> Title_TimeContext = [];
 
-  List<String> Title_TimeContext = ['9시간전', '13일전', '20일전'];
+  @override
+  void initState() {
+    super.initState();
+    fetchMyPosts();
+  }
+
+  Future<void> fetchMyPosts() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('accessToken');
+
+    if (token == null) {
+      print('Token not found');
+      return;
+    }
+
+    final response = await http.get(
+      Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/myPosts'),
+      headers: {
+         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
+      final posts = data['data'] as List;
+
+      setState(() {
+        TitleContext = posts.map<String>((post) => post['title'] as String).toList();
+        Title_TimeContext = posts.map<String>((post) {
+          final updateTime = DateTime.parse(post['updateTime']);
+          return '${updateTime.toLocal()}';
+        }).toList();
+      });
+    } else {
+      print('Failed to fetch posts');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,12 @@
+import 'package:babymeal/model/BabyModel.dart';
 import 'package:babymeal/pages/mypage/ChangeChildAllergy.dart';
 import 'package:babymeal/pages/mypage/ChangeChildBirthPage.dart';
 import 'package:babymeal/pages/mypage/ChangeChildNamePage.dart';
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewChildInfoPageWidget extends StatefulWidget {
   const ViewChildInfoPageWidget({super.key});
@@ -12,6 +17,46 @@ class ViewChildInfoPageWidget extends StatefulWidget {
 }
 
 class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
+  PostBaby? babyInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchBabyInfo();
+  }
+
+  Future<void> fetchBabyInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('accessToken');
+
+    if (token == null) {
+      print('No token found');
+      return;
+    }
+
+    final response = await http.get(
+      Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
+      if (data['success'] && data['data'] != null) {
+        setState(() {
+          babyInfo = PostBaby.fromJson(data['data'][0]);
+        });
+      }
+    } else {
+      print('Failed to fetch baby info');
+    }
+
+    print(babyInfo?.babyName);
+    print(babyInfo?.birth);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +115,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Text(
-                          '박서준',
+                          babyInfo?.babyName ?? '',
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
@@ -117,7 +162,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Text(
-                          '2020.12.01',
+                          babyInfo?.birth ?? '',
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
@@ -158,20 +203,38 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
                     ),
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ChangeChildAllergyPageWidget()),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Color(0xFF949494),
-                      size: 24,
-                    ))
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Text(
+                          babyInfo?.allergy ?? '',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF212121),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ChangeChildAllergyPageWidget()),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Color(0xFF949494),
+                            size: 24,
+                          )),
+                    ],
+                  ),
+                )
               ],
             )),
       ]),
