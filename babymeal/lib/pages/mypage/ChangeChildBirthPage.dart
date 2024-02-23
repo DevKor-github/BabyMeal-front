@@ -1,6 +1,11 @@
 import 'package:babymeal/pages/auth/SigninEnterAllergyPage.dart';
+import 'package:babymeal/pages/mypage/ViewChildInfoPage.dart';
+import 'package:babymeal/pages/mypage/ViewMyPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangeChildBirthPageWidget extends StatefulWidget {
   const ChangeChildBirthPageWidget({Key? key}) : super(key: key);
@@ -26,6 +31,85 @@ class _ChangeChildBirthPageWidgetState
     super.dispose();
   }
 
+  Future<Map<String, dynamic>?> fetchCurrentBabyData(int babyId) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? token = prefs.getString('accessToken');
+
+  if (token == null) {
+    print('No token found');
+    return null;
+  }
+
+  final response = await http.get(
+    Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+    headers: {
+      'Authorization': 'Bearer $token',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+    return data;
+  } else {
+    print('Failed to fetch baby data');
+    return null;
+  }
+}
+  Future<void> updateBabyData(int babyId, String newBirthday) async {
+  // 기존 데이터를 불러옵니다.
+  final currentData = await fetchCurrentBabyData(babyId);
+
+  if (currentData == null) {
+    print('Failed to fetch current data');
+    return;
+  }
+
+  // 변경하고자 하는 필드만 새로운 값으로 업데이트합니다.
+  currentData['data'][0]['birth'] = newBirthday;
+  print('newBabyName: $newBirthday');
+  print('Current data: $currentData');
+
+  final babyData = currentData['data'][0];
+  babyData['babyId'] = babyId;
+
+  print('babyData: $babyData');
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? userToken = prefs.getString('accessToken');
+
+  if (userToken == null) {
+    print('No token found');
+    return;
+  }
+
+  final response = await http.put(
+    Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $userToken',
+    },
+    body: jsonEncode(babyData), // 변경된 전체 데이터를 서버에 보냅니다.
+
+  );
+
+  if (response.statusCode == 200) {
+    print('Baby data updated successfully');
+  } else {
+    print('Failed to update baby data');
+  }
+}
+
+Future<void> navigateFromChangeChildBirthPage() async {
+  final result = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ViewChildInfoPageWidget()),
+  );
+
+  if (result == true) {
+     fetchCurrentBabyData(7);
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +127,15 @@ class _ChangeChildBirthPageWidgetState
               onPressed: change_yearController!.text.length == 4 &&
                       change_monthController!.text.length == 2 &&
                       change_dayController!.text.length == 2
-                  ? () {
+                  ? () async{
+                    final birthday = '${change_yearController!.text}-${change_monthController!.text}-${change_dayController!.text}';
+                    await updateBabyData(7, birthday);
+                    await navigateFromChangeChildBirthPage();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SigninEnterAllergyPageWidget()));
+                                  ViewMyPageWidget()));
                     }
                   : () {},
               label: Container(

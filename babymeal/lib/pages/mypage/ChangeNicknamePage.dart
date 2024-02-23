@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:babymeal/pages/mypage/ManageMyPage.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ChangeNicknamePageWidget extends StatefulWidget {
   const ChangeNicknamePageWidget({super.key});
 
@@ -14,6 +18,7 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
   TextEditingController? nickNameController = TextEditingController();
   int _charCount = 0;
   bool isExist = false;
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +37,43 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
     super.dispose();
   }
 
+  Future<void> updateNickname() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('accessToken');
+
+    final String url = 'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/nickname';
+
+    if (token != null && nickNameController!.text.isNotEmpty) {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({"customerName": nickNameController!.text}),
+      );
+
+    print(nickNameController!.text);
+    print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        final responseBody = json.decode(response.body);
+        if (responseBody["success"] && responseBody["data"] == true) {
+          // 닉네임 변경 성공
+          Navigator.pop(context);
+        } else {
+          // 닉네임이 이미 존재하는 경우
+          setState(() {
+            isExist = true;
+          });
+        }
+      } else {
+        // 서버 에러 처리
+        print("Error: ${response.body}");
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +88,8 @@ class _ChangeNicknamePageWidgetState extends State<ChangeNicknamePageWidget> {
                   ? Color(0xFFFF5C39)
                   : Color(0xFFBDBDBD),
               onPressed: !isExist && nickNameController!.text.length > 0
-                  ? () {
+                  ? () async{
+                    await updateNickname();
                 Navigator.push(
                     context,
                     MaterialPageRoute(

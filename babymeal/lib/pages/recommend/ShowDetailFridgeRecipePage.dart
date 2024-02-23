@@ -1,3 +1,4 @@
+import 'package:babymeal/model/FridgeRecipe.dart';
 import 'package:babymeal/model/RecipeDetailModel.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -6,20 +7,20 @@ import 'package:babymeal/model/RecipeModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' show utf8;
 
-class ShowDetailRecipePageWidget extends StatefulWidget {
+class ShowDetailFridgeRecipePageWidget extends StatefulWidget {
   final List<String> selectedMaterials;
   final List<String> selectedKeywords;
   final int? simpleDietId;
-  final List<GetRecipe> recipes;
+  final List<FridgeRecipe> fridgeRecipes;
   final Function(int, bool) onHeartChanged;
 
-  const ShowDetailRecipePageWidget({Key? key, required this.selectedMaterials, required this.selectedKeywords, this.simpleDietId, required this.recipes, required this.onHeartChanged}) : super(key: key);
+  const ShowDetailFridgeRecipePageWidget({Key? key, required this.selectedMaterials, required this.selectedKeywords, this.simpleDietId, required this.fridgeRecipes, required this.onHeartChanged}) : super(key: key);
 
   @override
-  State<ShowDetailRecipePageWidget> createState() => _ShowDetailRecipePageWidgetState();
+  State<ShowDetailFridgeRecipePageWidget> createState() => _ShowDetailRecipePageWidgetState();
 }
 
-class _ShowDetailRecipePageWidgetState extends State<ShowDetailRecipePageWidget> {
+class _ShowDetailRecipePageWidgetState extends State<ShowDetailFridgeRecipePageWidget> {
   bool isScrabed = false;
   bool isLoading = true; // 로딩 상태 관리
   RecipeDetail? recipeDetails;
@@ -128,21 +129,21 @@ class _ShowDetailRecipePageWidgetState extends State<ShowDetailRecipePageWidget>
           onPressed: () {
              setState(() {
               // 이전 페이지로 돌아가는 동안 변경된 Heart 정보를 반영
-              widget.recipes.forEach((recipe) {
+              widget.fridgeRecipes.forEach((recipe) {
               // 변경된 Heart 정보가 반영된 경우에만 각 레시피의 정보를 업데이트합니다.
               if (recipe.heart != null) {
                 // print(recipe.simpleDietId);
-                int index = widget.recipes.indexWhere((element) => element.simpleDietId == recipe.simpleDietId);
+                int index = widget.fridgeRecipes.indexWhere((element) => element.simpleDietId == recipe.simpleDietId);
                 // print(index);
                 // print('////');
-                if (index != -1 && widget.recipes[index].simpleDietId == widget.simpleDietId) {
+                if (index != -1 && widget.fridgeRecipes[index].simpleDietId == widget.simpleDietId) {
                   // print('*****');
                   // print(widget.simpleDietId);
                   // print('^^^^^^^');
-                  print(widget.recipes[index].heart);
+                  print(widget.fridgeRecipes[index].heart);
                   print(recipeDetails?.heart);                  
-                  widget.recipes[index].heart = recipeDetails?.heart;
-                  print(widget.recipes[index].heart);
+                  widget.fridgeRecipes[index].heart = recipeDetails?.heart;
+                  print(widget.fridgeRecipes[index].heart);
                 }
              }
       });
@@ -456,4 +457,3 @@ class _ShowDetailRecipePageWidgetState extends State<ShowDetailRecipePageWidget>
     ));
   }
 }
-

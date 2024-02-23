@@ -3,7 +3,10 @@ import 'package:babymeal/pages/recommend/WaitRecipesPage.dart';
 import 'package:flutter/material.dart';
 
 class SelectKeywordPageWidget extends StatefulWidget {
-  const SelectKeywordPageWidget({Key? key}) : super(key: key);
+  final String selectedOption;
+  final List<String> selectedMaterials;
+
+  const SelectKeywordPageWidget({Key? key, required this.selectedOption, required this.selectedMaterials}) : super(key: key);
 
   @override
   _SelectKeywordPageWidgetState createState() =>
@@ -13,8 +16,8 @@ class SelectKeywordPageWidget extends StatefulWidget {
 class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<bool> isSelected = List.generate(nutKeywords.length, (index) => false);
-
+ List<bool> isSelected = List.generate(nutKeywords.length + genKeywords.length, (index) => false);
+  
   double opacity1 = 0.0;
   double opacity2 = 0.0;
 
@@ -57,10 +60,27 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
               elevation: 0,
               backgroundColor: Color(0xFFFF5C39),
               onPressed: () {
+                List<String> selectedKeywords = [];
+                for (int i = 0; i < isSelected.length; i++) {
+                  if (isSelected[i]) {
+                    selectedKeywords.add(nutKeywords[i]); 
+                  }
+                }
+
+                for (int i = 0; i < genKeywords.length; i++) {
+                  if (isSelected[i + nutKeywords.length]) { 
+                    selectedKeywords.add(genKeywords[i]);
+                  }
+                }
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => WaitRecipesPageWidget()));
+                        builder: (context) => WaitRecipesPageWidget(
+                          selectedOption: widget.selectedOption,
+                          selectedMaterials: widget.selectedMaterials,
+                          selectedKeywords: selectedKeywords,
+                        )));
               },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
@@ -358,16 +378,18 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                               Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     0, 11, 20, 11),
+                                                child: FittedBox(
+                                                fit: BoxFit.scaleDown, // 텍스트가 컨테이너에 맞도록 크기 조정
                                                 child: Text(
                                                   '${genKeywords[index]}',
                                                   style: TextStyle(
                                                     color: Color(0xFF212121),
-                                                    fontSize: 15,
+                                                    fontSize: 15, // 원하는 최대 글자 크기 설정
                                                     fontFamily: 'Pretendard',
                                                     fontWeight: FontWeight.w600,
-                                                    height: 0,
                                                   ),
                                                 ),
+                                              ),
                                               )
                                             ],
                                           ),

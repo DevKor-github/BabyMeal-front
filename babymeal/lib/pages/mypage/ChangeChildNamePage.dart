@@ -1,6 +1,10 @@
 import 'package:babymeal/pages/mypage/ViewChildInfoPage.dart';
+import 'package:babymeal/pages/mypage/ViewMyPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangeChildNamePageWidget extends StatefulWidget {
   const ChangeChildNamePageWidget({Key? key}) : super(key: key);
@@ -32,6 +36,87 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
     super.dispose();
   }
 
+  Future<Map<String, dynamic>?> fetchCurrentBabyData(int babyId) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? token = prefs.getString('accessToken');
+
+  if (token == null) {
+    print('No token found');
+    return null;
+  }
+
+  final response = await http.get(
+    Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+    headers: {
+      'Authorization': 'Bearer $token',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+    return data;
+  } else {
+    print('Failed to fetch baby data');
+    return null;
+  }
+}
+  Future<void> updateBabyData(int babyId, String newBabyName) async {
+  // 기존 데이터를 불러옵니다.
+  final currentData = await fetchCurrentBabyData(babyId);
+
+  if (currentData == null) {
+    print('Failed to fetch current data');
+    return;
+  }
+
+  // 변경하고자 하는 필드만 새로운 값으로 업데이트합니다.
+  currentData['data'][0]['babyName'] = newBabyName;
+  print('newBabyName: $newBabyName');
+  print('Current data: $currentData');
+
+  final babyData = currentData['data'][0];
+  babyData['babyId'] = babyId;
+
+  print('babyData: $babyData');
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? userToken = prefs.getString('accessToken');
+
+  if (userToken == null) {
+    print('No token found');
+    return;
+  }
+
+  final response = await http.put(
+    Uri.parse('http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $userToken',
+    },
+    body: jsonEncode(babyData), // 변경된 전체 데이터를 서버에 보냅니다.
+
+  );
+
+  if (response.statusCode == 200) {
+    print('Baby data updated successfully');
+  } else {
+    print('Failed to update baby data');
+  }
+}
+
+// ViewChildInfoPageWidget에서
+Future<void> navigateFromChangeChildNamePage() async {
+  final result = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ViewChildInfoPageWidget()),
+  );
+
+  if (result == true) {
+     fetchCurrentBabyData(7);
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,11 +130,13 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
                   ? Color(0xFFFF5C39)
                   : Color(0xFFBDBDBD),
               onPressed: change_nameController!.text.length > 0
-                  ? () {
-                      Navigator.push(
+                  ? () async{
+                    await updateBabyData(7, change_nameController!.text);
+                    await navigateFromChangeChildNamePage();
+                    Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ViewChildInfoPageWidget()));
+                              builder: (context) => ViewMyPageWidget()));
                     }
                   : () {},
               label: Container(
