@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:babymeal/pages/auth/SigninEnterPassword.dart';
-import 'package:babymeal/pages/auth/SigninSelectEmailpage.dart';
+import 'package:babymeal/pages/signup/SignupPasswordPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:easy_rich_text/easy_rich_text.dart';
+import 'package:babymeal/services/AuthService.dart';
+import 'package:babymeal/model/AuthModel.dart';
 
 class SigninEnterEmail extends StatefulWidget{
   
@@ -13,12 +17,18 @@ class _SigninEnterEmail extends State<SigninEnterEmail>{
   final TextEditingController _emailController = TextEditingController();
   bool _isDisabled = true;
 
+  @override
+  void initState(){
+    super.initState();
+  }
+  
 
   @override
   void dispose() {
     _emailController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context){
     final phoneUnitHeight = MediaQuery.of(context).size.height/844;
@@ -40,13 +50,22 @@ class _SigninEnterEmail extends State<SigninEnterEmail>{
           child: Container(
             margin: EdgeInsets.only(bottom: 17.0 * phoneUnitHeight),
             child: ElevatedButton(
-              onPressed: (){
+              onPressed: () async{
                 String value = _emailController.text;
                 if(isValidEmail(value)){
-                  Navigator.push(
+                  bool? isExist = await AuthService().getCheckEmail(value);
+                  if(isExist == true){
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SigninEnterPassword())
-                  );
+                      MaterialPageRoute(builder: (context)=> SignupPasswordPageWidget(email:value)),
+                    );
+                  }
+                  if(isExist == false){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context)=> SigninEnterPassword(email: value)),
+                    );
+                  }
                 }
                 else null;
               },
@@ -115,6 +134,11 @@ class _SigninEnterEmail extends State<SigninEnterEmail>{
                   color: _isDisabled? Color(0xff9e9e9e):Color(0xff212121)
               ),
               obscureText: false,
+              onChanged: (value){
+                setState(() {
+                  _isDisabled = !isValidEmail(value);
+                });
+              },
               validator: (value){
                 String value = _emailController.text;
 

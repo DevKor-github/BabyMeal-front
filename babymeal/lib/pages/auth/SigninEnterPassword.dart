@@ -1,8 +1,15 @@
 import 'package:babymeal/pages/auth/SigninEnterEmailPage.dart';
+import 'package:babymeal/pages/refrigerator/ViewRefrigeratorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 
+import 'package:babymeal/model/AuthModel.dart';
+import 'package:babymeal/services/AuthService.dart';
+
 class SigninEnterPassword extends StatefulWidget{
+  const SigninEnterPassword({super.key, required this.email});
+
+  final String email;
   @override
   State<SigninEnterPassword> createState() => _SigninEnterPassword();
 }
@@ -11,6 +18,8 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
 
     final TextEditingController _passwordController = TextEditingController();
     bool _isDisabled = true;
+    bool validPassword = false;
+    int cnt = 0; //로그인 시도 횟수
 
     @override
     void dispose() {
@@ -18,6 +27,16 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
       super.dispose();
     }
 
+    void checkPassword(String email, String password) async{
+      bool? match = await AuthService().emailLogin(email, password);
+      setState(() {
+        if (match != null) {
+          validPassword = match;
+          print(validPassword);
+          cnt += 1 ;
+        }
+      });
+    }
     void _showPasswordResetDialog(BuildContext context){
       final phoneUnitHeight = MediaQuery.of(context).size.height/844;
       final phoneUnitWidth = MediaQuery.of(context).size.width/390;
@@ -97,12 +116,19 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
             child: Container(
               margin: EdgeInsets.only(bottom: 17 * phoneUnitHeight),
               child: ElevatedButton(
-                onPressed: (){
-                    return null;
+                onPressed: () async{
+                  checkPassword(widget.email, _passwordController.text);
+                  if (validPassword == true){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ViewRefrigeratorPageWidget()),
+                    );
+                  }
+
                 },
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size(phoneUnitWidth * 350, phoneUnitHeight * 55),
-                    backgroundColor: isValidPassword(_passwordController.text) ? Color(0xffff5c39) : Color.fromRGBO(189, 189, 189, 1),
+                    backgroundColor: _passwordController.text.isNotEmpty ? Color(0xffff5c39) : Color.fromRGBO(189, 189, 189, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -176,7 +202,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                   ),
                   validator: (value){
                     String value = _passwordController.text;
-                    if (!isValidPassword(value)){
+                    if (validPassword == false && cnt > 0){
                       return '잘못된 비밀번호입니다.';
                     }
                   },
@@ -234,13 +260,5 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
           ),
         ),
       );
-    }
-  }
-
-  bool isValidPassword(String password){
-    if (password.length >= 9 && password.length <= 16) {
-      return true;
-    } else {
-      return false;
     }
   }

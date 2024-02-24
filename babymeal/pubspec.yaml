@@ -13,6 +13,12 @@ dependencies:
   card_swiper: ^3.0.0
   easy_rich_text: '^2.0.0'
   flutter_screenutil: ^5.9.0
+  shared_preferences: ^2.2.2
+  provider: ^6.1.1
+  emoji_picker_flutter: ^1.6.3
+  firebase_auth: ^4.17.5
+  google_sign_in: ^6.1.6
+  reorderables:
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +27,8 @@ dev_dependencies:
   dio: ^4.0.6
   http: ^0.13.6
   http_parser: ^4.0.2
+  change_app_package_name: ^1.1.0
+
 
 flutter:
   uses-material-design: true

@@ -2,8 +2,11 @@ import 'package:babymeal/pages/auth/SigninEnterBirthPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+
+
 class SigninEnterNamePageWidget extends StatefulWidget {
   const SigninEnterNamePageWidget({Key? key}) : super(key: key);
+
 
   @override
   _SigninEnterNamePageWidgetState createState() =>
@@ -12,6 +15,7 @@ class SigninEnterNamePageWidget extends StatefulWidget {
 
 class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   TextEditingController? nameController = TextEditingController();
   int _charCount = 0;
@@ -48,9 +52,10 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                   ? () {
                       Navigator.push(
                           context,
+
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SigninEnterBirthPageWidget()));
+                                  SigninEnterBirthPageWidget(babyName: nameController!.text)));
                     }
                   : () {},
               label: Container(

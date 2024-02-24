@@ -2,8 +2,18 @@ import 'package:babymeal/pages/auth/SigninEnterNamePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:provider/provider.dart';
+import 'package:babymeal/services/AuthService.dart';
+
 class SigninEnterNicknamePageWidget extends StatefulWidget {
-  const SigninEnterNicknamePageWidget({Key? key}) : super(key: key);
+  const SigninEnterNicknamePageWidget({
+    Key? key,
+    required this.email,
+    required this.password,
+  }) : super(key: key);
+
+  final String email;
+  final String password;
 
   @override
   _SigninEnterNicknamePageWidgetState createState() =>
@@ -16,6 +26,7 @@ class _SigninEnterNicknamePageWidgetState
   TextEditingController? nickNameController = TextEditingController();
   int _charCount = 0;
   bool isExist = false;
+  bool success = false;
   @override
   void initState() {
     super.initState();
@@ -28,12 +39,31 @@ class _SigninEnterNicknamePageWidgetState
     });
   }
 
+  void checkNameExist(String name) async{
+    // 사용자 닉네임(이름)
+    bool? exist = await AuthService().getCheckName(name);
+    setState(() {
+      if(exist != null){
+        isExist = exist!;
+      }
+    });
+  }
+
+  void enrollAuth(String name, String email, String password) async{
+    // 회원 가입
+    bool? Success = await AuthService().postAuth(name, email, password);
+    setState(() {
+      success = Success;
+    });
+  }
+
   @override
   void dispose() {
     nickNameController!.dispose();
     super.dispose();
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,16 +73,22 @@ class _SigninEnterNicknamePageWidgetState
           height: 55,
           child: FloatingActionButton.extended(
               elevation: 0,
-              backgroundColor: !isExist && nickNameController!.text.length > 0
+              backgroundColor: isExist && nickNameController!.text.length > 0
                   ? Color(0xFFFF5C39)
                   : Color(0xFFBDBDBD),
-              onPressed: !isExist && nickNameController!.text.length > 0
+              onPressed: isExist && nickNameController!.text.length > 0
                   ? () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SigninEnterNamePageWidget()));
+                      enrollAuth(nickNameController!.text, widget.email, widget.password);
+                      if (success == true){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SigninEnterNamePageWidget()
+                            ));
+                      } else{
+
+                      }
                     }
                   : () {},
               label: Container(
@@ -183,6 +219,9 @@ class _SigninEnterNicknamePageWidgetState
                     controller: nickNameController,
                     autofillHints: [AutofillHints.email],
                     obscureText: false,
+                    onChanged: (value){
+                      checkNameExist(value);
+                    },
                     decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -253,7 +292,7 @@ class _SigninEnterNicknamePageWidgetState
                           ),
                         ),
                       ),
-                      isExist
+                      !isExist
                           ? Text(
                               "이미 존재하는 닉네임입니다.",
                               textAlign: TextAlign.right,

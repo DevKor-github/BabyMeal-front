@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SigninEnterAllergyPageWidget extends StatefulWidget {
-  const SigninEnterAllergyPageWidget({Key? key}) : super(key: key);
+import 'package:babymeal/services/BabyService.dart';
 
+class SigninEnterAllergyPageWidget extends StatefulWidget {
+  const SigninEnterAllergyPageWidget({
+    Key? key,
+    required this.babyName,
+    required this.birth,
+  }) : super(key: key);
+
+  final String babyName;
+  final String birth;
   @override
   _SigninEnterAllergyPageWidgetState createState() =>
       _SigninEnterAllergyPageWidgetState();
 }
+
 
 class _SigninEnterAllergyPageWidgetState
     extends State<SigninEnterAllergyPageWidget> {
@@ -53,7 +62,12 @@ class _SigninEnterAllergyPageWidgetState
           child: FloatingActionButton.extended(
               elevation: 0,
               backgroundColor: Color(0xFFFF5C39),
-              onPressed: () {},
+              onPressed: () async {
+                bool? success = await BabyService().postBaby(widget.babyName, widget.birth, "우유", "");
+                if(success == true){
+                  //페이지 넘기기
+                }
+              },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(

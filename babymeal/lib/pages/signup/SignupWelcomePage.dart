@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SignupWelcomePageWidget extends StatefulWidget {
-  const SignupWelcomePageWidget({super.key});
+  const SignupWelcomePageWidget({super.key, required this.email, required this.password});
+  final String email;
+  final String password;
 
   @override
   State<SignupWelcomePageWidget> createState() =>
@@ -47,7 +49,7 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
 
       Future.delayed(Duration(seconds: 3), () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SigninEnterNicknamePageWidget()));
+            builder: (context) => SigninEnterNicknamePageWidget(email: widget.email, password: widget.password)));
       });
     });
   }
@@ -99,7 +101,10 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
               child: Container(
                 height: 350.0,
                 width: 350.0,
-                color: const Color.fromARGB(255, 224, 224, 224),
+                child: Image.asset(
+                  'assets/images/baby.png',
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ],

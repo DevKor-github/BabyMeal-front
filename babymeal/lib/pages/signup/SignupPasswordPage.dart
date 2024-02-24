@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:babymeal/pages/signup/SignupWelcomePage.dart';
 
 class SignupPasswordPageWidget extends StatefulWidget {
-  const SignupPasswordPageWidget({super.key});
+  const SignupPasswordPageWidget(
+      {super.key, required this.email});
+  final String email;
 
   @override
   State<SignupPasswordPageWidget> createState() =>
@@ -50,7 +52,10 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.9,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 0.9,
           height: 55,
           child: FloatingActionButton.extended(
               elevation: 0,
@@ -59,11 +64,14 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                   : Color(0xFFBDBDBD),
               onPressed: charCount > 8 && matchpassword()
                   ? () {
-                      Navigator.of(context).push(_createRoute());
-                    }
+                Navigator.of(context).push(_createRoute(email: widget.email, passwordController: passwordController!));
+              }
                   : () {},
               label: Container(
-                  width: MediaQuery.of(context).size.width * 0.88,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -136,29 +144,29 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
                   child: RichText(
                       text: TextSpan(children: <TextSpan>[
-                    TextSpan(
-                      text: '비밀번호',
-                      style: TextStyle(
-                        color: Color(0xFF212121),
-                        fontSize: 25,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                        letterSpacing: -0.50,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '를 입력해주세요.',
-                      style: TextStyle(
-                        color: Color(0xFF616161),
-                        fontSize: 25,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                        letterSpacing: -0.50,
-                      ),
-                    ),
-                  ]))),
+                        TextSpan(
+                          text: '비밀번호',
+                          style: TextStyle(
+                            color: Color(0xFF212121),
+                            fontSize: 25,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                            letterSpacing: -0.50,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '를 입력해주세요.',
+                          style: TextStyle(
+                            color: Color(0xFF616161),
+                            fontSize: 25,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                            letterSpacing: -0.50,
+                          ),
+                        ),
+                      ]))),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                 child: Container(
@@ -199,7 +207,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
                     style: TextStyle(
                       color: Color(0xFF9E9E9E),
@@ -255,7 +263,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
                     style: TextStyle(
                       color: Color(0xFF9E9E9E),
@@ -279,47 +287,48 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 10, 20, 0),
                           child: charCount <= 8
                               ? Text(
-                                  "9~16자로 작성해주세요.",
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    color: Color(0xFFFF5C39),
-                                    fontSize: 12,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w400,
-                                    height: 0,
-                                    letterSpacing: -0.24,
-                                  ),
-                                )
+                            "9~16자로 작성해주세요.",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Color(0xFFFF5C39),
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                              letterSpacing: -0.24,
+                            ),
+                          )
                               : charCount > 8 && !matchpassword()
-                                  ? Text(
-                                      "비밀번호가 일치하지 않습니다.",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        color: Color(0xFFFF5C39),
-                                        fontSize: 12,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                        letterSpacing: -0.24,
-                                      ),
-                                    )
-                                  : charCount > 8 && matchpassword()
-                                      ? Text(
-                                          "비밀번호가 일치합니다",
-                                          textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                            color: Color(0xFFFF5C39),
-                                            fontSize: 12,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
-                                            letterSpacing: -0.24,
-                                          ),
-                                        )
-                                      : SizedBox(),
+                              ? Text(
+                            "비밀번호가 일치하지 않습니다.",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Color(0xFFFF5C39),
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                              letterSpacing: -0.24,
+                            ),
+                          )
+                              : charCount > 8 && matchpassword()
+                              ? Text(
+                            "비밀번호가 일치합니다",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Color(0xFFFF5C39),
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                              letterSpacing: -0.24,
+                            ),
+                          )
+                              : SizedBox(),
                         ),
                       ])),
             ],
@@ -327,12 +336,13 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
         ),
       ),
     );
+    }
   }
 
-  Route _createRoute() {
+  Route _createRoute({required String email, required TextEditingController passwordController}) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          SignupWelcomePageWidget(),
+          SignupWelcomePageWidget(email: email, password: passwordController.text),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
@@ -348,4 +358,4 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
       },
     );
   }
-}
+

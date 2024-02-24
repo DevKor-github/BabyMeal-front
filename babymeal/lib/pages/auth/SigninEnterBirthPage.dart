@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SigninEnterBirthPageWidget extends StatefulWidget {
-  const SigninEnterBirthPageWidget({Key? key}) : super(key: key);
+  const SigninEnterBirthPageWidget({
+    Key? key,
+    required this.babyName,
+  }) : super(key: key);
+
+  final String babyName;
 
   @override
   _SigninEnterBirthPageWidgetState createState() =>
@@ -48,7 +53,7 @@ class _SigninEnterBirthPageWidgetState
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SigninEnterAllergyPageWidget()));
+                                  SigninEnterAllergyPageWidget(babyName: widget.babyName, birth: '${yearController!.text}-${monthController!.text}-${dayController!.text}')));
                     }
                   : () {},
               label: Container(
