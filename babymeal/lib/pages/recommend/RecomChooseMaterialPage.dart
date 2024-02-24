@@ -1,8 +1,15 @@
 import 'package:babymeal/pages/recommend/SelectKeywordPage.dart';
+import 'package:babymeal/services/FridgeContentService.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecomChooseMaterialPageWidget extends StatefulWidget {
-  const RecomChooseMaterialPageWidget({super.key});
+  final String selectedOption;
+
+  const RecomChooseMaterialPageWidget({Key? key, required this.selectedOption})
+      : super(key: key);
 
   @override
   State<RecomChooseMaterialPageWidget> createState() =>
@@ -13,17 +20,7 @@ class _RecomChooseMaterialPageWidgetState
     extends State<RecomChooseMaterialPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<String> materialList = [
-    "체다치즈",
-    "고등어",
-    "달걀",
-    "통밀 식빵",
-    "브로콜리",
-    "양파",
-    "당근",
-    "우유",
-    "토마토"
-  ];
+  List<FridgeContent> FridgeContentsList = [];
 
   List<String> imageList = [
     "assets/images/cheese.png",
@@ -47,10 +44,11 @@ class _RecomChooseMaterialPageWidgetState
     super.initState();
     fadeInQuestion();
     fadeInOption();
+    loadUserTokenAndFetchFridgeContents();
   }
 
   fadeInQuestion() {
-    Future.delayed(const Duration(seconds: 0), () {
+    Future.delayed(Duration(seconds: 0), () {
       setState(() {
         opacity1 = 1.0;
       });
@@ -58,7 +56,7 @@ class _RecomChooseMaterialPageWidgetState
   }
 
   fadeInOption() {
-    Future.delayed(const Duration(seconds: 1, milliseconds: 0), () {
+    Future.delayed(Duration(seconds: 1, milliseconds: 0), () {
       setState(() {
         opacity2 = 1.0;
       });
@@ -76,24 +74,32 @@ class _RecomChooseMaterialPageWidgetState
               elevation: 0,
               backgroundColor: Color(0xFFFF5C39),
               onPressed: () {
+                List<String> selectedMaterials = [];
+                for (int i = 0; i < isSelected.length; i++) {
+                  if (isSelected[i]) {
+                    selectedMaterials.add(FridgeContentsList[i].ingredients);
+                  }
+                }
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SelectKeywordPageWidget()));
+                        builder: (context) => SelectKeywordPageWidget(
+                            selectedOption: widget.selectedOption,
+                            selectedMaterials: selectedMaterials)));
               },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
                         child: isSelected.contains(true)
-                            ? const Text(
+                            ? Text(
                                 '다음',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -105,7 +111,7 @@ class _RecomChooseMaterialPageWidgetState
                                   letterSpacing: -0.36,
                                 ),
                               )
-                            : const Text(
+                            : Text(
                                 '건너뛰기',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -119,10 +125,10 @@ class _RecomChooseMaterialPageWidgetState
                               ),
                       ),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
+                          padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: const Text(
+                          child: Text(
                             '2/3',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -141,10 +147,10 @@ class _RecomChooseMaterialPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -153,27 +159,27 @@ class _RecomChooseMaterialPageWidgetState
             Navigator.pop(context);
           },
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
         elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.00, -1.00),
+        alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: const BoxDecoration(),
+          decoration: BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AnimatedOpacity(
                 opacity: opacity1,
-                duration: const Duration(seconds: 1),
+                duration: Duration(seconds: 1),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                   child: Text(
                     '사용하고 싶은 재료 위주의 식단을 추천드려요!',
                     style: TextStyle(
@@ -188,11 +194,11 @@ class _RecomChooseMaterialPageWidgetState
               ),
               AnimatedOpacity(
                 opacity: opacity1,
-                duration: const Duration(seconds: 1),
+                duration: Duration(seconds: 1),
                 child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
+                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
                     child: RichText(
-                        text: const TextSpan(children: <TextSpan>[
+                        text: TextSpan(children: <TextSpan>[
                       TextSpan(
                         text: '냉장고 속 재료',
                         style: TextStyle(
@@ -219,61 +225,51 @@ class _RecomChooseMaterialPageWidgetState
               ),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 4,
                     mainAxisSpacing: 8.0,
                   ),
-                  itemCount: 9, // 아이템 개수
+                  itemCount: FridgeContentsList.length, // 아이템 개수
                   itemBuilder: (BuildContext context, int index) {
                     return AnimatedOpacity(
                         opacity: opacity2,
-                        duration: const Duration(seconds: 1),
+                        duration: Duration(seconds: 1),
                         child: GestureDetector(
                             onTap: () {
                               setState(() {
                                 isSelected[index] = !isSelected[index];
                               });
                             },
-                            child: Column(
+                            child: Container(
+                                child: Column(
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   width: 169,
                                   height: 48,
-                                  decoration: isSelected[index]
-                                      ? ShapeDecoration(
-                                          color: const Color(0x33FF582C),
-                                          shape: RoundedRectangleBorder(
-                                            side: const BorderSide(
-                                                width: 2,
-                                                color: Color(0xFFFF5C39)),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        )
-                                      : ShapeDecoration(
-                                          color: const Color(0xFFF4F3F0),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     child: Row(children: [
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 0, 10, 0),
-                                        child: Image.asset(imageList[index]),
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                        child: FridgeContentsList[index]
+                                                .emoticon
+                                                .isNotEmpty
+                                            ? Image.asset(
+                                                FridgeContentsList[index]
+                                                    .emoticon)
+                                            : SizedBox
+                                                .shrink(), // emoticon이 빈 문자열이면 아무 것도 표시하지 않음
                                       ),
                                       RichText(
                                           textAlign: TextAlign.left,
                                           text: TextSpan(
-                                            text: materialList[index],
+                                            text: FridgeContentsList[index]
+                                                .ingredients,
                                             style: isSelected[index]
-                                                ? const TextStyle(
+                                                ? TextStyle(
                                                     color: Color(0xFFFF5C39),
                                                     fontSize: 16,
                                                     fontFamily: 'Pretendard',
@@ -281,7 +277,7 @@ class _RecomChooseMaterialPageWidgetState
                                                     height: 0,
                                                     letterSpacing: -0.48,
                                                   )
-                                                : const TextStyle(
+                                                : TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 16,
                                                     fontFamily: 'Pretendard',
@@ -292,9 +288,28 @@ class _RecomChooseMaterialPageWidgetState
                                           ))
                                     ]),
                                   ),
+                                  decoration: isSelected[index]
+                                      ? ShapeDecoration(
+                                          color: Color(0x33FF582C),
+                                          shape: RoundedRectangleBorder(
+                                            side: BorderSide(
+                                                width: 2,
+                                                color: Color.fromARGB(
+                                                    255, 141, 74, 59)),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        )
+                                      : ShapeDecoration(
+                                          color: Color(0xFFF4F3F0),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
                                 ),
                               ],
-                            )));
+                            ))));
                   },
                 ),
               ),
@@ -303,5 +318,65 @@ class _RecomChooseMaterialPageWidgetState
         ),
       ),
     );
+  }
+
+  Future<void> loadUserTokenAndFetchFridgeContents() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String userToken = prefs.getString('accessToken') ??
+        ''; // accessToken 키로 저장된 토큰을 불러옵니다. 토큰이 없으면 빈 문자열을 반환합니다.
+
+    print('Loaded user token: $userToken');
+
+    if (userToken.isNotEmpty) {
+      fetchFridgeContents(userToken).then((contents) {
+        if (mounted) {
+          // Flutter 위젯의 상태가 여전히 활성 상태인지 확인
+          setState(() {
+            // materialList의 타입이 List<FridgeContent>로 변경되었다고 가정
+            FridgeContentsList = contents; // FridgeContent 객체의 리스트를 UI에 반영
+          });
+        }
+      }).catchError((error) {
+        print('Error fetching fridge contents: $error');
+      });
+    } else {
+      print("No user token found.");
+      // 토큰이 없을 경우의 처리 로직을 여기에 추가할 수 있습니다.
+    }
+  }
+
+  Future<List<FridgeContent>> fetchFridgeContents(String token) async {
+    final baseUrl =
+        'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080';
+    final url = Uri.parse('$baseUrl/fridge/customer');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // 여기서 인증 토큰을 전달
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final String responseBody = utf8.decode(response.bodyBytes);
+        final Map<String, dynamic> decodedResponse = jsonDecode(responseBody);
+
+        // 'data' 키에 해당하는 값을 List<dynamic>으로 추출합니다.
+        final List<dynamic> fridgeContents = decodedResponse['data'];
+
+        // FridgeContent 객체의 리스트로 변환합니다.
+        List<FridgeContent> contents = fridgeContents
+            .map<FridgeContent>((item) => FridgeContent.fromJson(item))
+            .toList();
+
+        return contents;
+      } else {
+        throw Exception('Failed to load fridge contents');
+      }
+    } catch (e) {
+      throw Exception('Failed to load fridge contents: $e');
+    }
   }
 }

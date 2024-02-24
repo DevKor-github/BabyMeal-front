@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MypageMyCommentsPageWidget extends StatefulWidget {
   const MypageMyCommentsPageWidget({super.key});
@@ -10,13 +13,51 @@ class MypageMyCommentsPageWidget extends StatefulWidget {
 
 class _MypageMyCommentsPageWidgetState
     extends State<MypageMyCommentsPageWidget> {
-  List<String> CommentContext = [
-    '좋은 글 잘 보고 가요!',
-    '생각해본 적 없는데 정말 좋은 방법이네요. 시도해볼게요!',
-    '감사합니다~'
-  ];
+  List<String> CommentContext = [];
+  List<String> Comment_TimeContext = [];
 
-  List<String> Comment_TimeContext = ['12시간전', '10일전', '15일전'];
+  @override
+  void initState() {
+    super.initState();
+    fetchMyComments();
+  }
+
+  Future<void> fetchMyComments() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('accessToken');
+
+    if (token == null) {
+      print('Token not found');
+      return;
+    }
+
+    final response = await http.get(
+      Uri.parse(
+          'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/myComments'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
+      final comments = data['data'] as List;
+
+      setState(() {
+        CommentContext = comments
+            .map<String>((comment) => comment['contents'] as String)
+            .toList();
+        Comment_TimeContext = comments.map<String>((comment) {
+          final time = DateTime.parse(comment['time']);
+          return '${time.toLocal()}'; // 여기서 원하는 형식으로 변환해야 할 수 있습니다.
+        }).toList();
+      });
+    } else {
+      print('Failed to fetch comments');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +66,7 @@ class _MypageMyCommentsPageWidgetState
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             '\n내 댓글',
             style: TextStyle(
               fontSize: 18.0,
@@ -37,7 +78,7 @@ class _MypageMyCommentsPageWidgetState
             padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
             color: Colors.transparent,
             iconSize: 60,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_ios,
               color: Color(0xFF949494),
               size: 24,
@@ -54,16 +95,16 @@ class _MypageMyCommentsPageWidgetState
             itemCount: CommentContext.length,
             itemBuilder: (context, index) {
               return Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 20, 10, 0),
+                        padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
                         child: Text(CommentContext[index],
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Color(0xFF212121),
                               fontSize: 16,
                               fontFamily: 'Pretendard',
@@ -73,9 +114,9 @@ class _MypageMyCommentsPageWidgetState
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 10, 10, 20),
+                        padding: EdgeInsets.fromLTRB(20, 10, 10, 20),
                         child: Text(Comment_TimeContext[index],
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Color(0xFF616161),
                               fontSize: 12,
                               fontFamily: 'Pretendard',

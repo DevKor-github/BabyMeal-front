@@ -1,3 +1,4 @@
+import 'package:babymeal/model/FridgeRecipe.dart';
 import 'package:babymeal/model/RecipeDetailModel.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -6,29 +7,25 @@ import 'package:babymeal/model/RecipeModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' show utf8;
 
-class ShowDetailRecipePageWidget extends StatefulWidget {
-  final List<String> selectedMaterials;
-  final List<String> selectedKeywords;
+class ShowDetailMainFridgeRecipePageWidget extends StatefulWidget {
   final int? simpleDietId;
-  final List<GetRecipe> recipes;
+  final List<FridgeRecipe> fridgeRecipes;
   final Function(int, bool) onHeartChanged;
 
-  const ShowDetailRecipePageWidget(
+  const ShowDetailMainFridgeRecipePageWidget(
       {Key? key,
-      required this.selectedMaterials,
-      required this.selectedKeywords,
       this.simpleDietId,
-      required this.recipes,
+      required this.fridgeRecipes,
       required this.onHeartChanged})
       : super(key: key);
 
   @override
-  State<ShowDetailRecipePageWidget> createState() =>
+  State<ShowDetailMainFridgeRecipePageWidget> createState() =>
       _ShowDetailRecipePageWidgetState();
 }
 
 class _ShowDetailRecipePageWidgetState
-    extends State<ShowDetailRecipePageWidget> {
+    extends State<ShowDetailMainFridgeRecipePageWidget> {
   bool isScrabed = false;
   bool isLoading = true; // 로딩 상태 관리
   RecipeDetail? recipeDetails;
@@ -43,32 +40,23 @@ class _ShowDetailRecipePageWidgetState
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('accessToken');
 
-    String fridge = widget.selectedMaterials
-        .join(','); // selectedMaterials를 콤마로 구분된 문자열로 변환
-    String keyword = widget.selectedKeywords.join(',');
     if (token != null) {
-      fetchRecipeDetails(token, fridge, keyword);
+      fetchRecipeDetails(token);
     } else {
       print('No token found');
       // 토큰이 없는 경우의 처리를 여기에 추가하세요.
     }
   }
 
-  Future<void> fetchRecipeDetails(
-      String token, String fridge, String keyword) async {
+  Future<void> fetchRecipeDetails(String token) async {
     print(widget.simpleDietId);
     var url = Uri.parse(
-        'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/diet/detail?simpleDietId=${widget.simpleDietId}');
+        'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/diet/fridge/detail?simpleDietId=${widget.simpleDietId}');
     // print(url);
-    var body = jsonEncode({
-      'fridge': fridge,
-      'keyword': keyword,
-    });
 
     try {
       var response = await http.post(
         url,
-        body: body,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -141,24 +129,24 @@ class _ShowDetailRecipePageWidgetState
             onPressed: () {
               setState(() {
                 // 이전 페이지로 돌아가는 동안 변경된 Heart 정보를 반영
-                widget.recipes.forEach((recipe) {
+                widget.fridgeRecipes.forEach((recipe) {
                   // 변경된 Heart 정보가 반영된 경우에만 각 레시피의 정보를 업데이트합니다.
                   if (recipe.heart != null) {
                     // print(recipe.simpleDietId);
-                    int index = widget.recipes.indexWhere((element) =>
+                    int index = widget.fridgeRecipes.indexWhere((element) =>
                         element.simpleDietId == recipe.simpleDietId);
                     // print(index);
                     // print('////');
                     if (index != -1 &&
-                        widget.recipes[index].simpleDietId ==
+                        widget.fridgeRecipes[index].simpleDietId ==
                             widget.simpleDietId) {
                       // print('*****');
                       // print(widget.simpleDietId);
                       // print('^^^^^^^');
-                      print(widget.recipes[index].heart);
+                      print(widget.fridgeRecipes[index].heart);
                       print(recipeDetails?.heart);
-                      widget.recipes[index].heart = recipeDetails?.heart;
-                      print(widget.recipes[index].heart);
+                      widget.fridgeRecipes[index].heart = recipeDetails?.heart;
+                      print(widget.fridgeRecipes[index].heart);
                     }
                   }
                 });
@@ -264,16 +252,6 @@ class _ShowDetailRecipePageWidgetState
                                       Icons.tag,
                                       color: Color(0xFF9E9E9E),
                                       size: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    widget?.selectedKeywords.toString() ?? ' ',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Pretendard',
-                                      color: Color(0xFF616161),
                                     ),
                                   ),
                                 ],

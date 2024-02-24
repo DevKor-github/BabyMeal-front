@@ -1,6 +1,11 @@
 import 'package:babymeal/pages/auth/SigninEnterAllergyPage.dart';
+import 'package:babymeal/pages/mypage/ViewChildInfoPage.dart';
+import 'package:babymeal/pages/mypage/ViewMyPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangeChildBirthPageWidget extends StatefulWidget {
   const ChangeChildBirthPageWidget({Key? key}) : super(key: key);
@@ -26,6 +31,88 @@ class _ChangeChildBirthPageWidgetState
     super.dispose();
   }
 
+  Future<Map<String, dynamic>?> fetchCurrentBabyData(int babyId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('accessToken');
+
+    if (token == null) {
+      print('No token found');
+      return null;
+    }
+
+    final response = await http.get(
+      Uri.parse(
+          'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data =
+          json.decode(utf8.decode(response.bodyBytes));
+      return data;
+    } else {
+      print('Failed to fetch baby data');
+      return null;
+    }
+  }
+
+  Future<void> updateBabyData(int babyId, String newBirthday) async {
+    // 기존 데이터를 불러옵니다.
+    final currentData = await fetchCurrentBabyData(babyId);
+
+    if (currentData == null) {
+      print('Failed to fetch current data');
+      return;
+    }
+
+    // 변경하고자 하는 필드만 새로운 값으로 업데이트합니다.
+    currentData['data'][0]['birth'] = newBirthday;
+    print('newBabyName: $newBirthday');
+    print('Current data: $currentData');
+
+    final babyData = currentData['data'][0];
+    babyData['babyId'] = babyId;
+
+    print('babyData: $babyData');
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userToken = prefs.getString('accessToken');
+
+    if (userToken == null) {
+      print('No token found');
+      return;
+    }
+
+    final response = await http.put(
+      Uri.parse(
+          'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/baby'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $userToken',
+      },
+      body: jsonEncode(babyData), // 변경된 전체 데이터를 서버에 보냅니다.
+    );
+
+    if (response.statusCode == 200) {
+      print('Baby data updated successfully');
+    } else {
+      print('Failed to update baby data');
+    }
+  }
+
+  Future<void> navigateFromChangeChildBirthPage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ViewChildInfoPageWidget()),
+    );
+
+    if (result == true) {
+      fetchCurrentBabyData(7);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +130,18 @@ class _ChangeChildBirthPageWidgetState
               onPressed: change_yearController!.text.length == 4 &&
                       change_monthController!.text.length == 2 &&
                       change_dayController!.text.length == 2
-                  ? () {
+                  ? () async {
+                      final birthday =
+                          '${change_yearController!.text}-${change_monthController!.text}-${change_dayController!.text}';
+                      await updateBabyData(7, birthday);
+                      await navigateFromChangeChildBirthPage();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  const SigninEnterAllergyPageWidget()));
+                              builder: (context) => ViewMyPageWidget()));
                     }
                   : () {},
-              label: SizedBox(
+              label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +150,7 @@ class _ChangeChildBirthPageWidgetState
                         child: Container(
                           alignment: Alignment.center,
                           width: 64,
-                          child: const Text(
+                          child: Text(
                             '저장',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -82,7 +172,7 @@ class _ChangeChildBirthPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           '\n아이 생일',
           style: TextStyle(
             fontSize: 18.0,
@@ -91,10 +181,10 @@ class _ChangeChildBirthPageWidgetState
           ),
         ),
         leading: IconButton(
-          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -107,10 +197,10 @@ class _ChangeChildBirthPageWidgetState
         elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.00, -1.00),
+        alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570,
           ),
           decoration: BoxDecoration(),
@@ -119,12 +209,12 @@ class _ChangeChildBirthPageWidgetState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: Container(
                     width: double.infinity,
                     child: Column(
                       children: [
-                        const SizedBox(height: 20),
+                        SizedBox(height: 20),
                         Row(
                           children: <Widget>[
                             Expanded(
@@ -134,7 +224,7 @@ class _ChangeChildBirthPageWidgetState
                                   LengthLimitingTextInputFormatter(4),
                                 ],
                                 textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   hintText: 'YYYY',
                                   hintStyle: TextStyle(
                                     color: Color(0xFF9E9E9E),
@@ -148,7 +238,7 @@ class _ChangeChildBirthPageWidgetState
                                 keyboardType: TextInputType.number,
                               ),
                             ),
-                            const Text(
+                            Text(
                               '/',
                               style: TextStyle(
                                 color: Color(0xFFE0E0E0),
@@ -165,7 +255,7 @@ class _ChangeChildBirthPageWidgetState
                                   LengthLimitingTextInputFormatter(2),
                                 ],
                                 textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   hintText: 'MM',
                                   hintStyle: TextStyle(
                                     color: Color(0xFF9E9E9E),
@@ -179,7 +269,7 @@ class _ChangeChildBirthPageWidgetState
                                 keyboardType: TextInputType.number,
                               ),
                             ),
-                            const Text(
+                            Text(
                               '/',
                               style: TextStyle(
                                 color: Color(0xFFE0E0E0),
@@ -196,7 +286,7 @@ class _ChangeChildBirthPageWidgetState
                                   LengthLimitingTextInputFormatter(2),
                                 ],
                                 textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   hintText: 'DD',
                                   hintStyle: TextStyle(
                                     color: Color(0xFF9E9E9E),
@@ -212,13 +302,13 @@ class _ChangeChildBirthPageWidgetState
                             ),
                           ],
                         ),
-                        SizedBox(
+                        Container(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child: const Divider())
+                            child: Divider())
                       ],
                     )),
               ),
-              const Align(
+              Align(
                 alignment: AlignmentDirectional(0.00, 0.00),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),

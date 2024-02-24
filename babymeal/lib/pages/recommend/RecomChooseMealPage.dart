@@ -33,7 +33,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
   }
 
   fadeInQuestion() {
-    Future.delayed(const Duration(seconds: 0), () {
+    Future.delayed(Duration(seconds: 0), () {
       setState(() {
         opacity1 = 1.0;
       });
@@ -41,7 +41,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
   }
 
   fadeInOption() {
-    Future.delayed(const Duration(seconds: 1, milliseconds: 0), () {
+    Future.delayed(Duration(seconds: 1, milliseconds: 0), () {
       setState(() {
         opacity2 = 1.0;
       });
@@ -60,30 +60,33 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
               backgroundColor:
                   (isSelected[0] == true && !isSelected[1] == true) ||
                           (!isSelected[0] == true && isSelected[1] == true)
-                      ? const Color(0xFFFF5C39)
-                      : const Color(0xFFBDBDBD),
+                      ? Color(0xFFFF5C39)
+                      : Color(0xFFBDBDBD),
               onPressed: (isSelected[0] == true && !isSelected[1] == true) ||
                       (!isSelected[0] == true && isSelected[1] == true)
                   ? () {
+                      int selectedOptionIndex = isSelected.indexOf(true);
+                      String selectedValue = mealordessert[selectedOptionIndex];
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const RecomChooseMaterialPageWidget()));
+                                  RecomChooseMaterialPageWidget(
+                                      selectedOption: selectedValue)));
                     }
                   : () {},
-              label: SizedBox(
+              label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: const Text(
+                        child: Text(
                           '다음',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -100,7 +103,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
                           padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: const Text(
+                          child: Text(
                             '1/3',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -122,7 +125,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
           padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -131,24 +134,24 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
             Navigator.pop(context);
           },
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
         elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.00, -1.00),
+        alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: const BoxDecoration(),
+          decoration: BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                 child: Text(
                   '  ',
                   style: TextStyle(
@@ -162,11 +165,11 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
               ),
               AnimatedOpacity(
                 opacity: opacity1,
-                duration: const Duration(seconds: 1),
+                duration: Duration(seconds: 1),
                 child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
+                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
                     child: RichText(
-                        text: const TextSpan(children: <TextSpan>[
+                        text: TextSpan(children: <TextSpan>[
                       TextSpan(
                         text: '원하는 유형',
                         style: TextStyle(
@@ -193,31 +196,32 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
               ),
               Expanded(
                   child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
                 itemCount: 2,
                 itemBuilder: (BuildContext context, int index) {
                   return AnimatedOpacity(
                       opacity: opacity2,
-                      duration: const Duration(seconds: 1),
+                      duration: Duration(seconds: 1),
                       child: GestureDetector(
                           onTap: () {
                             setState(() {
                               isSelected[index] = !isSelected[index];
                             });
                           },
-                          child: Column(
+                          child: Container(
+                              child: Column(
                             children: [
                               Container(
-                                margin: const EdgeInsets.fromLTRB(0, 10, 0, 6),
+                                margin: EdgeInsets.fromLTRB(0, 10, 0, 6),
                                 width: 168,
                                 height: 168,
                                 decoration: isSelected[index]
                                     ? ShapeDecoration(
                                         color: Color(0x33FF582C),
                                         shape: RoundedRectangleBorder(
-                                          side: const BorderSide(
+                                          side: BorderSide(
                                               width: 2,
                                               color: Color(0xFFFF5C39)),
                                           borderRadius:
@@ -225,7 +229,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
                                         ),
                                       )
                                     : ShapeDecoration(
-                                        color: const Color(0xFFF4F3F0),
+                                        color: Color(0xFFF4F3F0),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(12),
@@ -237,7 +241,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
                                 mealordessert[index],
                                 textAlign: TextAlign.center,
                                 style: isSelected[index]
-                                    ? const TextStyle(
+                                    ? TextStyle(
                                         color: Color(0xFFFF5C39),
                                         fontSize: 16,
                                         fontFamily: 'Pretendard',
@@ -245,7 +249,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
                                         height: 0,
                                         letterSpacing: -0.48,
                                       )
-                                    : const TextStyle(
+                                    : TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
                                         fontFamily: 'Pretendard',
@@ -255,7 +259,7 @@ class _RecomChooseMealPageWidgetState extends State<RecomChooseMealPageWidget> {
                                       ),
                               )
                             ],
-                          )));
+                          ))));
                 },
               )),
             ],

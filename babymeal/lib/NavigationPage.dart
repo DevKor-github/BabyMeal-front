@@ -1,6 +1,8 @@
+import 'package:babymeal/etc/url.dart';
 import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'pages/community/ViewCommunityPage.dart';
 import 'pages/mypage/ViewMyPage.dart';
@@ -42,12 +44,18 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
     super.initState();
     _loadPosts();
     _loadScrappedPosts();
+    _setToken();
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future _setToken() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    sharedPreference.setString("access_token", tempToken);
   }
 
   @override

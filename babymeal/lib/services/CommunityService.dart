@@ -70,7 +70,7 @@ class PostService extends ChangeNotifier {
     }
   }
 
-  Future<bool> updatePost(PostPost post) async {
+  Future<bool> updatePost(int postId, PostPost post) async {
     //Post 업데이트
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
     String? token = sharedPreference.getString("access_token");
@@ -78,15 +78,15 @@ class PostService extends ChangeNotifier {
       {
         'postUpdateReq': MultipartFile.fromString(
           jsonEncode({
-            "postId": 15,
-            "comments": 0,
-            "likes": 0,
-            "title": "체인지1",
-            "body": "체인지1",
-            "scrap": 0,
-            "type": "식단",
+            "postId": postId,
+            "comments": post.comments,
+            "likes": post.likes,
+            "title": post.title,
+            "body": post.body,
+            "scrap": post.scrap,
+            "type": post.type,
             "filePath": [],
-            "files": []
+            "files": post.photos
           }),
           contentType: MediaType.parse('application/json'),
         )
