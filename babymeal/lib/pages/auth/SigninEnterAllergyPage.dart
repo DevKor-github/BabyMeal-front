@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SigninEnterAllergyPageWidget extends StatefulWidget {
-  const SigninEnterAllergyPageWidget({Key? key}) : super(key: key);
+import 'package:babymeal/services/BabyService.dart';
 
+class SigninEnterAllergyPageWidget extends StatefulWidget {
+  const SigninEnterAllergyPageWidget({
+    Key? key,
+    required this.babyName,
+    required this.birth,
+  }) : super(key: key);
+
+  final String babyName;
+  final String birth;
   @override
   _SigninEnterAllergyPageWidgetState createState() =>
       _SigninEnterAllergyPageWidgetState();
@@ -53,19 +61,25 @@ class _SigninEnterAllergyPageWidgetState
           child: FloatingActionButton.extended(
               elevation: 0,
               backgroundColor: Color(0xFFFF5C39),
-              onPressed: () {},
+              onPressed: () async {
+                bool? success = await BabyService()
+                    .postBaby(widget.babyName, widget.birth, "우유", "");
+                if (success == true) {
+                  //페이지 넘기기
+                }
+              },
               label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: const Text(
+                        child: Text(
                           '시작하기',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -82,7 +96,7 @@ class _SigninEnterAllergyPageWidgetState
                           padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: const Text(
+                          child: Text(
                             '4/4',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -101,10 +115,10 @@ class _SigninEnterAllergyPageWidgetState
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -118,19 +132,19 @@ class _SigninEnterAllergyPageWidgetState
         elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.00, -1.00),
+        alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: const BoxDecoration(),
+          decoration: BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                 child: Text(
                   '레시피 추천 시 해당 식품을 제외하고 알려드려요.',
                   style: TextStyle(
@@ -143,9 +157,9 @@ class _SigninEnterAllergyPageWidgetState
                 ),
               ),
               Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 48),
                   child: RichText(
-                      text: const TextSpan(children: <TextSpan>[
+                      text: TextSpan(children: <TextSpan>[
                     TextSpan(
                       text: '알레르기 식품',
                       style: TextStyle(
@@ -171,7 +185,7 @@ class _SigninEnterAllergyPageWidgetState
                   ]))),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                   ),
                   itemCount: 19, // 아이템 개수
@@ -193,7 +207,7 @@ class _SigninEnterAllergyPageWidgetState
                                   ? ShapeDecoration(
                                       color: Color(0x33FF582C),
                                       shape: RoundedRectangleBorder(
-                                        side: const BorderSide(
+                                        side: BorderSide(
                                             width: 2, color: Color(0xFFFF5C39)),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
@@ -208,7 +222,7 @@ class _SigninEnterAllergyPageWidgetState
                             Text(
                               allergyList[index],
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontFamily: 'Pretendard',

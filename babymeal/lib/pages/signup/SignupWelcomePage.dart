@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SignupWelcomePageWidget extends StatefulWidget {
-  const SignupWelcomePageWidget({super.key});
+  const SignupWelcomePageWidget(
+      {super.key, required this.email, required this.password});
+  final String email;
+  final String password;
 
   @override
   State<SignupWelcomePageWidget> createState() =>
@@ -24,7 +27,7 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
   }
 
   fadeInWelcome() {
-    Future.delayed(const Duration(seconds: 0), () {
+    Future.delayed(Duration(seconds: 0), () {
       setState(() {
         opacity1 = 1.0;
       });
@@ -32,7 +35,7 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
   }
 
   fadeInExtraInfo() {
-    Future.delayed(const Duration(seconds: 0, milliseconds: 500), () {
+    Future.delayed(Duration(seconds: 0, milliseconds: 500), () {
       setState(() {
         opacity2 = 1.0;
       });
@@ -40,14 +43,15 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
   }
 
   fadeInPicture() {
-    Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
+    Future.delayed(Duration(seconds: 1, milliseconds: 500), () {
       setState(() {
         opacity3 = 1.0;
       });
 
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 3), () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const SigninEnterNicknamePageWidget()));
+            builder: (context) => SigninEnterNicknamePageWidget(
+                email: widget.email, password: widget.password)));
       });
     });
   }
@@ -61,8 +65,8 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
           children: <Widget>[
             AnimatedOpacity(
               opacity: opacity1,
-              duration: const Duration(seconds: 1),
-              child: const Padding(
+              duration: Duration(seconds: 1),
+              child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 130, 0, 8),
                 child: Text(
                   '환영합니다!',
@@ -78,8 +82,8 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
             ),
             AnimatedOpacity(
               opacity: opacity2,
-              duration: const Duration(seconds: 1),
-              child: const Padding(
+              duration: Duration(seconds: 1),
+              child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                 child: Text(
                   '이제 추가 정보 입력만 남았어요',
@@ -95,11 +99,14 @@ class _SignupWelcomePageWidgetState extends State<SignupWelcomePageWidget> {
             ),
             AnimatedOpacity(
               opacity: opacity3,
-              duration: const Duration(seconds: 1),
+              duration: Duration(seconds: 1),
               child: Container(
                 height: 350.0,
                 width: 350.0,
-                color: const Color.fromARGB(255, 224, 224, 224),
+                child: Image.asset(
+                  'assets/images/baby_big.png',
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ],

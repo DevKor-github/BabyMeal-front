@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:babymeal/pages/auth/SigninEnterPassword.dart';
-import 'package:babymeal/pages/auth/SigninSelectEmailpage.dart';
+import 'package:babymeal/pages/signup/SignupPasswordPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:easy_rich_text/easy_rich_text.dart';
+import 'package:babymeal/services/AuthService.dart';
+import 'package:babymeal/model/AuthModel.dart';
 
 class SigninEnterEmail extends StatefulWidget {
   @override
@@ -10,7 +14,12 @@ class SigninEnterEmail extends StatefulWidget {
 
 class _SigninEnterEmail extends State<SigninEnterEmail> {
   final TextEditingController _emailController = TextEditingController();
-  final bool _isDisabled = true;
+  bool _isDisabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -39,13 +48,26 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
         child: Container(
           margin: EdgeInsets.only(bottom: 17.0 * phoneUnitHeight),
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               String value = _emailController.text;
               if (isValidEmail(value)) {
-                Navigator.push(
+                bool? isExist = await AuthService().getCheckEmail(value);
+                if (isExist == true) {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SigninEnterPassword()));
+                        builder: (context) =>
+                            SignupPasswordPageWidget(email: value)),
+                  );
+                }
+                if (isExist == false) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SigninEnterPassword(email: value)),
+                  );
+                }
               } else
                 null;
             },
@@ -57,13 +79,13 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                   fontFamily: 'Pretendard',
                   color: Color.fromRGBO(33, 33, 33, 1),
                 )),
-            child: const Text(
+            child: Text(
               '다음',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -85,7 +107,7 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               EasyRichText('이메일을 입력해주세요.',
-                  defaultStyle: const TextStyle(
+                  defaultStyle: TextStyle(
                     fontSize: 25,
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w700,
@@ -93,13 +115,13 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
                   patternList: [
                     EasyRichTextPattern(
                       targetString: '이메일',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Color(0xff212121),
                       ),
                     ),
                     EasyRichTextPattern(
                       targetString: '을 입력해주세요.',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Color(0xff616161),
                       ),
                     ),
@@ -116,6 +138,11 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
                       color:
                           _isDisabled ? Color(0xff9e9e9e) : Color(0xff212121)),
                   obscureText: false,
+                  onChanged: (value) {
+                    setState(() {
+                      _isDisabled = !isValidEmail(value);
+                    });
+                  },
                   validator: (value) {
                     String value = _emailController.text;
 
@@ -128,7 +155,7 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       hintText: '이메일',
                       hintStyle: TextStyle(
                         color: Color(0xff9e9e9e),

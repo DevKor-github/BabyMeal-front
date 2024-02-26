@@ -1,8 +1,15 @@
 import 'package:babymeal/pages/auth/SigninEnterEmailPage.dart';
+import 'package:babymeal/pages/refrigerator/ViewRefrigeratorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 
+import 'package:babymeal/model/AuthModel.dart';
+import 'package:babymeal/services/AuthService.dart';
+
 class SigninEnterPassword extends StatefulWidget {
+  const SigninEnterPassword({super.key, required this.email});
+
+  final String email;
   @override
   State<SigninEnterPassword> createState() => _SigninEnterPassword();
 }
@@ -10,11 +17,24 @@ class SigninEnterPassword extends StatefulWidget {
 class _SigninEnterPassword extends State<SigninEnterPassword> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isDisabled = true;
+  bool validPassword = false;
+  int cnt = 0; //로그인 시도 횟수
 
   @override
   void dispose() {
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void checkPassword(String email, String password) async {
+    bool? match = await AuthService().emailLogin(email, password);
+    setState(() {
+      if (match != null) {
+        validPassword = match;
+        print(validPassword);
+        cnt += 1;
+      }
+    });
   }
 
   void _showPasswordResetDialog(BuildContext context) {
@@ -29,7 +49,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
             return AlertDialog(
               backgroundColor: Color(0xffffffff),
               content: Container(
-                child: const Text(
+                child: Text(
                   '이메일로 임시 비밀번호를 전송했습니다.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -57,7 +77,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text('확인',
+                      child: Text('확인',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -94,24 +114,31 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
         child: Container(
           margin: EdgeInsets.only(bottom: 17 * phoneUnitHeight),
           child: ElevatedButton(
-            onPressed: () {
-              return null;
+            onPressed: () async {
+              checkPassword(widget.email, _passwordController.text);
+              if (validPassword == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ViewRefrigeratorPageWidget()),
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
                 minimumSize: Size(phoneUnitWidth * 350, phoneUnitHeight * 55),
-                backgroundColor: isValidPassword(_passwordController.text)
+                backgroundColor: _passwordController.text.isNotEmpty
                     ? Color(0xffff5c39)
                     : Color.fromRGBO(189, 189, 189, 1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                   fontFamily: 'Pretendard',
                   color: Color.fromRGBO(33, 33, 33, 1),
                 )),
-            child: const Text('로그인',
+            child: Text('로그인',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
@@ -127,7 +154,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               '9~16자로 입력해주세요.',
               style: TextStyle(
                 color: Color(0xff757575),
@@ -139,7 +166,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
             ),
             SizedBox(height: phoneUnitHeight * 4),
             EasyRichText('비밀번호를 입력해주세요.',
-                defaultStyle: const TextStyle(
+                defaultStyle: TextStyle(
                   fontSize: 25,
                   fontFamily: 'Pretendard',
                   fontWeight: FontWeight.w700,
@@ -147,13 +174,13 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                 patternList: [
                   EasyRichTextPattern(
                     targetString: '비밀번호',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xff212121),
                     ),
                   ),
                   EasyRichTextPattern(
                     targetString: '를 입력해주세요.',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xff616161),
                     ),
                   ),
@@ -170,12 +197,12 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                   color: _isDisabled ? Color(0xff9e9e9e) : Color(0xff212121)),
               validator: (value) {
                 String value = _passwordController.text;
-                if (!isValidPassword(value)) {
+                if (validPassword == false && cnt > 0) {
                   return '잘못된 비밀번호입니다.';
                 }
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: '비밀번호',
                 hintStyle: TextStyle(
                   color: Color(0xff9E9E9E),
@@ -210,7 +237,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                   onTap: () {
                     _showPasswordResetDialog(context);
                   },
-                  child: const Text(
+                  child: Text(
                     '비밀번호 찾기',
                     textAlign: TextAlign.end,
                     style: TextStyle(
@@ -226,13 +253,5 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
         ),
       ),
     );
-  }
-}
-
-bool isValidPassword(String password) {
-  if (password.length >= 9 && password.length <= 16) {
-    return true;
-  } else {
-    return false;
   }
 }
