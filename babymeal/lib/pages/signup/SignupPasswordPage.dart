@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:babymeal/pages/signup/SignupWelcomePage.dart';
 
 class SignupPasswordPageWidget extends StatefulWidget {
-  const SignupPasswordPageWidget({super.key});
+  const SignupPasswordPageWidget({super.key, required this.email});
+  final String email;
 
   @override
   State<SignupPasswordPageWidget> createState() =>
@@ -55,14 +56,16 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
           child: FloatingActionButton.extended(
               elevation: 0,
               backgroundColor: charCount > 8 && matchpassword()
-                  ? const Color(0xFFFF5C39)
-                  : const Color(0xFFBDBDBD),
+                  ? Color(0xFFFF5C39)
+                  : Color(0xFFBDBDBD),
               onPressed: charCount > 8 && matchpassword()
                   ? () {
-                      Navigator.of(context).push(_createRoute());
+                      Navigator.of(context).push(_createRoute(
+                          email: widget.email,
+                          passwordController: passwordController!));
                     }
                   : () {},
-              label: SizedBox(
+              label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +73,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: const Text(
+                        child: Text(
                           '회원가입',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -91,10 +94,10 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -103,24 +106,24 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
             Navigator.pop(context);
           },
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
         elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.00, -1.00),
+        alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: const BoxDecoration(),
+          decoration: BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                 child: Text(
                   '9-16자로 입력해주세요.',
                   style: TextStyle(
@@ -133,9 +136,9 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
                   child: RichText(
-                      text: const TextSpan(children: <TextSpan>[
+                      text: TextSpan(children: <TextSpan>[
                     TextSpan(
                       text: '비밀번호',
                       style: TextStyle(
@@ -160,13 +163,13 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                     ),
                   ]))),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFFE0E0E0),
@@ -201,7 +204,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       contentPadding:
                           EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontSize: 18,
                       fontFamily: 'Pretendard',
@@ -211,18 +214,18 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                     ),
                     //maxLines: null,
                     keyboardType: TextInputType.emailAddress,
-                    cursorColor: const Color(0xFF6F61EF),
+                    cursorColor: Color(0xFF6F61EF),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     controller: confirmpasswordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFFE0E0E0),
@@ -257,7 +260,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       contentPadding:
                           EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontSize: 18,
                       fontFamily: 'Pretendard',
@@ -267,7 +270,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                     ),
                     //maxLines: null,
                     keyboardType: TextInputType.emailAddress,
-                    cursorColor: const Color(0xFF6F61EF),
+                    cursorColor: Color(0xFF6F61EF),
                   ),
                 ),
               ),
@@ -279,10 +282,9 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 10, 20, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
                           child: charCount <= 8
-                              ? const Text(
+                              ? Text(
                                   "9~16자로 작성해주세요.",
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
@@ -295,7 +297,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                                   ),
                                 )
                               : charCount > 8 && !matchpassword()
-                                  ? const Text(
+                                  ? Text(
                                       "비밀번호가 일치하지 않습니다.",
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
@@ -308,7 +310,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                                       ),
                                     )
                                   : charCount > 8 && matchpassword()
-                                      ? const Text(
+                                      ? Text(
                                           "비밀번호가 일치합니다",
                                           textAlign: TextAlign.right,
                                           style: TextStyle(
@@ -320,7 +322,7 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
                                             letterSpacing: -0.24,
                                           ),
                                         )
-                                      : const SizedBox(),
+                                      : SizedBox(),
                         ),
                       ])),
             ],
@@ -329,24 +331,26 @@ class _SignupPasswordPageWidgetState extends State<SignupPasswordPageWidget> {
       ),
     );
   }
+}
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const SignupWelcomePageWidget(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.easeInOut;
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
+Route _createRoute(
+    {required String email,
+    required TextEditingController passwordController}) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        SignupWelcomePageWidget(
+            email: email, password: passwordController.text),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInOut;
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
 
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-    );
-  }
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+  );
 }

@@ -12,6 +12,7 @@ class SigninEnterNamePageWidget extends StatefulWidget {
 
 class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   TextEditingController? nameController = TextEditingController();
   int _charCount = 0;
@@ -49,22 +50,22 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  SigninEnterBirthPageWidget()));
+                              builder: (context) => SigninEnterBirthPageWidget(
+                                  babyName: nameController!.text)));
                     }
                   : () {},
-              label: SizedBox(
+              label: Container(
                   width: MediaQuery.of(context).size.width * 0.88,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 64,
                       ),
                       Container(
                         alignment: Alignment.center,
                         width: 64,
-                        child: const Text(
+                        child: Text(
                           '다음',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -78,10 +79,10 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                         ),
                       ),
                       Container(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
+                          padding: EdgeInsets.fromLTRB(0, 0, 32, 0),
                           alignment: Alignment.center,
                           width: 64,
-                          child: const Text(
+                          child: Text(
                             '2/4',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -100,10 +101,10 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 0, 0),
           color: Colors.transparent,
           iconSize: 60,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Color(0xFF949494),
             size: 24,
@@ -117,19 +118,19 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
         elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.00, -1.00),
+        alignment: AlignmentDirectional(0.00, -1.00),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570,
           ),
-          decoration: const BoxDecoration(),
+          decoration: BoxDecoration(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
+                padding: EdgeInsetsDirectional.fromSTEB(24, 48, 16, 8),
                 child: Text(
                   '별명도 좋아요!',
                   style: TextStyle(
@@ -142,9 +143,9 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 24),
                   child: RichText(
-                      text: const TextSpan(children: <TextSpan>[
+                      text: TextSpan(children: <TextSpan>[
                     TextSpan(
                       text: '아이의 이름',
                       style: TextStyle(
@@ -169,8 +170,8 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                     ),
                   ]))),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     inputFormatters: [
@@ -181,7 +182,7 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                     controller: nameController,
                     autofillHints: [AutofillHints.email],
                     obscureText: false,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFFE0E0E0),
@@ -216,7 +217,7 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                       contentPadding:
                           EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontSize: 18,
                       fontFamily: 'Pretendard',
@@ -231,9 +232,9 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.00, 0.00),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +243,7 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                         child: Text(
                           '$_charCount/5',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Color(0xFF616161),
                             fontSize: 16,
                             fontFamily: 'Pretendard',
@@ -251,7 +252,7 @@ class _SigninEnterNamePageWidgetState extends State<SigninEnterNamePageWidget> {
                           ),
                         ),
                       ),
-                      const Text(
+                      Text(
                         "아이 이름을 입력해주세요.",
                         textAlign: TextAlign.right,
                         style: TextStyle(
