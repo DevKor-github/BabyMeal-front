@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49d03681-881e-4452-819c-fa31fad25b22" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/babymeal/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/etc/url.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/etc/url.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/model/BabyModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/model/BabyModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterAllergyPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterAllergyPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterBirthPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterBirthPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterEmailPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterEmailPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterNamePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterNamePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterNicknamePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterNicknamePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterPassword.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterPassword.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninSelectEmailpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninSelectEmailpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/refrigerator/ViewRefrigeratorPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/refrigerator/ViewRefrigeratorPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/signup/SignupPasswordPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/signup/SignupPasswordPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/signup/SignupWelcomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/signup/SignupWelcomePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babymeal/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,11 +54,11 @@
       <recent name="C:\Users\yujin\BabyMeal-front\babymeal\assets\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yujin\BabyMeal-front" />
+      <recent name="C:\Users\yujin\BabyMeal-front\babymeal" />
       <recent name="C:\Users\yujin\BabyMeal-front\babymeal\assets\images" />
       <recent name="C:\Users\yujin\BabyMeal-front\babymeal\ios\Runner" />
       <recent name="C:\Users\yujin\BabyMeal-front\babymeal\android" />
-      <recent name="C:\Users\yujin\BabyMeal-front\babymeal\android\app" />
-      <recent name="C:\Users\yujin\BabyMeal-front\babymeal\lib\model" />
     </key>
   </component>
   <component name="RunManager">
