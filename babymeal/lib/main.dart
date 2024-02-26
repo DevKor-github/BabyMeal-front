@@ -2,6 +2,7 @@ import 'package:babymeal/NavigationPage.dart';
 import 'package:babymeal/pages/community/ViewCommunityPage.dart';
 import 'package:babymeal/pages/community/WriteCommunityPostPage.dart';
 import 'package:babymeal/pages/mypage/MyPagePost.dart';
+import 'package:babymeal/services/AuthService.dart';
 import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => PostService()),
     ChangeNotifierProvider(create: (context) => CommentService()),
+    ChangeNotifierProvider(create: (context) => AuthService()),
   ], child: const MainApp()));
 }
 

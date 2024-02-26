@@ -7,9 +7,8 @@ class UserInfoService extends ChangeNotifier {
   void enrollBaby(PostBaby baby) async {
     Map<String, dynamic> data = baby.toJson();
     try {
-      Response response = await Dio().post(
-        "${baseUrl}/customer/baby/enroll",data : data
-      );
+      Response response =
+          await Dio().post("${baseUrl}/customer/baby/enroll", data: data);
       if (response.statusCode == 200) {
         print('POST 요청 성공');
       } else {
@@ -25,9 +24,8 @@ class UserInfoService extends ChangeNotifier {
   void updateBaby(PostBaby baby) async {
     Map<String, dynamic> data = baby.toJson();
     try {
-      Response response = await Dio().put(
-        "${baseUrl}/customer/baby", data : data
-      );
+      Response response =
+          await Dio().put("${baseUrl}/customer/baby", data: data);
       if (response.statusCode == 200) {
         print('POST 요청 성공');
       } else {
