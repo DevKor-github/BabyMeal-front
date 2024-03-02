@@ -44,7 +44,7 @@ class _ManageMyPageWidgetState extends State<ManageMyPageWidget> {
     final String url =
         'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/manage';
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('accessToken');
+    final String? token = prefs.getString('access_token');
 
     if (token != null) {
       final response = await http.get(
@@ -72,7 +72,7 @@ class _ManageMyPageWidgetState extends State<ManageMyPageWidget> {
     final String apiUrl =
         "http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer";
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('accessToken');
+    final String? token = prefs.getString('access_token');
 
     if (token == null) {
       print("No user token found");

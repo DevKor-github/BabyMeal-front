@@ -73,7 +73,7 @@ class _ChagePasswordPageWidgetState extends State<ChagePasswordPageWidget> {
     final String apiUrl =
         "http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/customer/password/validate";
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userToken = prefs.getString('accessToken');
+    final String? userToken = prefs.getString('access_token');
 
     if (userToken == null) {
       print('No user token found');

@@ -1,4 +1,6 @@
+import 'package:babymeal/NavigationPage.dart';
 import 'package:babymeal/pages/auth/SigninEnterEmailPage.dart';
+import 'package:babymeal/pages/recommend/ViewRecommendPage.dart';
 import 'package:babymeal/pages/refrigerator/ViewRefrigeratorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -120,7 +122,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewRefrigeratorPageWidget()),
+                      builder: (context) => NavigationPageWidget()),
                 );
               }
             },
@@ -255,3 +257,4 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
     );
   }
 }
+

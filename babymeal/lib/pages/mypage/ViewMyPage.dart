@@ -35,7 +35,7 @@ class _ViewMyPageWidgetState extends State<ViewMyPageWidget> {
 
   Future<void> fetchCustomerInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userToken = prefs.getString('accessToken');
+    final String? userToken = prefs.getString('access_token');
 
     final response = await http.get(
       Uri.parse(

@@ -41,7 +41,7 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
     DietService dietService = DietService();
     MyPageService myPageService = MyPageService();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userToken = prefs.getString('accessToken');
+    final String? userToken = prefs.getString('access_token');
     if (userToken == null) {
       print('No user token found');
       return;
@@ -81,7 +81,7 @@ class _ViewRecommendPageWidgetState extends State<ViewRecommendPageWidget> {
         'http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/diet/press?simpleDietId=$simpleDietId';
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userToken = prefs.getString('accessToken');
+    final String? userToken = prefs.getString('access_token');
 
     if (userToken == null) {
       print('No user token found');
@@ -369,3 +369,4 @@ class RefrigeratorRecipe extends StatelessWidget {
     );
   }
 }
+

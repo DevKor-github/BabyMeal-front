@@ -27,7 +27,7 @@ class _ViewChildInfoPageWidgetState extends State<ViewChildInfoPageWidget> {
 
   Future<void> fetchBabyInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('accessToken');
+    final String? token = prefs.getString('access_token');
 
     if (token == null) {
       print('No token found');

@@ -24,7 +24,7 @@ class _MypageMyCommentsPageWidgetState
 
   Future<void> fetchMyComments() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('accessToken');
+    final String? token = prefs.getString('access_token');
 
     if (token == null) {
       print('Token not found');

@@ -1,4 +1,5 @@
 import 'package:babymeal/NavigationPage.dart';
+import 'package:babymeal/pages/auth/SigninSelectEmailpage.dart';
 import 'package:babymeal/pages/community/ViewCommunityPage.dart';
 import 'package:babymeal/pages/community/WriteCommunityPostPage.dart';
 import 'package:babymeal/pages/mypage/MyPagePost.dart';
@@ -20,11 +21,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "Login",
       debugShowCheckedModeBanner: false,
       // initialRoute: "/login",
-      home: NavigationPageWidget(),
+      home: SigninSelectEmail(),
     );
   }
 }
+
