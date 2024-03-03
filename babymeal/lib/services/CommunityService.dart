@@ -50,7 +50,7 @@ class PostService extends ChangeNotifier {
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json'
           },
         ),
@@ -99,7 +99,7 @@ class PostService extends ChangeNotifier {
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -127,7 +127,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post?startPostId=$startPostId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -157,7 +157,7 @@ class PostService extends ChangeNotifier {
         "http://ec2-43-200-210-159.ap-northeast-2.compute.amazonaws.com:8080/post?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -190,7 +190,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type?startPostId=$startPostId&type=식단",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -222,7 +222,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/likes?startPostId=$startPostId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -252,7 +252,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type/likes?startPostId=$startPostId&type=게시글",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -287,7 +287,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/type/likes?startPostId=$startPostId&type=식단",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -317,7 +317,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/weekly",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -348,7 +348,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/customer?startPostId=$startPostId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -379,7 +379,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/$keyword",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -409,7 +409,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/unique?postId=$postId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -437,7 +437,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/scrap?type=게시글",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -468,7 +468,7 @@ class PostService extends ChangeNotifier {
         "$baseUrl/post/scrap?type=식단",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -499,7 +499,7 @@ class PostService extends ChangeNotifier {
         data: {"postId": postId},
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -528,7 +528,7 @@ class PostService extends ChangeNotifier {
         data: {"postId": postId},
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -549,6 +549,8 @@ class PostService extends ChangeNotifier {
   }
 
   Future<void> deletePost(int postId) async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    String? token = sharedPreference.getString("access_token");
     //post 삭제
     Map<String, dynamic> data = {"postId": postId};
     try {
@@ -557,7 +559,7 @@ class PostService extends ChangeNotifier {
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -585,7 +587,7 @@ class CommentService extends ChangeNotifier {
         "$baseUrl/post/comment?postId=$postId",
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),
@@ -618,7 +620,7 @@ class CommentService extends ChangeNotifier {
         data: data,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $tempToken',
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
           },
         ),

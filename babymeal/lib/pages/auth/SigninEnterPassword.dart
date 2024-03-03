@@ -1,3 +1,4 @@
+import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:babymeal/pages/auth/SigninEnterEmailPage.dart';
 import 'package:babymeal/pages/refrigerator/ViewRefrigeratorPage.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewRefrigeratorPageWidget()),
+                      builder: (context) => NavigationPageWidget()),
                 );
               }
             },

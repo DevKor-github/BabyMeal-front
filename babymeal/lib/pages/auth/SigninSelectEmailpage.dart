@@ -1,3 +1,4 @@
+import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:babymeal/pages/auth/SigninEnterEmailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -6,6 +7,7 @@ import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:babymeal/services/AuthService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninSelectEmail extends StatefulWidget {
   @override
@@ -14,6 +16,8 @@ class SigninSelectEmail extends StatefulWidget {
 
 class _SigninSelectEmail extends State<SigninSelectEmail> {
   @override
+  void initState() {}
+
   Widget build(BuildContext context) {
     final phoneUnitHeight = MediaQuery.of(context).size.height / 844;
     final phoneUnitWidth = MediaQuery.of(context).size.width / 390;
@@ -71,7 +75,7 @@ class _SigninSelectEmail extends State<SigninSelectEmail> {
             child: Column(children: [
       SizedBox(height: phoneUnitHeight * 91),
       Container(
-        height: 450,
+        height: 550,
         width: 390,
         child: Swiper(
           scrollDirection: Axis.horizontal,

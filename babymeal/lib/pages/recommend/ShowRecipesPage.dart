@@ -1,4 +1,4 @@
-import 'package:babymeal/NavigationPage.dart';
+import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:babymeal/model/FridgeRecipe.dart';
 import 'package:babymeal/model/RecipeModel.dart';
 import 'package:babymeal/pages/recommend/ShowDetailFridgeRecipePage.dart';

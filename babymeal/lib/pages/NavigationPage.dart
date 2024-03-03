@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'pages/community/ViewCommunityPage.dart';
-import 'pages/mypage/ViewMyPage.dart';
-import 'pages/recommend/ViewRecommendPage.dart';
-import 'pages/refrigerator/ViewRefrigeratorPage.dart';
-import 'pages/scrab/ViewScrabPage.dart';
+import 'community/ViewCommunityPage.dart';
+import 'mypage/ViewMyPage.dart';
+import 'recommend/ViewRecommendPage.dart';
+import 'refrigerator/ViewRefrigeratorPage.dart';
+import 'scrab/ViewScrabPage.dart';
 
 class NavigationPageWidget extends StatefulWidget {
   const NavigationPageWidget({super.key});
@@ -44,7 +44,7 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
     super.initState();
     _loadPosts();
     _loadScrappedPosts();
-    _setToken();
+    _getToken();
   }
 
   void _onItemTapped(int index) {
@@ -53,9 +53,10 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
     });
   }
 
-  Future _setToken() async {
+  Future _getToken() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
-    sharedPreference.setString("access_token", tempToken);
+    String? token = sharedPreference.getString("access_token");
+    print(token);
   }
 
   @override

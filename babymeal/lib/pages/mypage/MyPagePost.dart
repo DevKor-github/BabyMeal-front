@@ -1,3 +1,4 @@
+import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:babymeal/model/PostModel.dart';
 import 'package:babymeal/pages/community/ViewDetailPostPage.dart';
 import 'package:babymeal/pages/mypage/ChangePostPage.dart';
@@ -33,9 +34,11 @@ class _MyPagePostWidgetState extends State<MyPagePostWidget> {
               onPressed: () async {
                 await Provider.of<PostService>(context, listen: false)
                     .deletePost(postInfo.postId!);
-                _loadPosts();
 
-                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NavigationPageWidget()));
               },
               child: Text('확인'),
             ),

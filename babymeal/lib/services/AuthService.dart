@@ -59,6 +59,7 @@ class AuthService extends ChangeNotifier {
         String? token = PostAuth.fromJson(response.data).accessToken;
         if (token != null) {
           await sharedPreferences.setString('access_token', token);
+
           print('POST 요청 성공');
           return true;
         } else {

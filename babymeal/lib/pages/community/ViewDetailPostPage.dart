@@ -1,4 +1,4 @@
-import 'package:babymeal/NavigationPage.dart';
+import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:babymeal/model/PostModel.dart';
 import 'package:babymeal/pages/community/CommentCommunityPage.dart';
 import 'package:babymeal/pages/community/ViewCommunityPage.dart';
