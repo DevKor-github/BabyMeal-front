@@ -347,12 +347,6 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                       childAspectRatio:
                                           2.4 / 1, // 높이를 너비와 동일하게 유지
                                     ),
-                                    // gridDelegate:
-                                    //     SliverGridDelegateWithFixedCrossAxisCount(
-                                    //   crossAxisSpacing: 12,
-                                    //   crossAxisCount: 2,
-                                    //   childAspectRatio: 2.4 / 1,
-                                    // ),
                                     itemCount: genKeywords.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
@@ -389,7 +383,7 @@ class _SelectKeywordPageWidgetState extends State<SelectKeywordPageWidget> {
                                                     style: TextStyle(
                                                       color: Color(0xFF212121),
                                                       fontSize:
-                                                          15, // 원하는 최대 글자 크기 설정
+                                                          10, // 원하는 최대 글자 크기 설정
                                                       fontFamily: 'Pretendard',
                                                       fontWeight:
                                                           FontWeight.w600,

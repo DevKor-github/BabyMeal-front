@@ -6,10 +6,19 @@ import 'package:babymeal/pages/community/WriteCommunityPostPage.dart';
 import 'package:babymeal/pages/mypage/MyPagePost.dart';
 import 'package:babymeal/services/AuthService.dart';
 import 'package:babymeal/services/CommunityService.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  // // FCM 토큰 얻기
+  // String? fcmToken = await messaging.getToken();
+  // print('FCM Token: $fcmToken');
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => PostService()),
     ChangeNotifierProvider(create: (context) => CommentService()),

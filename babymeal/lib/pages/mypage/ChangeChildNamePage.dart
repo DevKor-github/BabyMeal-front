@@ -38,7 +38,7 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
 
   Future<Map<String, dynamic>?> fetchCurrentBabyData(int babyId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('accessToken');
+    final String? token = prefs.getString('access_token');
 
     if (token == null) {
       print('No token found');
@@ -83,7 +83,7 @@ class _ChangeChildNamePageWidgetState extends State<ChangeChildNamePageWidget> {
     print('babyData: $babyData');
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userToken = prefs.getString('accessToken');
+    final String? userToken = prefs.getString('access_token');
 
     if (userToken == null) {
       print('No token found');

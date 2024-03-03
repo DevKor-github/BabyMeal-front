@@ -322,7 +322,7 @@ class _RecomChooseMaterialPageWidgetState
 
   Future<void> loadUserTokenAndFetchFridgeContents() async {
     final prefs = await SharedPreferences.getInstance();
-    final String userToken = prefs.getString('accessToken') ??
+    final String userToken = prefs.getString('access_token') ??
         ''; // accessToken 키로 저장된 토큰을 불러옵니다. 토큰이 없으면 빈 문자열을 반환합니다.
 
     print('Loaded user token: $userToken');
