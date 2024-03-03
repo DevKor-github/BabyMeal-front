@@ -273,7 +273,7 @@ class _ShowRecipesPageWidgetState extends State<ShowRecipesPageWidget> {
                   ),
                 )),
             Container(
-                margin: EdgeInsets.only(left: 22, top: 24, bottom: 0),
+                margin: EdgeInsets.only(left: 22, top: 24, bottom: 10),
                 child: Column(
                   children: [
                     Container(

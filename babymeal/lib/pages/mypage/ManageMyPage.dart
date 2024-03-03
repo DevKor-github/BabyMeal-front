@@ -299,6 +299,143 @@ class _ManageMyPageWidgetState extends State<ManageMyPageWidget> {
                     padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                     child: TextButton(
                         child: Text(
+                          '로그 아웃',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Pretendard',
+                            fontSize: 16,
+                            color: Color(0xFF212121),
+                          ),
+                        ),
+                        onPressed: () {
+                          showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    surfaceTintColor: Color(0xFFFFFFFF),
+                                    content: Container(
+                                      width: 340,
+                                      height: 180,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '로그아웃을 진행하시겠습니까?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'Pretendard',
+                                              fontSize: 16,
+                                              color: Color(0xFF212121),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 30, 0, 0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 0, 3, 0),
+                                                  child: ElevatedButton(
+                                                      onPressed: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(builder: (context) => SigninSelectEmail()),
+                                                          );
+                                                        },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  Color(
+                                                                      0xFFBDBDBD),
+                                                              shadowColor: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.25),
+                                                              elevation: 2,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12),
+                                                              ),
+                                                              fixedSize: Size(
+                                                                  140, 55)),
+                                                      child: Text(
+                                                        '로그아웃',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'Pretendard',
+                                                          fontSize: 18,
+                                                          color:
+                                                              Color(0xFFFFFFFF),
+                                                        ),
+                                                      )),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                                  child: ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            Color(0xFFFF5C39),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                        ),
+                                                        fixedSize:
+                                                            Size(140, 55),
+                                                      ),
+                                                      child: Text(
+                                                        '아니요',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'Pretendard',
+                                                          fontSize: 18,
+                                                          color:
+                                                              Color(0xFFFFFFFF),
+                                                        ),
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    elevation: 5,
+                                    shadowColor: Colors.black.withOpacity(0.15),
+                                    backgroundColor: Colors.white);
+                              });
+                        })),
+                Spacer(),
+                
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                    child: TextButton(
+                        child: Text(
                           '계정 탈퇴',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -426,6 +563,7 @@ class _ManageMyPageWidgetState extends State<ManageMyPageWidget> {
                               });
                         })),
                 Spacer(),
+                
               ])
             ]));
   }

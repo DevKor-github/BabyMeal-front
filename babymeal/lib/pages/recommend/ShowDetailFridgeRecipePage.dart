@@ -205,242 +205,172 @@ class _ShowDetailRecipePageWidgetState
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(20, 15, 1, 15),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xFFDEFCE9),
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                              child: Text(
-                                recipeDetails?.difficulty ?? '기본 레시피 난이도',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Pretendard',
-                                  color: Color(0xFF29CC5A),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(1, 15, 1, 15),
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(18),
-                                color: Color(0xFFFFFFFF),
-                              ),
-                              child: Text(
-                                "${recipeDetails?.time?.toString() ?? '기본 레시피 시간'}분",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Pretendard',
-                                  color: Color(0xFF616161),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(1, 15, 5, 15),
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(18),
-                                color: Color(0xFFFFFFFF),
-                              ),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
-                                    child: Icon(
-                                      Icons.tag,
-                                      color: Color(0xFF9E9E9E),
-                                      size: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    widget?.selectedKeywords.toString() ?? ' ',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Pretendard',
-                                      color: Color(0xFF616161),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       Stack(
                         children: [
-                          // Container(
-                          //   color: Color(0xFFF4F3F0),
-                          //   child: Row(
-                          //     children: [
-                          //       Padding(
-                          //         padding: EdgeInsets.fromLTRB(20, 15, 1, 15),
-                          //         child: Container(
-                          //           decoration: BoxDecoration(
-                          //             color: Color(0xFFDEFCE9),
-                          //             borderRadius: BorderRadius.circular(18),
-                          //           ),
-                          //           padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                          //           child: Text(
-                          //             '간단해요',
-                          //             textAlign: TextAlign.center,
-                          //             style: TextStyle(
-                          //               fontSize: 14,
-                          //               fontWeight: FontWeight.w400,
-                          //               fontFamily: 'Pretendard',
-                          //               color: Color(0xFF29CC5A),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       Padding(
-                          //         padding: EdgeInsets.fromLTRB(1, 15, 1, 15),
-                          //         child: Container(
-                          //           padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                          //           decoration: BoxDecoration(
-                          //             borderRadius: BorderRadius.circular(18),
-                          //             color: Color(0xFFFFFFFF),
-                          //           ),
-                          //           child: Text(
-                          //             '20분 소요',
-                          //             textAlign: TextAlign.center,
-                          //             style: TextStyle(
-                          //               fontSize: 14,
-                          //               fontWeight: FontWeight.w400,
-                          //               fontFamily: 'Pretendard',
-                          //               color: Color(0xFF616161),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       SizedBox(width: 5),
-                          //       Padding(
-                          //         padding: EdgeInsets.fromLTRB(1, 15, 5, 15),
-                          //         child: Container(
-                          //           padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                          //           decoration: BoxDecoration(
-                          //             borderRadius: BorderRadius.circular(18),
-                          //             color: Color(0xFFFFFFFF),
-                          //           ),
-                          //           child: Row(
-                          //             children: [
-                          //               Padding(
-                          //                 padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
-                          //                 child: Icon(
-                          //                   Icons.tag,
-                          //                   color: Color(0xFF9E9E9E),
-                          //                   size: 16,
-                          //                 ),
-                          //               ),
-                          //               Text(
-                          //                 '비타민이 풍부한',
-                          //                 textAlign: TextAlign.center,
-                          //                 style: TextStyle(
-                          //                   fontSize: 14,
-                          //                   fontWeight: FontWeight.w400,
-                          //                   fontFamily: 'Pretendard',
-                          //                   color: Color(0xFF616161),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          Container(
-                            color: Colors.white,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                                  child: Text(
-                                    '재료',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Pretendard',
-                                      color: Color(0xFF424242),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(20, 15, 1, 15),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFDEFCE9),
+                                        borderRadius: BorderRadius.circular(18),
+                                      ),
+                                      padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                      child: Text(
+                                        recipeDetails?.difficulty ?? '기본 레시피 난이도',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Pretendard',
+                                          color: Color(0xFF29CC5A),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                  child: Text(
-                                    recipeDetails?.ingredients ?? '기본 레시피 재료',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Pretendard',
-                                      color: Color(0xFF212121),
+                                  SizedBox(width: 5),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(1, 15, 1, 15),
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color: Color(0xFFFFFFFF),
+                                      ),
+                                      child: Text(
+                                        "${recipeDetails?.time?.toString() ?? '기본 레시피 시간'}분",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Pretendard',
+                                          color: Color(0xFF616161),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: -18,
-                            left: 325,
-                            //TO DO
-                            //Icon Button 완전히 보이기
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.15),
-                                    blurRadius: 8,
-                                    spreadRadius: 1,
+                                  SizedBox(width: 5),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(1, 15, 5, 15),
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color: Color(0xFFFFFFFF),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
+                                            child: Icon(
+                                              Icons.tag,
+                                              color: Color(0xFF9E9E9E),
+                                              size: 16,
+                                            ),
+                                          ),
+                                          Text(
+                                            widget?.selectedKeywords.toString() ?? ' ',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: 'Pretendard',
+                                              color: Color(0xFF616161),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                              width: 45,
-                              height: 45,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.favorite,
-                                  color: recipeDetails != null &&
-                                          recipeDetails!.heart == true
-                                      ? Color(0xFFFF5C39)
-                                      : Color(0xFFDDDDDD),
+                              Stack(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                color: Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                      child: Text(
+                                        '재료',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Pretendard',
+                                          color: Color(0xFF424242),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                      child: Text(
+                                        recipeDetails?.ingredients ?? '기본 레시피 재료',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Pretendard',
+                                          color: Color(0xFF212121),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    toggleScrab();
-                                  });
-                                },
                               ),
-                            ),
+                            ],
                           ),
+                            ],
+                          ),
+                          Positioned(
+                                top: 20,
+                                left: 325,
+                                //TO DO
+                                //Icon Button 완전히 보이기
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.15),
+                                        blurRadius: 8,
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  width: 45,
+                                  height: 45,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.favorite,
+                                      color: recipeDetails != null &&
+                                              recipeDetails!.heart == true
+                                          ? Color(0xFFFF5C39)
+                                          : Color(0xFFDDDDDD),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        toggleScrab();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
                         ],
                       ),
-                      Container(
+                       Container(
                         color: Color(0xFFF4F3F0),
                         height: 10,
                         width: double.infinity,
                       ),
                       Container(
+                        width: MediaQuery.of(context).size.width,
                         color: Colors.white,
                         child: Padding(
                             padding: EdgeInsets.fromLTRB(20, 20, 0, 10),
