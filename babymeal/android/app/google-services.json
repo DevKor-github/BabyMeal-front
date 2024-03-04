@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "119046393072",
+    "project_id": "babymeal",
+    "storage_bucket": "babymeal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119046393072:android:fcb39f3e24570f4a768635",
+        "android_client_info": {
+          "package_name": "com.example.babymeal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCINMg_h8NcVZkF0dJHGOmOGkN-xVQSimk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

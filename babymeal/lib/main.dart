@@ -1,3 +1,4 @@
+import 'package:babymeal/firebase_options.dart';
 import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:babymeal/pages/StartPage.dart';
 import 'package:babymeal/pages/auth/SigninSelectEmailpage.dart';
@@ -11,14 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  // // FCM 토큰 얻기
-  // String? fcmToken = await messaging.getToken();
-  // print('FCM Token: $fcmToken');
+  // FCM 토큰 얻기
+  String? fcmToken = await messaging.getToken();
+  print('FCM Token: $fcmToken');
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => PostService()),
     ChangeNotifierProvider(create: (context) => CommentService()),
