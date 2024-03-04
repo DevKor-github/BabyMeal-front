@@ -1,6 +1,7 @@
 import 'package:babymeal/pages/auth/SigninEnterEmailPage.dart';
 import 'package:babymeal/pages/refrigerator/ViewRefrigeratorPage.dart';
 import 'package:flutter/material.dart';
+import 'package:babymeal/NavigationPage.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 
 import 'package:babymeal/model/AuthModel.dart';
@@ -121,7 +122,7 @@ class _SigninEnterPassword extends State<SigninEnterPassword> {
                   if (validPassword == true){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ViewRefrigeratorPageWidget()),
+                      MaterialPageRoute(builder: (context) => NavigationPageWidget()),
                     );
                   }
 

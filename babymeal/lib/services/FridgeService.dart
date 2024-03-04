@@ -54,7 +54,9 @@ class FridgeService extends ChangeNotifier {
   Future<bool?> customerSort(List<int> fridgeIdOrder) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString("access_token");
-    var data = fridgeIdOrder;
+    var data = {
+      "fridgeIdOrder": fridgeIdOrder
+    };
 
     try {
       Response response = await Dio().post(
@@ -165,6 +167,7 @@ class FridgeService extends ChangeNotifier {
     }
   }
 
+
   Future<dynamic> getUniqueIngredient(int fridgeId) async {
     //냉장고 재료 하나씩 불러오기
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -176,7 +179,7 @@ class FridgeService extends ChangeNotifier {
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
-            'Content-Type': 'applicaiton/json',
+            'Content-Type': 'application/json',
           }
         ),
       );
@@ -201,22 +204,32 @@ class FridgeService extends ChangeNotifier {
     // 재료 수정
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString("access_token");
+    var data;
 
-    var data = {
-      "fridgeId": fridgeId,
-      "ingredients": '${ingredients}',
-      "exist": exist,
-      "emoticon": '${emoticon}',
-    };
-
+    if (emoticon != null){
+      data = {
+        "fridgeId": fridgeId,
+        "ingredients": "$ingredients",
+        "exist": exist,
+        "emoticon": "$emoticon"
+      };
+    }
+    else{
+      data = {
+        "fridgeId": fridgeId,
+        "ingredients": "$ingredients",
+        "exist": exist
+      };
+    }
+    print(data);
     try {
       Response response = await Dio().put(
-        "${baseUrl}/fridge",
+        "$baseUrl/fridge",
         data: data,
         options: Options(
             headers: {
               'Authorization': 'Bearer $token',
-              'Content-Type': 'applicaiton/json',
+              'Content-Type': 'application/json',
             }
         ),
       );

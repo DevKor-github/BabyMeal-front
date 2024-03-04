@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="49d03681-881e-4452-819c-fa31fad25b22" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterAllergyPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterAllergyPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterPassword.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/auth/SigninEnterPassword.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babymeal/lib/pages/refrigerator/ViewRefrigeratorPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/pages/refrigerator/ViewRefrigeratorPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babymeal/lib/services/FridgeService.dart" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/lib/services/FridgeService.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babymeal/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/babymeal/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
