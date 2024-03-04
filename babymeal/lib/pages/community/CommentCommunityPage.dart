@@ -146,10 +146,14 @@ class _CommentCommunityPageWidgetState
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xFF757575))),
                             onPressed: () async {
-                              if (commentController.text == "") {
+                              if (commentController.text != "") {
                                 await commentService.uploadComment(PostComment(
                                     postId: widget.postId,
                                     contents: commentController.text));
+                                _loadComments();
+                                setState(() {
+                                  commentController.text = "";
+                                });
                               }
                             },
                           ),

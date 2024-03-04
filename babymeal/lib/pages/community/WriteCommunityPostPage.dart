@@ -71,8 +71,8 @@ class _WriteCommunityPostPageWidgetState
                   },
                   icon: Image.asset(
                     selectedCategory == '자유글'
-                        ? 'assets/images/recipepost_pressed.png'
-                        : 'assets/images/recipepost.png',
+                        ? 'assets/images/generalpost_pressed.png'
+                        : 'assets/images/generalpost.png',
                     width: 60, // 이미지의 가로 길이
                     height: 60, // 이미지의 세로 길이
                   ),

@@ -1,4 +1,5 @@
 import 'package:babymeal/etc/url.dart';
+import 'package:babymeal/services/AlarmService.dart';
 import 'package:babymeal/services/CommunityService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +40,15 @@ class _NavigationPageWidgetState extends State<NavigationPageWidget> {
     await Provider.of<PostService>(context, listen: false).getBest10Posts();
   }
 
+  void _setFCMToken() async {
+    await Provider.of<AlarmService>(context, listen: false).updateToken();
+  }
+
   @override
   void initState() {
     super.initState();
+    _setFCMToken();
+
     _loadPosts();
     _loadScrappedPosts();
     _getToken();

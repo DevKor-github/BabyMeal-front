@@ -5,6 +5,7 @@ import 'package:babymeal/pages/auth/SigninSelectEmailpage.dart';
 import 'package:babymeal/pages/community/ViewCommunityPage.dart';
 import 'package:babymeal/pages/community/WriteCommunityPostPage.dart';
 import 'package:babymeal/pages/mypage/MyPagePost.dart';
+import 'package:babymeal/services/AlarmService.dart';
 import 'package:babymeal/services/AuthService.dart';
 import 'package:babymeal/services/CommunityService.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -24,6 +25,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) => PostService()),
     ChangeNotifierProvider(create: (context) => CommentService()),
     ChangeNotifierProvider(create: (context) => AuthService()),
+    ChangeNotifierProvider(create: (context) => AlarmService()),
   ], child: const MainApp()));
 }
 
