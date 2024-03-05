@@ -42,8 +42,6 @@ class _ViewRefrigeratorPageWidgetState
     }
     if (sort[2] == true) {
       sortedIngredients = await FridgeService().getNewSort();
-    } else {
-      sortedIngredients = [];
     }
     setState(() {
       ingredient = List<Map<String, dynamic>>.from(sortedIngredients);
@@ -283,19 +281,6 @@ class _ViewRefrigeratorPageWidgetState
     }
   }
 
-  Future<void> editIngredient(Map<String, dynamic> ingredient) async {
-    bool success = await FridgeService().updateIngredient(
-        ingredient["fridgeId"],
-        ingredient["ingredients"],
-        ingredient["exist"],
-        ingredient["emoticon"]);
-    if (success) {
-      setState(() {
-        _updateIngredientSort();
-      });
-    }
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -303,8 +288,10 @@ class _ViewRefrigeratorPageWidgetState
   }
 
   void _showIngredient(int index) async {
+    // 개별 재료 확인(재료 편집 가능)
     Map<String, dynamic> uniqueIngredient = await FridgeService()
         .getUniqueIngredient(ingredient[index]["fridgeId"]);
+    bool exist = uniqueIngredient["active"];
     TextEditingController? _editIngredientController =
         TextEditingController(text: uniqueIngredient["ingredients"]);
     TextEditingController? editEmojiController =
@@ -326,7 +313,7 @@ class _ViewRefrigeratorPageWidgetState
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      uniqueIngredient["active"]
+                      exist
                           ? Padding(
                               padding: const EdgeInsets.fromLTRB(0, 15, 3, 15),
                               child: Text(
@@ -363,9 +350,9 @@ class _ViewRefrigeratorPageWidgetState
                                 return Colors.transparent;
                               },
                             ),
-                            value: uniqueIngredient["active"],
-                            onChanged: (bool newValue) => setState(
-                                () => uniqueIngredient["active"] = newValue)),
+                            value: exist,
+                            onChanged: (bool newValue) =>
+                                setState(() => exist = newValue)),
                       )
                     ],
                   ),
@@ -426,20 +413,22 @@ class _ViewRefrigeratorPageWidgetState
                   ),
                   SizedBox(height: 7),
                   Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(3)),
+                    width: 50,
+                    height: 50,
+                    padding: EdgeInsets.fromLTRB(15, 0, 0, 5),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFE0E0E0),
+                        border: InputBorder.none,
                       ),
-                      padding: EdgeInsets.fromLTRB(15, 5, 0, 30),
-                      width: 50,
-                      height: 50,
-                      child: TextField(
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1),
-                          FilteringTextInputFormatter.deny(
-                              RegExp(r'^[\u0020-\u007E]*$')),
-                        ],
-                        controller: editEmojiController,
-                      )),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[^\u0000-\u007F]+'))
+                      ],
+                      controller: editEmojiController,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -473,12 +462,13 @@ class _ViewRefrigeratorPageWidgetState
                       SizedBox(width: 10),
                       ElevatedButton(
                         onPressed: () async {
+                          print(_editIngredientController.text);
                           bool? success = await FridgeService()
                               .updateIngredient(
                                   uniqueIngredient["fridgeId"],
-                                  _ingredientController!.text,
-                                  uniqueIngredient["active"],
-                                  emojiController!.text);
+                                  _editIngredientController.text,
+                                  exist,
+                                  editEmojiController!.text);
                           if (success == true) {
                             Navigator.pop(context);
                           }
@@ -510,8 +500,8 @@ class _ViewRefrigeratorPageWidgetState
   }
 
   void _addIngredient() {
-    TextEditingController? _editIngredientController = TextEditingController();
-    TextEditingController? editEmojiController = TextEditingController();
+    TextEditingController? _addIngredientController = TextEditingController();
+    TextEditingController? addEmojiController = TextEditingController();
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -589,7 +579,7 @@ class _ViewRefrigeratorPageWidgetState
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 0, 16, 5),
                     child: TextFormField(
-                      controller: _editIngredientController,
+                      controller: _addIngredientController,
                       style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 18,
@@ -629,24 +619,22 @@ class _ViewRefrigeratorPageWidgetState
                   ),
                   SizedBox(height: 7),
                   Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(3)),
+                    width: 50,
+                    height: 50,
+                    padding: EdgeInsets.fromLTRB(15, 0, 0, 5),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFE0E0E0),
+                        border: InputBorder.none,
                       ),
-                      padding: EdgeInsets.fromLTRB(15, 5, 0, 30),
-                      width: 50,
-                      height: 50,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xFFE0E0E0),
-                        ),
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1),
-                          FilteringTextInputFormatter.deny(
-                              RegExp(r'^[\u0020-\u007E]*$')),
-                        ],
-                        controller: editEmojiController,
-                      )),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[^\u0000-\u007F]+'))
+                      ],
+                      controller: addEmojiController,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -676,8 +664,8 @@ class _ViewRefrigeratorPageWidgetState
                       ElevatedButton(
                         onPressed: () async {
                           bool? success = await FridgeService()
-                              .enrollIngredients(_ingredientController!.text,
-                                  _ingredientExist, emojiController!.text);
+                              .enrollIngredients(_addIngredientController!.text,
+                                  _ingredientExist, addEmojiController!.text);
                           if (success == true) {
                             Navigator.pop(context);
                           }
@@ -862,6 +850,7 @@ class _ViewRefrigeratorPageWidgetState
                   onChanged: (value) {
                     setState(() {
                       _isActive = value!;
+                      _updateIngredientSort();
                     });
                   }),
               Text(

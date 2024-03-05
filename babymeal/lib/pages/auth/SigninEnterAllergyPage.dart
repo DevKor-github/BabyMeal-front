@@ -1,5 +1,5 @@
+import 'package:babymeal/pages/NavigationPage.dart';
 import 'package:flutter/material.dart';
-
 import 'package:babymeal/services/BabyService.dart';
 
 class SigninEnterAllergyPageWidget extends StatefulWidget {
@@ -19,6 +19,7 @@ class SigninEnterAllergyPageWidget extends StatefulWidget {
 class _SigninEnterAllergyPageWidgetState
     extends State<SigninEnterAllergyPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String allergy = ""; // 선택한 allergy들을 하나의 string으로 합치는 변수
   List<String> allergyList = [
     "알류",
     "우유",
@@ -62,10 +63,21 @@ class _SigninEnterAllergyPageWidgetState
               elevation: 0,
               backgroundColor: Color(0xFFFF5C39),
               onPressed: () async {
+                for (int i = 0; i < 19; i++) {
+                  if (isSelected[i] == true) {
+                    allergy =
+                        allergy + ', ' + allergyList[i]; //선택된 것 하나의 string으로
+                  }
+                }
                 bool? success = await BabyService()
-                    .postBaby(widget.babyName, widget.birth, "우유", "");
+                    .postBaby(widget.babyName, widget.birth, allergy, "");
+                //need를 받는 페이지가 따로 없어서 마지막 변수 빈 문자열
                 if (success == true) {
-                  //페이지 넘기기
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NavigationPageWidget()),
+                  );
                 }
               },
               label: Container(
