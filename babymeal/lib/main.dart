@@ -37,7 +37,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: "Login",
       debugShowCheckedModeBanner: false,
-      // initialRoute: "/login",
       home: StartPageWidget(),
     );
   }

@@ -52,15 +52,14 @@ class _SigninEnterEmail extends State<SigninEnterEmail> {
               String value = _emailController.text;
               if (isValidEmail(value)) {
                 bool? isExist = await AuthService().getCheckEmail(value);
-                if (isExist == true) {
+                if (isExist!) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
                             SignupPasswordPageWidget(email: value)),
                   );
-                }
-                if (isExist == false) {
+                } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
